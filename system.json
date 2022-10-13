@@ -113,6 +113,18 @@
         "compatibility": {}
       },
       {
+        "id": "force-client-settings",
+        "type": "module",
+        "manifest": "https://gitlab.com/kimitsu_desu/force-client-settings/-/raw/main/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "settings-markers",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/reonZ/settings-markers/master/module.json",
+        "compatibility": {}
+      },
+      {
         "id": "minimal-ui",
         "type": "module",
         "manifest": "https://github.com/saif-ellafi/foundryvtt-minimal-ui/releases/latest/download/module.json",
