@@ -1,0 +1,18 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+    {
+      "label": "run-node-foundry-deployed",
+      "type": "shell",
+      "command": "node",
+      "isBackground": true,
+      "args": [
+        "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app\\main.js",
+        "--datapath='C:\\Code\\FoundryLocal'"
+      ],
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    }
+  ]
+}
