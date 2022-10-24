@@ -141,6 +141,12 @@
         "type": "module",
         "manifest": "https://github.com/saif-ellafi/foundryvtt-window-controls/releases/latest/download/module.json",
         "compatibility": {}
+      },
+      {
+        "id": "hide-player-ui",
+        "type": "module",
+        "manifest": "https://github.com/gsimon2/hide-player-ui/releases/download/1.5.1/module.json",
+        "compatibility": {}
       }
     ]
   }
