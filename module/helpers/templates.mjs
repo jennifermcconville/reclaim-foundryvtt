@@ -5,10 +5,5 @@
  */
  export const preloadHandlebarsTemplates = async function() {
   return loadTemplates([
-
-    // Actor partials.
-    "systems/reclaimboardgame/templates/actor/parts/actor-features.html",
-    "systems/reclaimboardgame/templates/actor/parts/actor-items.html",
-    "systems/reclaimboardgame/templates/actor/parts/actor-effects.html",
   ]);
 };
