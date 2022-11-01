@@ -41,7 +41,7 @@ Hooks.once('init', async function() {
   // Define custom Document classes
   CONFIG.Actor.documentClass = ReclaimBGActor;
   CONFIG.Item.documentClass = ReclaimBGItem;
-  //CONFIG.Token.objectClass = ReclaimToken;
+  CONFIG.Token.objectClass = ReclaimToken;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
