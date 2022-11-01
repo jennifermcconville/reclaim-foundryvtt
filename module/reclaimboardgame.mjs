@@ -1,6 +1,7 @@
 // Import document classes.
 import { ReclaimBGActor } from "./documents/actor.mjs";
 import { ReclaimBGItem } from "./documents/item.mjs";
+import { ReclaimToken } from "./documents/token.mjs";
 // Import sheet classes.
 import { ReclaimBGActorSheet } from "./sheets/actor-sheet.mjs";
 import { ReclaimBGItemSheet } from "./sheets/item-sheet.mjs";
@@ -14,11 +15,14 @@ import { RECLAIMBOARDGAME } from "./helpers/config.mjs";
 
 Hooks.once('init', async function() {
 
+  console.debug("Initialising Reclaim System.");
+
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaimboardgame = {
     ReclaimBGActor,
     ReclaimBGItem,
+    ReclaimToken,
     rollItemMacro
   };
 
@@ -37,6 +41,7 @@ Hooks.once('init', async function() {
   // Define custom Document classes
   CONFIG.Actor.documentClass = ReclaimBGActor;
   CONFIG.Item.documentClass = ReclaimBGItem;
+  //CONFIG.Token.objectClass = ReclaimToken;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
