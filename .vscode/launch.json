@@ -5,6 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "firefox",
+            "request": "attach",
+            "name": "Attach to Firefox"
+        },
+        {
             "name": "Attach to Edge",
             "port": 9222,
             "request": "attach",
