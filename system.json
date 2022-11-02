@@ -1,6 +1,6 @@
 {
-  "name": "reclaimboardgame",
-  "id": "reclaimboardgame",
+  "name": "reclaim",
+  "id": "reclaim",
   "title": "Reclaim Board Game",
   "description": "The Reclaim Board Game system for FoundryVTT!",
   "version": "0.0.2",
@@ -16,10 +16,10 @@
     }
   ],
   "esmodules": [
-    "module/reclaimboardgame.mjs"
+    "module/reclaim.mjs"
   ],
   "styles": [
-    "css/reclaimboardgame.css"
+    "css/reclaim.css"
   ],
   "scripts": [],
   "packs": [
@@ -28,7 +28,7 @@
       "type": "Actor",
       "name": "reclaim-tokens-actors",
       "path": "packs/reclaim-tokens-actors.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []
@@ -38,7 +38,7 @@
       "type": "Actor",
       "name": "reclaim-resouces-tokens",
       "path": "packs/reclaim-resouces-tokens.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []
@@ -48,7 +48,7 @@
       "type": "Scene",
       "name": "reclaim-boards-scenes",
       "path": "packs/reclaim-boards-scenes.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []
@@ -58,7 +58,7 @@
       "type": "RollTable",
       "name": "reclaim-dice",
       "path": "packs/reclaim-dice.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []
@@ -68,7 +68,7 @@
       "type": "Cards",
       "name": "reclaim-decks",
       "path": "packs/reclaim-decks.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {}
     },
@@ -77,7 +77,7 @@
       "type": "Macro",
       "name": "macro-pack",
       "path": "packs/macro-pack.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []
@@ -87,7 +87,7 @@
       "type": "Cards",
       "name": "reclaim-card-hands",
       "path": "packs/reclaim-card-hands.db",
-      "system": "reclaimboardgame",
+      "system": "reclaim",
       "private": false,
       "flags": {},
       "index": []

@@ -4,7 +4,7 @@ import { ReclaimToken } from "./documents/token.mjs";
 
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
-import { RECLAIMBOARDGAME } from "./helpers/config.mjs";
+import { RECLAIM } from "./helpers/config.mjs";
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -16,12 +16,12 @@ Hooks.once('init', async function() {
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.reclaimboardgame = {
+  game.reclaim = {
     ReclaimToken,
   };
 
   // Add custom constants for configuration.
-  CONFIG.RECLAIMBOARDGAME = RECLAIMBOARDGAME;
+  CONFIG.RECLAIM = RECLAIM;
 
   // Define custom Document classes
   CONFIG.Token.objectClass = ReclaimToken;
