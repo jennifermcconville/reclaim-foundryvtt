@@ -9,8 +9,8 @@ export class ReclaimBGActorSheet extends ActorSheet {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["reclaimboardgame", "sheet", "actor"],
-      template: "systems/reclaimboardgame/templates/actor/actor-sheet.html",
+      classes: ["reclaim", "sheet", "actor"],
+      template: "systems/reclaim/templates/actor/actor-sheet.html",
       width: 600,
       height: 600,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
@@ -19,7 +19,7 @@ export class ReclaimBGActorSheet extends ActorSheet {
 
   /** @override */
   get template() {
-    return `systems/reclaimboardgame/templates/actor/actor-${this.actor.type}-sheet.html`;
+    return `systems/reclaim/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
