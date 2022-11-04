@@ -7,7 +7,12 @@
 			"path": "../../Program Files/Foundry Virtual Tabletop/resources/app"
 		}
 	],
-	"settings": {},
+	"settings": {
+		"workbench.colorCustomizations": {
+			"fileAccess.readonlyForeground": "#ffff00",
+			"fileAccess.writeableForeground": "#008800"
+		},
+	},
 	"extensions": {
 		"recommendations": [
 			"alefragnani.bookmarks",
