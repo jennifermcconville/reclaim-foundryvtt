@@ -121,3 +121,6 @@ dist
 
 # Foundry
 *.lock
+
+# SCSS compiled results
+css/
