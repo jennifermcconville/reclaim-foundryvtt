@@ -27,6 +27,7 @@
 			"fileAccess.readonlyForeground": "#ffff00",
 			"fileAccess.writeableForeground": "#008800"
 		},
+		"eslint.validate": ["javascript"]
 	},
 	"extensions": {
 		"recommendations": [
