@@ -1,7 +1,2 @@
-export const RECLAIMBOARDGAME = {};
+export const RECLAIM = {};
 
-// Define constants here, such as:
-RECLAIMBOARDGAME.foobar = {
-  'bas': 'RECLAIMBOARDGAME.bas',
-  'bar': 'RECLAIMBOARDGAME.bar'
-};

@@ -1,5 +1,5 @@
 {
-  "name": "reclaimboardgame",
+  "name": "reclaim",
   "version": "1.0.0",
   "description": "CSS compiler for the Reclaim Board Game system",
   "scripts": {
@@ -17,12 +17,15 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "mocha": "^10.0.0",
-    "nyc": "^15.1.0",
-	  "gulp": "^4.0.2",
+    "electron": "^21.2.2",
+    "eslint": "^8.27.0",
+    "eslint-plugin-jsdoc": "^39.6.2",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
-    "sass": "^1.53.0"  
-    }
+    "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
+    "sass": "^1.53.0"
+  }
 }

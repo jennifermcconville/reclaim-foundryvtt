@@ -1,9 +1,3 @@
 {
-
-  "RECLAIMBOARDGAME.EffectCreate": "Create Effect",
-  "RECLAIMBOARDGAME.EffectToggle": "Toggle Effect",
-  "RECLAIMBOARDGAME.EffectEdit": "Edit Effect",
-  "RECLAIMBOARDGAME.EffectDelete": "Delete Effect",
-
-  "RECLAIMBOARDGAME.Add": "Add"
+  "RECLAIM.Add": "Add"
 }

@@ -121,7 +121,6 @@ dist
 
 # Foundry
 *.lock
-FoundryWorlds/developing-reclaim/data/Backup/
-FoundryWorlds/developing-reclaim/assets/Tokens/Backup/
-FoundryWorlds/developing-reclaim/data/messages.db
 
+# SCSS compiled results
+css/

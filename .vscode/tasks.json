@@ -1,6 +1,6 @@
 {
-	"version": "2.0.0",
-	"tasks": [
+  "version": "2.0.0",
+  "tasks": [
     {
       "label": "run-node-foundry-deployed",
       "type": "shell",
@@ -12,6 +12,47 @@
       ],
       "problemMatcher": [
         "$eslint-stylish"
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "npm: build",
+      "detail": "gulp build && gulp link"
+    },
+    {
+      "type": "gulp",
+      "task": "buildScss",
+      "presentation": {
+        "reveal": "never"
+      }
+    },
+    {
+      "label": "watch: enable",
+      "type": "shell",
+      "command": "${command:triggerTaskOnSave.enable}"
+    },
+    {
+      "label": "watch: disable",
+      "type": "shell",
+      "command": "${command:triggerTaskOnSave.disable}"
+    },
+    {
+      "label": "watch: reload",
+      "type": "shell",
+      "command": "${command:launches.fvtt-debug}"
+    },
+    {
+      "label": "watch: scss",
+      "type": "shell",
+      "command": "${command:launches.fvtt-debug}",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "gulp: buildScss"
       ]
     }
   ]
