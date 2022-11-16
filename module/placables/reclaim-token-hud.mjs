@@ -4,20 +4,13 @@
 
 export class ReclaimTokenHUD extends TokenHUD {
 
-   /** @override
-  static get defaultOptions() {
-     return foundry.utils.mergeObject(super.defaultOptions, {
-        id: "token-hud",
-        template: "systems/reclaim/templates/reclaim-token-hud.html"
-     });
-  } */
-
    /** @override */
    getData(options) {
       let data = super.getData(options);
 
       var isGM = game.user.isGM;
 
+      // disables the dynamic unused buttons from Token HUD
       data = foundry.utils.mergeObject(data, {
          canConfigure: isGM,
          canToggleCombat: false,
@@ -38,18 +31,16 @@ export class ReclaimTokenHUD extends TokenHUD {
 
    /** @override */
    async _render(...args) {
-      var effectsButton = this.element.find('div.col.right').find('div.control-icon[data-action="effects"]');
-
-
       await super._render(...args);
 
-      // hiding elements via jQuerry since they are not made conditional in the template 
+      // hiding elements via jQuerry since they are not made conditional (dynamic) in the template 
       this.element.find('div.col.left').find('div.control-icon[data-action="target"]').hide()
       this.element.find('div.col.left').find('div.attribute.elevation').hide();
 
       var effectsButton = this.element.find('div.col.right').find('div.control-icon[data-action="effects"]');
       effectsButton.hide();
 
+      // adding delete button via code to avoid overriding the whole template just for one button
       var deleteButton = $(`
                            <div class="control-icon" data-action="delete">
                               <img src="icons/svg/cancel.svg" width="36" height="36" title="Delete token"> 
@@ -57,30 +48,13 @@ export class ReclaimTokenHUD extends TokenHUD {
                         `);
 
       deleteButton.insertBefore(effectsButton);
+      // connecting click listener manually as other buttons get connected in super._render call
+      // which re-creates the html, so our button needs to be added afterwards
       deleteButton.click(this._onClickDelete.bind(this));
-
-
-
-
-      //.click(this._onClickControl.bind(this));
-
-      //adds the Delete button for all users
-
-      /** icon - cancel? style: fill red 
-      *  <div class="control-icon" data-action="delete">
-      *      <img src="icons/svg/cancel.svg" width="36" height="36" title="Delete token">
-      *  </div>   
-      */
    }
 
-   // super._onClickControl(event);
-   // if ( event.defaultPrevented ) return;
-   // const button = event.currentTarget;
-   // switch ( button.dataset.action ) {
-   //   case "config":
-   //     return this._onTokenConfig(event);
-
    _onClickDelete(event) {
+      // following the pattern of other on click handles in super class
       if (event.defaultPrevented) return;
       const button = event.currentTarget;
       if(button.dataset.action == "delete") 
@@ -88,7 +62,6 @@ export class ReclaimTokenHUD extends TokenHUD {
    }
 
    _onDeleteToken(event) {
-      console.log("Delete token now");
-
+      canvas.scene.deleteEmbeddedDocuments('Token', [this.object.id]);
    }
 }
