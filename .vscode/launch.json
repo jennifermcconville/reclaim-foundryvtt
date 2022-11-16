@@ -4,33 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        // {
-        //     "name": "Electron Main",
-        //     "type": "node",
-        //     "cwd": "${env:ProgramFiles}/Foundry Virtual Tabletop/resources/app",            
-        //     "program": "C:/Program Files/Foundry Virtual Tabletop/resources/app/main.js",
-        //     "args": [
-        //         "--datapath C:/Code/FoundryLocal",
-        //         "--world=developing-reclaim" 
-                
-        //     ],
-        //     "outputCapture": "std",
-        //     "request": "launch",
-        //     "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-        //     "runtimeArgs": [
-        //         "C:/Program Files/Foundry Virtual Tabletop/resources/app/main.js"
-        //     ],
-        //     "skipFiles": [
-        //         "<node_internals>/**",
-        //         "node_modules/**/*.js"
-        //     ],
-        //     // "serverReadyAction": {
-        //     //     "pattern": "listening on port ([0-9]+)",
-        //     //     "action": "startDebugging",
-        //     //     "name": "FoundryVTT"
-        //     // },
-        //     "postDebugTask": "watch: disable"
-        // },
         {
             "name": "Electron launcher",
             "type": "node",
