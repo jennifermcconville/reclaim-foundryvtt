@@ -51,7 +51,7 @@ jobs:
         target: system.json
       
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./system.zip * -x *test* *node_modules* *scss* gulpfile.js system-pipeline-template.json
+    - run: zip -r system.zip ./ -x "*node_modules/*" "*.git*" "*.nyc_output*" "*.vscode*" "*coverage*" "*Dev Assets*" "*scss*" "*test*" ".eslintrc.json" ".gitignore" ".hintrc" ".npmignore" "dev-notes.txt" "gulpfile.js" "reclaim.code-workspace"
 
     # Create a release for this specific version
     - name: Update Release with Files
