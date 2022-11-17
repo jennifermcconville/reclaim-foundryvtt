@@ -19,7 +19,7 @@ jobs:
       run: npm ci
       
     - name: Install gulp
-      run: npm gulp
+      run: npm install gulp
       
     - name: Run gulp build scss files
       run: gulp build
