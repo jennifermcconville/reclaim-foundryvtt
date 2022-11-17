@@ -10,7 +10,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: 
+        actions/checkout@v3
+        actions/setup-node@latest
+    
+    - name: Gulp Runner
+      run: 
+        npm ci
+        npm gulp
+        gulp build
 
     # get part of the tag after the `v`
     - name: Extract tag version number
@@ -41,7 +49,7 @@ jobs:
         target: system.json
       
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./system.zip *
+    - run: zip -r ./system.zip * -x test gulpfile.js system-pipeline-template.json
 
     # Create a release for this specific version
     - name: Update Release with Files
