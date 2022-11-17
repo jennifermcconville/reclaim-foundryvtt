@@ -1,10 +1,8 @@
 name: Release Creation
 
-on:
-  push:
-    tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
-    branches: [ "release" ]
+on: 
+  release:
+    types: [published]
 
 jobs:
   build:
@@ -12,49 +10,47 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Run Gulp production build
-      uses: elstudio/actions-js-build/build@v4
-      with:
-        args: build:prod
-
-    - name: Get the version
+    # get part of the tag after the `v`
+    - name: Extract tag version number
       id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      uses: battila7/get-version-action@v2
 
-    #Substitute the Manifest and Download URLs in the system-pipeline-template.json
+    # Substitute the Manifest and Download URLs in the system.json
     - name: Substitute Manifest and Download Links For Versioned Ones
       id: sub_manifest_link_version
       uses: microsoft/variable-substitution@v1
       with:
         files: 'system-pipeline-template.json'
       env:
-        version: ${{ steps.get_version.outputs.VERSION }}
-        manifest: ""
-        download: https://github.com/jennifermcconville/reclaim-foundryvtt/releases/download/${{ steps.get_version.outputs.VERSION }}/system.zip
-
-    - run: mkdir release
-
-    # create a zip file with all files required by the system to add to the release
-    - run: cd dist && zip -r ../release/system.zip . && cd ../
-
-    - name: Copy File
+        version: ${{steps.get_version.outputs.version-without-v}}
+        url: https://github.com/${{github.repository}}
+        manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
+        download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
+    
+    # Copy and rename the template to a system.json file
+    - name: Copy file
       # You may pin to the exact commit or the version.
       # uses: canastro/copy-action@7ddff6fc153a2ea2cd0fb88ed9750544c051e399
       uses: canastro/copy-action@0.0.2
       with:
         # Source file
-        source: 'system-pipeline-template.json'
+        source: system-pipeline-template.json
         # Target file
-        target: './release/system.json'
+        target: system.json
+      
+    # Create a zip file with all files required by the system to add to the release
+    - run: zip -r ./system.zip
 
     # Create a release for this specific version
-    - name: Create Release
+    - name: Update Release with Files
       id: create_version_release
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ steps.get_version.outputs.VERSION }}
-        name: Release ${{ steps.get_version.outputs.VERSION }}
-        draft: false
-        prerelease: false
+        allowUpdates: true # Set this to false if you want to prevent updating existing releases
+        name: ${{ github.event.release.name }}
+        draft: ${{ github.event.release.unpublished }}
+        prerelease: ${{ github.event.release.prerelease }}
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: './release/system.json,./release/system.zip'
+        artifacts: './module.json, ./module.zip'
+        tag: ${{ github.event.release.tag_name }}
+        body: ${{ github.event.release.body }}
