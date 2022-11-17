@@ -3,8 +3,6 @@ name: Release Creation
 on: 
   release:
     types: [published]
-  push:
-    branches: [ "release" ]
   
 jobs:
   build:
@@ -53,7 +51,7 @@ jobs:
         target: system.json
       
     # Create a zip file with all files required by the system to add to the release
-    - run: zip -r ./system.zip * -x test gulpfile.js system-pipeline-template.json
+    - run: zip -r ./system.zip * -x *test* *node_modules* gulpfile.js system-pipeline-template.json
 
     # Create a release for this specific version
     - name: Update Release with Files
