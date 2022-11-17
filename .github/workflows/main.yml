@@ -1,0 +1,59 @@
+name: Release Creation
+
+on:
+  push:
+    tags:
+    - '*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run Gulp production build
+      uses: elstudio/actions-js-build/build@v2
+      with:
+        args: build:prod
+
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+    #Substitute the Manifest and Download URLs in the system.json
+    - name: Substitute Manifest and Download Links For Versioned Ones
+      id: sub_manifest_link_version
+      uses: microsoft/variable-substitution@v1
+      with:
+        files: 'system.json'
+      env:
+        version: ${{ steps.get_version.outputs.VERSION }}
+        manifest: ""
+        download: https://github.com/jennifermcconville/reclaim-foundryvtt/releases/download/${{ steps.get_version.outputs.VERSION }}/system.zip
+
+    - run: mkdir release
+
+    # create a zip file with all files required by the system to add to the release
+    - run: cd dist && zip -r ../release/system.zip . && cd ../
+
+    - name: Copy File
+      # You may pin to the exact commit or the version.
+      # uses: canastro/copy-action@7ddff6fc153a2ea2cd0fb88ed9750544c051e399
+      uses: canastro/copy-action@0.0.2
+      with:
+        # Source file
+        source: 'system.json'
+        # Target file
+        target: './release/system.json'
+
+    # Create a release for this specific version
+    - name: Create Release
+      id: create_version_release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ steps.get_version.outputs.VERSION }}
+        name: Release ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './release/system.json,./release/system.zip'
