@@ -15,11 +15,14 @@ jobs:
       with:
         node-version: 18
     
-    - name: Gulp Runner
-      run: 
-        npm ci
-        npm gulp
-        gulp build
+    - name: Install npm ci
+      run: npm ci
+      
+    - name: Install gulp
+      run: npm gulp
+      
+    - name: Run gulp build scss files
+      run: gulp build
 
     # get part of the tag after the `v`
     - name: Extract tag version number
