@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Run Gulp production build
-      uses: elstudio/actions-js-build/build@v2
+      uses: elstudio/actions-js-build/build@v4
       with:
         args: build:prod
 
