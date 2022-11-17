@@ -10,12 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@dependabot/npm_and_yarn/minimatch-3.1.2
+    - uses: actions/checkout@v3
 
     # get part of the tag after the `v`
     - name: Extract tag version number
       id: get_version
-      uses: battila7/get-version-action@latest
+      uses: battila7/get-version-action@dependabot/npm_and_yarn/minimatch-3.1.2
 
     # Substitute the Manifest and Download URLs in the system.json
     - name: Substitute Manifest and Download Links For Versioned Ones
