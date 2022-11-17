@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@dependabot/npm_and_yarn/minimatch-3.1.2
 
     # get part of the tag after the `v`
     - name: Extract tag version number
