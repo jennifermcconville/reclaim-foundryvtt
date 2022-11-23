@@ -1,0 +1,52 @@
+body.vtt.game.system-reclaim footer.hand-mini-bar-right {
+    grid-template-columns: minmax(auto, auto) minmax(220px, 275px);
+}
+
+body.vtt.game.system-reclaim #hand-mini-bar-container {
+    width: 270px;
+}
+
+body.vtt.game.system-reclaim #hand-mini-bar-hands-container {
+    max-height: unset;
+    max-width: unset;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-hand {
+    max-width: 250px;
+    max-height: unset;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-hand-name {
+    width: 250px;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-settings,
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-actions {
+    height: 104px;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-card-container {
+    max-width: 308px;
+    max-height: 104px;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container .hand-mini-bar-card {
+    height: 100px;
+    width: 100px;
+    background-size: auto 100px;
+}
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container div.hand-mini-bar-card.card {
+    height: 100px;
+    width: 74px;
+    background-size: auto 100px;
+}
+
+/* body.vtt.game.system-reclaim div#hand-mini-bar-hands-container>div:nth-child(1) {
+    margin-left: -14px;
+} */
+
+
+body.vtt.game.system-reclaim div#hand-mini-bar-hands-container div.hand-mini-bar-card.card:hover {
+    z-index: 1100;
+}

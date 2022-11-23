@@ -19,7 +19,8 @@
     "module/reclaim.mjs"
   ],
   "styles": [
-    "css/reclaim.css"
+    "css/reclaim.css",
+    "css/ModOverrides/hand-mini-bar-overrides.css"
   ],
   "scripts": [],
   "packs": [

@@ -8,18 +8,15 @@
 		}
 	],
 	"settings": {
+		"[css]": {
+			"editor.defaultFormatter": "michelemelluso.code-beautifier"
+		},
 		"workbench.colorCustomizations": {
 			"fileAccess.readonlyForeground": "#ffff00",
 			"fileAccess.writeableForeground": "#008800"
 		},
-	},
-	"extensions": {
-		"recommendations": [
-			"alefragnani.bookmarks",
-			"fabiospampinato.vscode-todo-plus",
-			"dbaeumer.vscode-eslint",
-			"compulim.vscode-mocha",
-			"maty.vscode-mocha-sidebar"
-		]
+		"beautify.options": {
+			"preserveNewLines": "true"
+		},
 	}
 }
