@@ -11,8 +11,8 @@
 		"debug.javascript.usePreview": false,
 		"triggerTaskOnSave.tasks": {
 			"watch: reload": [
-				"dist/**/*.js",
-				"dist/templates/**/*.html"
+				"module/**/*.js",
+				"**/*.html"
 			],
 			"watch: scss": [
 				"scss/*.scss"
@@ -23,6 +23,9 @@
 			"fvtt-debug": "FoundryVTT"
 		},
 		"launch-config.ifDebugSessionRunning": "restart",	
+		"[css]": {
+			"editor.defaultFormatter": "michelemelluso.code-beautifier"
+		},
 		"workbench.colorCustomizations": {
 			"fileAccess.readonlyForeground": "#ffff00",
 			"fileAccess.writeableForeground": "#008800"
@@ -39,6 +42,9 @@
 			"gruntfuggly.triggertaskonsave",
 			"ArturoDent.launch-config"
 		
-		]
+		],
+		"beautify.options": {
+			"preserveNewLines": "true"
+		},
 	}
 }
