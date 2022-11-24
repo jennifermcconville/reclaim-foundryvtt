@@ -1,0 +1,49 @@
+body.vtt.game.system-reclaim {
+	footer.hand-mini-bar-right {
+		grid-template-columns: minmax(auto, auto) minmax(220px, 275px);
+	}
+
+	#hand-mini-bar-container {
+		width: 270px;
+	}
+
+	#hand-mini-bar-hands-container {
+		max-height: unset;
+		max-width: unset;
+
+		.hand-mini-bar-hand {
+			max-width: 250px;
+			max-height: unset;
+		}
+
+		.hand-mini-bar-hand-name {
+			width: 250px;
+		}
+
+		.hand-mini-bar-settings,
+		.hand-mini-bar-actions {
+			height: 104px;
+		}
+
+		.hand-mini-bar-card-container {
+			max-width: 308px;
+			max-height: 104px;
+		}
+
+		.hand-mini-bar-card {
+			height: 100px;
+			width: 100px;
+			background-size: auto 100px;
+		}
+
+		div.hand-mini-bar-card.card {
+			height: 100px;
+			width: 74px;
+			background-size: auto 100px;
+		}
+
+		div.hand-mini-bar-card.card:hover {
+			z-index: 1100;
+		}
+	}
+}
