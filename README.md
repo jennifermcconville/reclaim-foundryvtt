@@ -1,5 +1,7 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+A digitalisation of the Reclaim board game by created by the SPANS (Sanitation Planning for Alternative Nutrient-recovery Systems) project at the SLU (Sveriges lantbruksuniversitet). Currently under developement with no public releases yet. 
+
+Read more here: https://www.slu.se/institutioner/energi-teknik/projekt/kretslopp/reclaim/
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:

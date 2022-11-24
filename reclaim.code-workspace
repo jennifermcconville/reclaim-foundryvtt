@@ -8,6 +8,21 @@
 		}
 	],
 	"settings": {
+		"debug.javascript.usePreview": false,
+		"triggerTaskOnSave.tasks": {
+			"watch: reload": [
+				"module/**/*.js",
+				"**/*.html"
+			],
+			"watch: scss": [
+				"scss/*.scss"
+			]
+		},
+		"triggerTaskOnSave.showStatusBarToggle": true,
+		"launches": {
+			"fvtt-debug": "FoundryVTT"
+		},
+		"launch-config.ifDebugSessionRunning": "restart",	
 		"[css]": {
 			"editor.defaultFormatter": "michelemelluso.code-beautifier"
 		},
@@ -15,6 +30,19 @@
 			"fileAccess.readonlyForeground": "#ffff00",
 			"fileAccess.writeableForeground": "#008800"
 		},
+		"eslint.validate": ["javascript"]
+	},
+	"extensions": {
+		"recommendations": [
+			"alefragnani.bookmarks",
+			"dbaeumer.vscode-eslint",
+			"compulim.vscode-mocha",
+			"maty.vscode-mocha-sidebar",
+			"ms-vscode.js-debug",
+			"gruntfuggly.triggertaskonsave",
+			"ArturoDent.launch-config"
+		
+		],
 		"beautify.options": {
 			"preserveNewLines": "true"
 		},

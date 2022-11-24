@@ -9,11 +9,11 @@ export class ReclaimBGActorSheet extends ActorSheet {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["reclaim", "sheet", "actor"],
-      template: "systems/reclaim/templates/actor/actor-sheet.html",
+      classes: [`reclaim`, `sheet`, `actor`],
+      template: `systems/reclaim/templates/actor/actor-sheet.html`,
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
+      tabs: [{ navSelector: `.sheet-tabs`, contentSelector: `.sheet-body`, initial: `features` }]
     });
   }
 
@@ -40,13 +40,13 @@ export class ReclaimBGActorSheet extends ActorSheet {
     context.flags = actorData.flags;
 
     // Prepare character data and items.
-    if (actorData.type == 'character') {
+    if (actorData.type === `character`) {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
     // Prepare NPC data and items.
-    if (actorData.type == 'npc') {
+    if (actorData.type === `npc`) {
       this._prepareItems(context);
     }
 
@@ -60,11 +60,10 @@ export class ReclaimBGActorSheet extends ActorSheet {
   }
 
   /**
-   * Organize and classify Items for Character sheets.
+   * Prepare character data, empty
    *
-   * @param {Object} actorData The actor to prepare.
-   *
-   * @return {undefined}
+   * @param {actorData} context The actor to prepare.
+   * @returns {undefined}
    */
   _prepareCharacterData(context) {
   }
@@ -72,9 +71,8 @@ export class ReclaimBGActorSheet extends ActorSheet {
   /**
    * Organize and classify Items for Character sheets.
    *
-   * @param {Object} actorData The actor to prepare.
-   *
-   * @return {undefined}
+   * @param {actorData} context The actor to prepare.
+   * @returns {undefined}
    */
   _prepareItems(context) {
     // Initialize containers.
@@ -85,11 +83,11 @@ export class ReclaimBGActorSheet extends ActorSheet {
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
       // Append to gear.
-      if (i.type === 'item') {
+      if (i.type === `item`) {
         gear.push(i);
       }
       // Append to features.
-      else if (i.type === 'feature') {
+      else if (i.type === `feature`) {
         features.push(i);
       }
     }
@@ -97,7 +95,7 @@ export class ReclaimBGActorSheet extends ActorSheet {
     // Assign and return
     context.gear = gear;
     context.features = features;
-   }
+  }
 
   /* -------------------------------------------- */
 
@@ -106,9 +104,9 @@ export class ReclaimBGActorSheet extends ActorSheet {
     super.activateListeners(html);
 
     // Render the item sheet for viewing/editing prior to the editable check.
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
+    html.find(`.item-edit`).click(ev => {
+      const li = $(ev.currentTarget).parents(`.item`);
+      const item = this.actor.items.get(li.data(`itemId`));
       item.sheet.render(true);
     });
 
@@ -117,29 +115,29 @@ export class ReclaimBGActorSheet extends ActorSheet {
     if (!this.isEditable) return;
 
     // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
+    html.find(`.item-create`).click(this._onItemCreate.bind(this));
 
     // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
+    html.find(`.item-delete`).click(ev => {
+      const li = $(ev.currentTarget).parents(`.item`);
+      const item = this.actor.items.get(li.data(`itemId`));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
 
     // Active Effect management
-    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+    html.find(`.effect-control`).click(ev => onManageActiveEffect(ev, this.actor));
 
     // Rollable abilities.
-    html.find('.rollable').click(this._onRoll.bind(this));
+    html.find(`.rollable`).click(this._onRoll.bind(this));
 
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = ev => this._onDragStart(ev);
-      html.find('li.item').each((i, li) => {
-        if (li.classList.contains("inventory-header")) return;
-        li.setAttribute("draggable", true);
-        li.addEventListener("dragstart", handler, false);
+      html.find(`li.item`).each((i, li) => {
+        if (li.classList.contains(`inventory-header`)) return;
+        li.setAttribute(`draggable`, true);
+        li.addEventListener(`dragstart`, handler, false);
       });
     }
   }
@@ -165,7 +163,7 @@ export class ReclaimBGActorSheet extends ActorSheet {
       system: data
     };
     // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.system["type"];
+    delete itemData.system.type;
 
     // Finally, create the item!
     return await Item.create(itemData, {parent: this.actor});
@@ -183,8 +181,8 @@ export class ReclaimBGActorSheet extends ActorSheet {
 
     // Handle item rolls.
     if (dataset.rollType) {
-      if (dataset.rollType == 'item') {
-        const itemId = element.closest('.item').dataset.itemId;
+      if (dataset.rollType === `item`) {
+        const itemId = element.closest(`.item`).dataset.itemId;
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
       }
@@ -192,12 +190,12 @@ export class ReclaimBGActorSheet extends ActorSheet {
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      let label = dataset.label ? `[ability] ${dataset.label}` : '';
+      let label = dataset.label ? `[ability] ${dataset.label}` : ``;
       let roll = new Roll(dataset.roll, this.actor.getRollData());
       roll.toMessage({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: label,
-        rollMode: game.settings.get('core', 'rollMode'),
+        rollMode: game.settings.get(`core`, `rollMode`)
       });
       return roll;
     }
