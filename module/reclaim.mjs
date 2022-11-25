@@ -1,5 +1,7 @@
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
+import { ReclaimAutoCardHand } from "./documents/auto-card-hand.mjs";
+
 // Import sheet classes.
 
 // Import placable classes.
@@ -20,6 +22,7 @@ Hooks.once(`init`, async function() {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
+    ReclaimAutoCardHand,
     ReclaimToken,
     ReclaimTokenHUD
   };
@@ -29,7 +32,7 @@ Hooks.once(`init`, async function() {
 
   // Define custom Document classes
   CONFIG.Token.objectClass = ReclaimToken;
-
+  CONFIG.Cards.documentClass = ReclaimAutoCardHand;
 
   // Register sheet application classes
 

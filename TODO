@@ -1,0 +1,6 @@
+
+Todo:
+☐ Add a function to run each time Deal, pass, draw, recall run on a cards object. 
+☐ Make it possible to associate a hand with a deck
+☐ Draw up to a set number of cards if a hand is missing them
+  ✔ add command line for electron to open with dev tools @started(22-11-25 13:33) @done(22-11-25 13:37) @lasted(4m8s)
