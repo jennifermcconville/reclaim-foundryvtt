@@ -2,11 +2,11 @@
  * @extends {Cards}
  */
 
-Hooks.once(`init`, async function () {
+Hooks.once(`init`, async function() {
   // ReclaimAutoCardHand.updateSchema();
 });
 
-const AUTO_HAND_TYPE = 'reclaim-auto-hand';
+const AUTO_HAND_TYPE = `reclaim-auto-hand`;
 const NEW_TYPES = [`deck`, `pile`, `hand`, AUTO_HAND_TYPE];
 
 
@@ -54,8 +54,8 @@ export class ReclaimAutoCardHand extends Cards {
 
     if (source.type === `hand`) {
       console.debug(`Migrating data of type: ${source.type}`);
-      // make into reclaim-auto-hand and add locked deck
-      //source.type = AUTO_HAND_TYPE;
+      // Make into reclaim-auto-hand and add locked deck
+      // source.type = AUTO_HAND_TYPE;
 
 
     }
@@ -64,7 +64,7 @@ export class ReclaimAutoCardHand extends Cards {
       console.debug(`Migrating data of type: ${source.type}`);
     }
 
-    //if reclaim-auto-hand check for locked deck, try migrate / throw warning?
+    // If reclaim-auto-hand check for locked deck, try migrate / throw warning?
   }
 
   /** @override */
@@ -75,22 +75,19 @@ export class ReclaimAutoCardHand extends Cards {
   addBoundDeckFlag() {
     if (this.type === `hand`) {
 
-      let boundDeck = this.getFlag('reclaim', 'boundDeck');
-      if (boundDeck)
-        return;;
+      let boundDeck = this.getFlag(`reclaim`, `boundDeck`);
+      if (boundDeck) return;
 
-      // add bound deck flag if all cards belong to same deck otherwise do nothing
+      // Add bound deck flag if all cards belong to same deck otherwise do nothing
       let parentIDs = new Map();
       this.cards.forEach(element => {
         const mapped = parentIDs.get(elemenet.origin.id);
-        if (mapped)
-          parentIDs.set(element.origin.id, (mapped++));
-        else
-          parentIDs.set(element.origin.id, 0);
+        if (mapped) parentIDs.set(element.origin.id, (mapped++));
+        else parentIDs.set(element.origin.id, 0);
       });
 
       if (parentIDs.length === 1) {
-        this.setFlag('reclaim', 'boundDeck', parentIDs[0].id);
+        this.setFlag(`reclaim`, `boundDeck`, parentIDs[0].id);
       }
 
     }
