@@ -96,6 +96,16 @@
       "private": false,
       "flags": {},
       "index": []
+    },
+    {
+      "label": "Reclaim Journals",
+      "type": "JournalEntry",
+      "name": "reclaim-journals",
+      "path": "packs/reclaim-journals.db",
+      "system": "reclaim",
+      "private": false,
+      "flags": {},
+      "package": "world"
     }
   ],
   "languages": [
