@@ -38,17 +38,6 @@ jobs:
         url: https://github.com/${{github.repository}}
         manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
         download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
-    
-    # Copy and rename the template to a system.json file
-    - name: Copy file
-      # You may pin to the exact commit or the version.
-      # uses: canastro/copy-action@7ddff6fc153a2ea2cd0fb88ed9750544c051e399
-      uses: canastro/copy-action@0.0.2
-      with:
-        # Source file
-        source: system-pipeline-template.json
-        # Target file
-        target: system.json
       
     # Create a zip file with all files required by the system to add to the release
     - run: zip -r system.zip ./ -x "*node_modules/*" "*.git*" "*.nyc_output*" "*.vscode*" "*coverage*" "*Dev Assets*" "*scss*" "*test*" ".eslintrc.json" ".gitignore" ".hintrc" ".npmignore" "dev-notes.txt" "gulpfile.js" "reclaim.code-workspace"
