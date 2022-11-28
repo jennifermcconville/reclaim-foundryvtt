@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../../Program Files/Foundry Virtual Tabletop/resources/app"
+		},
+		{
+			"path": "../FoundryLocal/Data/worlds/developing-reclaim"
 		}
 	],
 	"settings": {
@@ -33,9 +36,8 @@
 		"eslint.validate": [
 			"javascript"
 		],
-		"beautify.options": {
-			"preserveNewLines": "true"
-		}
+		"editor.formatOnSave": true,
+		"eslint.format.enable": true
 	},
 	"extensions": {
 		"recommendations": [
