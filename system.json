@@ -3,7 +3,7 @@
   "id": "reclaim",
   "title": "Reclaim Board Game",
   "description": "The Reclaim Board Game system for FoundryVTT!",
-  "version": "0.2.0",
+  "version": "#{version}#",
   "compatibility": {
     "minimum": "10",
     "verified": "10.285"
@@ -105,7 +105,7 @@
       "path": "lang/en.json"
     }
   ],
-  "url": "",
+  "url": "https://github.com/jennifermcconville/reclaim-foundryvtt",
   "manifest": "http://localhost:8000/system.json",
   "download": "http://localhost:8000/packaged.zip",
   "license": "LICENSE.txt",
