@@ -6,7 +6,9 @@ Hooks.once(`init`, async function () {
   // ReclaimAutoCardHand.updateSchema();
 });
 
-const NEW_TYPES = [`deck`, `pile`, `reclaim-auto-hand`];
+const AUTO_HAND_TYPE = 'reclaim-auto-hand';
+const NEW_TYPES = [`deck`, `pile`, `hand`, AUTO_HAND_TYPE];
+
 
 export class ReclaimAutoCardHand extends Cards {
   constructor(data = {}, { parent = null, strict = true, ...options } = {}) {
@@ -25,6 +27,8 @@ export class ReclaimAutoCardHand extends Cards {
     // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
     // prepareDerivedData().
     super.prepareData();
+
+    addBoundDeckFlag();
   }
 
   /** @override */
@@ -46,24 +50,50 @@ export class ReclaimAutoCardHand extends Cards {
   }
 
   static migrateData(source) {
+    super.migrateData(source);
+
     if (source.type === `hand`) {
-      // Source.type = `reclaim-auto-hand`;
-      // Try {
-      //   this.update({ type: `reclaim-auto-hand` });
-      // } catch(error) {
-      //   console.error(error);
-      //   throw error;
-      // }
+      console.debug(`Migrating data of type: ${source.type}`);
+      // make into reclaim-auto-hand and add locked deck
+      //source.type = AUTO_HAND_TYPE;
+
 
     }
-    console.debug(`Migrating data of type: ${source.type}`);
-    super.migrateData(source);
+
+    if (source.type === AUTO_HAND_TYPE) {
+      console.debug(`Migrating data of type: ${source.type}`);
+    }
+
+    //if reclaim-auto-hand check for locked deck, try migrate / throw warning?
   }
 
   /** @override */
   _onUpdate(data, options, userId) {
-    debugger;
     super._onUpdate(data, option, userId);
+  }
+
+  addBoundDeckFlag() {
+    if (this.type === `hand`) {
+
+      let boundDeck = this.getFlag('reclaim', 'boundDeck');
+      if (boundDeck)
+        return;;
+
+      // add bound deck flag if all cards belong to same deck otherwise do nothing
+      let parentIDs = new Map();
+      this.cards.forEach(element => {
+        const mapped = parentIDs.get(elemenet.origin.id);
+        if (mapped)
+          parentIDs.set(element.origin.id, (mapped++));
+        else
+          parentIDs.set(element.origin.id, 0);
+      });
+
+      if (parentIDs.length === 1) {
+        this.setFlag('reclaim', 'boundDeck', parentIDs[0].id);
+      }
+
+    }
   }
 
 }
