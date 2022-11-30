@@ -40,12 +40,19 @@ export class ReclaimTokenHUD extends TokenHUD {
     let effectsButton = this.element.find(`div.col.right`).find(`div.control-icon[data-action="effects"]`);
     effectsButton.hide();
 
-    // Adding delete button via code to avoid overriding the whole template just for one button
+    // Adding buttons via code to avoid overriding the whole template
     let deleteButton = $(`
                            <div class="control-icon" data-action="delete">
                               <img src="icons/svg/cancel.svg" width="36" height="36" title="Delete token"> 
                            </div>
                         `);
+
+    let changeButton = $(`
+                          <div class="control-icon" data-action="delete">
+                        <img src="icons/svg/cancel.svg" width="36" height="36" title="Delete token"> 
+    </div>
+ `);
+
 
     deleteButton.insertBefore(effectsButton);
     // Connecting click listener manually as other buttons get connected in super._render call
