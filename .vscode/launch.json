@@ -5,6 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Build and Run Chrome",
+            "type": "chrome",
+            "url": "http://localhost:30000",
+            "preLaunchTask": "build-then-run-node",
+            "postDebugTask": "stop server",
+            "request": "launch",
+            // "runtimeArgs": [
+            //     ".",
+            //     "--remote-debugging-port=9223"
+            // ],
+            // "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**/*.js",
+                "node_modules/**/*.js"
+            ],
+            "pathMapping": {
+                "localhost:30000/systems/reclaim/module/": "${workspaceFolder}"
+            },
+            "webRoot": "${workspaceFolder}"
+        },
+        {
             "name": "Electron launcher",
             "type": "node",
             "cwd": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
@@ -13,7 +34,6 @@
                 "--world=developing-reclaim"
             ],
             "preLaunchTask": "${defaultBuildTask}",
-            
             // Start Electron through Node.js.         
             "request": "launch",
             "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
@@ -48,11 +68,11 @@
             "request": "attach",
             "port": 9223,
             // Tell the debugger where to find stuff. May need adjustments.
-            "webRoot": "${env:ProgramFiles}/FoundryVTT/resources/app",
+            //"webRoot": "${env:ProgramFiles}/FoundryVTT/resources/app",
             "pathMapping": {
                 // Override the path for your own system or module ...
-                "/systems/reclaim": "${workspaceFolder}",
-                "localhost:30000": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
+                //"/systems/reclaim": "${workspaceFolder}",
+                //"localhost:30000": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
                 // ... and use the default for everything else.
                 // Note the slightly different formats - swap them for a module.
                 // "/systems/*": "${env:AppData}/../Local/FoundryVTT/Data/systems/*",

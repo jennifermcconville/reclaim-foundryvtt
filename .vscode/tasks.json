@@ -2,7 +2,56 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "run-node-foundry-deployed",
+      "label": "npm: build",
+      "type": "npm",
+      "script": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "gulp build && gulp link"
+    },
+    {
+      "label": "build-then-run-node",
+      "dependsOn": [
+        "npm: build"
+      ],
+      "type": "shell",
+      "command": "node",
+      "isBackground": true,
+      "args": [
+        "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app\\main.js",
+        "--datapath='C:\\Code\\FoundryLocal'",
+        "--world=developing-reclaim"
+      ],
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "line": 1,
+              "column": 1,
+              "message": 1
+            }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": {
+              "regexp": "."
+            },
+            "endsPattern": {
+              "regexp": "."
+            }
+          },
+        }
+      ]
+    },
+    {
+      "label": "run-node-foundry",
       "type": "shell",
       "command": "node",
       "isBackground": true,
@@ -13,16 +62,6 @@
       "problemMatcher": [
         "$eslint-stylish"
       ]
-    },
-    {
-      "type": "npm",
-      "script": "build",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "label": "npm: build",
-      "detail": "gulp build && gulp link"
     },
     {
       "type": "gulp",
@@ -54,6 +93,19 @@
       "dependsOn": [
         "gulp: buildScss"
       ]
+    },
+    {
+      "label": "stop server",
+      "command": "echo ${input:terminate}",
+      "type": "shell"
+    },
+  ],
+  "inputs": [
+    {
+      "id": "terminate",
+      "type": "command",
+      "command": "workbench.action.tasks.terminate",
+      "args": "terminateAll"
     }
   ]
 }
