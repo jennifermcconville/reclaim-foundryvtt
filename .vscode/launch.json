@@ -21,14 +21,15 @@
                 "node_modules/**/*.js"
             ],
             "pathMapping": {
-                "localhost:30000/systems/reclaim/module/": "${workspaceFolder}"
+                "/systems/*": "C:/Code/FoundryLocal/Data/systems",
+                "/systems/reclaim": "${workspaceFolder}"
             },
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public/scripts"
         },
         // {
         //     "name": "Electron launcher",
         //     "type": "node",
-        //     "cwd": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
+    //     "cwd": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
         //     "args": [
         //         "--datapath C:/Code/FoundryLocal",
         //         "--world=developing-reclaim"
