@@ -109,7 +109,7 @@ export class ReclaimTokenHUD extends TokenHUD {
     let sortedResourceActors = game.actors.filter(actor => actor.type === `resource`).sort(a => a.name);
 
     // Find next actor
-    let index = sortedResourceActors.findIndex(function (actor) {
+    let index = sortedResourceActors.findIndex(function(actor) {
       if (actor.id === this) {
         return true;
       } else {
@@ -121,7 +121,7 @@ export class ReclaimTokenHUD extends TokenHUD {
       throw Error(`Could not find tokens actor in actors list`);
     }
     index++;
-    if (index === sortedResourceActors) index = 0;
+    if (index >= sortedResourceActors.length) index = 0;
     let nextActor = sortedResourceActors[index];
 
     // Change this token association to the next actor in list
@@ -133,5 +133,8 @@ export class ReclaimTokenHUD extends TokenHUD {
         id: nextActor.prototypeToken.id
       },
       { parent: token.parent.parent });
+
+    // Prevent closing of HUD
+    this.bind(token);
   }
 }
