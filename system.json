@@ -29,10 +29,10 @@
   "scripts": [],
   "packs": [
     {
-      "label": "Reclaim Tokens (Actors)",
+      "label": "Reclaim Infrastructure Tokens",
       "type": "Actor",
-      "name": "reclaim-tokens-actors",
-      "path": "packs/reclaim-tokens-actors.db",
+      "name": "reclaim-infrastructure-tokens",
+      "path": "packs/reclaim-infrastructure-tokens.db",
       "system": "reclaim",
       "private": false,
       "flags": {},
@@ -162,6 +162,12 @@
         "type": "module",
         "manifest": "https://github.com/gsimon2/hide-player-ui/releases/download/1.5.1/module.json",
         "compatibility": {}
+      },
+      {
+        "id":"monks-active-tiles",
+        "type": "module",
+        "manifest":"https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+        "compatibility":{}
       }
     ]
   }
