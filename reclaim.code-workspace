@@ -22,7 +22,7 @@
 		"launches": {
 			"fvtt-debug": "FoundryVTT"
 		},
-		"launch-config.ifDebugSessionRunning": "restart",	
+		"launch-config.ifDebugSessionRunning": "restart",
 		"[css]": {
 			"editor.defaultFormatter": "michelemelluso.code-beautifier"
 		},
@@ -30,7 +30,12 @@
 			"fileAccess.readonlyForeground": "#ffff00",
 			"fileAccess.writeableForeground": "#008800"
 		},
-		"eslint.validate": ["javascript"]
+		"eslint.validate": [
+			"javascript"
+		],
+		"beautify.options": {
+			"preserveNewLines": "true"
+		}
 	},
 	"extensions": {
 		"recommendations": [
@@ -41,10 +46,6 @@
 			"ms-vscode.js-debug",
 			"gruntfuggly.triggertaskonsave",
 			"ArturoDent.launch-config"
-		
-		],
-		"beautify.options": {
-			"preserveNewLines": "true"
-		},
+		]
 	}
 }
