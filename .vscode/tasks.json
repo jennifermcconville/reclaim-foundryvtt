@@ -51,50 +51,6 @@
       ]
     },
     {
-      "label": "run-node-foundry",
-      "type": "shell",
-      "command": "node",
-      "isBackground": true,
-      "args": [
-        "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app\\main.js",
-        "--datapath='C:\\Code\\FoundryLocal'"
-      ],
-      "problemMatcher": [
-        "$eslint-stylish"
-      ]
-    },
-    {
-      "type": "gulp",
-      "task": "buildScss",
-      "presentation": {
-        "reveal": "never"
-      }
-    },
-    {
-      "label": "watch: enable",
-      "type": "shell",
-      "command": "${command:triggerTaskOnSave.enable}"
-    },
-    {
-      "label": "watch: disable",
-      "type": "shell",
-      "command": "${command:triggerTaskOnSave.disable}"
-    },
-    {
-      "label": "watch: reload",
-      "type": "shell",
-      "command": "${command:launches.fvtt-debug}"
-    },
-    {
-      "label": "watch: scss",
-      "type": "shell",
-      "command": "${command:launches.fvtt-debug}",
-      "dependsOrder": "sequence",
-      "dependsOn": [
-        "gulp: buildScss"
-      ]
-    },
-    {
       "label": "stop server",
       "command": "echo ${input:terminate}",
       "type": "shell"
