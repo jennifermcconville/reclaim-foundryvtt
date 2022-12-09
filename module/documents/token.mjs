@@ -26,4 +26,12 @@ export class ReclaimToken extends Token {
       if (!refreshVision) canvas.effects.visibility.restrictVisibility();
     });
   }
+
+  /** @override */
+  _onClickLeft2(event) {
+    if (this.actor.type === `infrastructure` || this.actor.type === `resource`) return;
+
+    super._onClickLeft2(event);
+  }
+
 }
