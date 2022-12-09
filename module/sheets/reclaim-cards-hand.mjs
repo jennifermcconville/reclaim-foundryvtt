@@ -21,10 +21,29 @@ export class ReclaimCardsHand extends CardsHand {
    * */
   render( force = false, options = {} ) {
     let result = super.render( force, options );
-    console.debug( result );
 
-    // Result.element.find("")
+    let deckBinderElement = $( `<div class="reclaim.deckBinder">Just some innocent text :) </div>` );
+    deckBinderElement.insertAfter( result.element.find( `form.editable.div` ) );
+
     return result;
   }
+
+  /**
+   * @override
+   */
+  async _render( ...args ) {
+    await super._render( args );
+
+    console.debug( this.element.find( `form.editable` ) );
+
+    let deckBinderElement = $( `<div class="reclaim.deckBinder">Just some innocent text</div>` );
+    deckBinderElement.insertAfter( this.element.find( `form.editable` ).children( `div` ) );
+  }
+
+  // Async _render( force, options ) {
+  //   await super.render( force, options );
+
+  //   console.debug( this.element.find( `form.editable` ) );
+  // }
 
 }
