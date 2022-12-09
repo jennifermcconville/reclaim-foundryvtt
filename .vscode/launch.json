@@ -11,11 +11,10 @@
             "preLaunchTask": "build-then-run-node",
             "postDebugTask": "stop server",
             "request": "launch",
-            // "runtimeArgs": [
-            //     ".",
-            //     "--remote-debugging-port=9223"
-            // ],
-            // "outputCapture": "std",
+            "runtimeArgs": [
+                ".",
+                "--remote-debugging-port=9223"
+            ],
             "skipFiles": [
                 "<node_internals>/**/*.js",
                 "node_modules/**/*.js"
@@ -25,70 +24,6 @@
                 "/systems/reclaim": "${workspaceFolder}"
             },
             "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public/scripts"
-        },
-        // {
-        //     "name": "Electron launcher",
-        //     "type": "node",
-    //     "cwd": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
-        //     "args": [
-        //         "--datapath C:/Code/FoundryLocal",
-        //         "--world=developing-reclaim"
-        //     ],
-        //     "preLaunchTask": "${defaultBuildTask}",
-        //     // Start Electron through Node.js.         
-        //     "request": "launch",
-        //     "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
-        //     "runtimeArgs": [
-        //         ".",
-        //         "--remote-debugging-port=9223"
-        //     ],
-        //     "skipFiles": [
-        //         "<node_internals>/**/*.js",
-        //         "node_modules/**/*.js"
-        //     ],
-        //     "outputCapture": "std",
-        //     "postDebugTask": "watch: disable",
-        //     // Source map configuration - set this to true and add paths for TypeScript.
-        //     "sourceMaps": false,
-        //     // Run our rendering process debugger (see below) after launching successfully.
-        //     "serverReadyAction": {
-        //         "pattern": "listening on port ([0-9]+)",
-        //         "action": "startDebugging",
-        //         "name": "FoundryVTT"
-        //     }
-        // },
-        // {
-        //     // Renderer debugging configuration.
-        //     "name": "FoundryVTT",
-        //     // Hide it from the selection - it'll be started by the launcher.
-        //     "presentation": {
-        //         "hidden": true,
-        //     },
-        //     // Attach to our launcher instance.
-        //     "type": "chrome",
-        //     "request": "attach",
-        //     "port": 9223,
-        //     // Tell the debugger where to find stuff. May need adjustments.
-        //     //"webRoot": "${env:ProgramFiles}/FoundryVTT/resources/app",
-        //     "pathMapping": {
-        //         // Override the path for your own system or module ...
-        //         //"/systems/reclaim": "${workspaceFolder}",
-        //         //"localhost:30000": "C:\\Program Files\\Foundry Virtual Tabletop\\resources\\app",
-        //         // ... and use the default for everything else.
-        //         // Note the slightly different formats - swap them for a module.
-        //         // "/systems/*": "${env:AppData}/../Local/FoundryVTT/Data/systems/*",
-        //         // "/modules": "${env:AppData}/../Local/FoundryVTT/Data/modules"
-        //     },
-        //     // Again, we don't want to debug into dependencies.
-        //     "skipFiles": [
-        //         "<node_internals>/**/*.js",
-        //         "node_modules/**/*.js"
-        //     ],
-        //     // How long to wait for the launcher. Increase this for potato debugging.
-        //     "timeout": 5000,
-        //     // Only watch files when we're debugging.
-        //     "preLaunchTask": "watch: enable",
-        //     "postDebugTask": "watch: disable",
-        // }
+        }
     ]
 }
