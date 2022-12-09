@@ -1,8 +1,11 @@
+/* eslint-disable no-undef */
+
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimAutoCardHand } from "./documents/auto-card-hand.mjs";
 
 // Import sheet classes.
+import { ReclaimCardsHand } from "./sheets/reclaim-cards-hand.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -15,14 +18,15 @@ import { RECLAIM } from "./helpers/config.mjs";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once(`init`, async function() {
+Hooks.once( `init`, async function() {
 
-  console.debug(`Initialising Reclaim System.`);
+  console.debug( `Initialising Reclaim System.` );
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
     ReclaimAutoCardHand,
+    ReclaimCardsHand,
     ReclaimToken,
     ReclaimTokenHUD
   };
@@ -35,16 +39,20 @@ Hooks.once(`init`, async function() {
   CONFIG.Cards.documentClass = ReclaimAutoCardHand;
 
   // Register sheet application classes
-
+  DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHand, {
+    label: `Reclaim Cards Hand`,
+    types: [`hand`],
+    makeDefault: true
+  } );
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
-});
+} );
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once(`ready`, async function() {
+Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
-});
+} );
