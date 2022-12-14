@@ -43,8 +43,7 @@ export class ReclaimCardsHand extends CardsHand {
    * @override
    */
   async _render( ...args ) {
-    await super._render( args );
-    return;
+    let result = super._render( args );
 
     let deckBinderHtmlString =
     `<div class="reclaim-deckBinder">
@@ -56,7 +55,7 @@ export class ReclaimCardsHand extends CardsHand {
         <select class="deck" name="boundDeck" >
           <option value="">-</option>`;
 
-    let allDecks = game.cards.filter( collection => collection.type = `deck` );
+    let allDecks = game.cards.filter( collection => collection.type === `deck` );
     allDecks.forEach( deck => {
       deckBinderHtmlString +=
           `
@@ -72,6 +71,8 @@ export class ReclaimCardsHand extends CardsHand {
     let deckBinderElement = $.parseHTML( deckBinderHtmlString );
     let deckBinderSiblingElement = this.element.find( `form.editable` ).children( `div` );
     deckBinderSiblingElement.after( deckBinderElement[ 0 ] );
+
+    return result;
   }
 
   // <div class="form-fields">
