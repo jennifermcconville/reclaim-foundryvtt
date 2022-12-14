@@ -2,7 +2,7 @@
 
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
-import { ReclaimAutoCardHand } from "./documents/auto-card-hand.mjs";
+import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 
 // Import sheet classes.
 import { ReclaimCardsHand } from "./sheets/reclaim-cards-hand.mjs";
@@ -25,7 +25,7 @@ Hooks.once( `init`, async function() {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
-    ReclaimAutoCardHand,
+    ReclaimConnectedCards,
     ReclaimCardsHand,
     ReclaimToken,
     ReclaimTokenHUD
@@ -36,11 +36,18 @@ Hooks.once( `init`, async function() {
 
   // Define custom Document classes
   CONFIG.Token.objectClass = ReclaimToken;
-  CONFIG.Cards.documentClass = ReclaimAutoCardHand;
+  CONFIG.Cards.documentClass = ReclaimConnectedCards;
+
+  // Unregister default sheet
+  DocumentSheetConfig.unregisterSheet( Cards, `core`, CardsHand, {
+    label: `CARDS.CardsHand`,
+    types: [`hand`],
+    makeDefault: true
+  } );
 
   // Register sheet application classes
   DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHand, {
-    label: `Reclaim Cards Hand`,
+    label: `RECLAIM.CardsHand`,
     types: [`hand`],
     makeDefault: true
   } );

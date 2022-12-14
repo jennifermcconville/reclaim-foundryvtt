@@ -1,2 +1,4 @@
-export const RECLAIM = {};
+export const RECLAIM = {
+  FlagContext: `ReclaimFlag`
+};
 
