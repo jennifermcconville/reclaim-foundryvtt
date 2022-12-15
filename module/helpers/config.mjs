@@ -1,4 +1,5 @@
 export const RECLAIM = {
-  FlagContext: `ReclaimFlag`
+  FlagConnectedDeck: `connectedDeck`,
+  FlagAutoDrawLimit: `autoDrawLimit`
 };
 

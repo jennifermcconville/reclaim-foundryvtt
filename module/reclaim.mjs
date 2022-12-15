@@ -5,7 +5,7 @@ import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 
 // Import sheet classes.
-import { ReclaimCardsHand } from "./sheets/reclaim-cards-hand.mjs";
+import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -26,7 +26,7 @@ Hooks.once( `init`, async function() {
   // accessible in global contexts.
   game.reclaim = {
     ReclaimConnectedCards,
-    ReclaimCardsHand,
+    ReclaimCardsHandSheet,
     ReclaimToken,
     ReclaimTokenHUD
   };
@@ -46,7 +46,7 @@ Hooks.once( `init`, async function() {
   } );
 
   // Register sheet application classes
-  DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHand, {
+  DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
     label: `RECLAIM.CardsHand`,
     types: [`hand`],
     makeDefault: true

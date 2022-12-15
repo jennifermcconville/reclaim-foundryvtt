@@ -23,3 +23,28 @@
 /* Module overrides */
 @import "mod_overrides/hand_mini_bar";
 /* /Module overrides */
+
+/* Card Hand Sheet customization */
+body.vtt.game.system-reclaim {
+  div.sheet.cards-config.hand {
+    form.editable {
+      ol.cards {
+        padding-bottom: 4px;
+        border-bottom: 2px groove #444;
+      }
+
+      header.reclaim-deckBinder-header {
+        font-weight: bold;
+      }
+
+      .deck {
+        flex: 2;
+      }
+
+      .number {
+        flex: 1;
+      }
+    }
+  }
+}
+/* /Card Hand Sheet customization */
