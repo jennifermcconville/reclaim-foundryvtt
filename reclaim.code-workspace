@@ -22,7 +22,11 @@
 			"javascript"
 		],
 		"editor.formatOnSave": true,
-		"eslint.format.enable": true
+		"eslint.format.enable": true,
+		"[javascript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+		}
 	},
 	"extensions": {
 		"recommendations": [
