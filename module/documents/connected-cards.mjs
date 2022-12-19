@@ -21,6 +21,8 @@ export class ReclaimConnectedCards extends Cards {
     data.flags[ game.system.id ] = reclaimFlags;
 
     super.update( data );
+
+    ReclaimConnectedCards.autoDrawCardLimit( this );
   }
 
   /**
