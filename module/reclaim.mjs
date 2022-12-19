@@ -52,6 +52,9 @@ Hooks.once( `init`, async function() {
     makeDefault: true
   } );
 
+  // Propagate init to other modules
+  ReclaimConnectedCards.onInit();
+
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 } );

@@ -1,5 +1,7 @@
 export const RECLAIM = {
-  FlagConnectedDeck: `connectedDeck`,
-  FlagAutoDrawLimit: `autoDrawLimit`
+  Flags: {
+    ConnectedDeckId: `connectedDeck`,
+    AutoDrawLimit: `autoDrawLimit`
+  }
 };
 
