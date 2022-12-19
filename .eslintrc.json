@@ -139,6 +139,7 @@
       }
     ],
     "no-unused-expressions": "warn",
+    "no-unused-vars": "warn",
     "no-useless-backreference": "warn",
     "no-useless-call": "warn",
     "no-useless-catch": "warn",
