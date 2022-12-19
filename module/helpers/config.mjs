@@ -1,7 +1,13 @@
 export const RECLAIM = {
   Flags: {
-    ConnectedDeckId: `connectedDeck`,
-    AutoDrawLimit: `autoDrawLimit`
+    ConnectedDeckId: `ReclaimFlagConnectedDeck`,
+    AutoDrawLimit: `ReclaimFlagAutoDrawLimit`,
+    ConnectedDeckArray: `ReclaimFlagConnectedDeckArray`
+  },
+  InputFields:
+  {
+    ConnectedDeckId: `ReclaimInputFieldConnectedDeckId`,
+    AutoDrawLimit: `ReclaimInputFieldAutoDrawLimit`
   }
 };
 
