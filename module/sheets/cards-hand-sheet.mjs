@@ -50,15 +50,4 @@ export class ReclaimCardsHandSheet extends CardsHand {
 
     super.activateListeners( html );
   }
-
-  /**
-   * Submit the contents of a Form Application, processing its content as defined by the Application
-   * @override
-   *
-   * @param {object} [options]        Options passed to the _onSubmit event handler
-   * @returns {FormApplication}       Return a self-reference for convenient method chaining
-   */
-  async submit( options = {} ) {
-    return super.submit( options );
-  }
 }
