@@ -7,6 +7,7 @@ import { RECLAIM } from "..//helpers/config.mjs";
  */
 export class ReclaimConnectedCards extends Cards {
 
+
   /**
    * @override
    * @param {*} data
@@ -45,7 +46,7 @@ export class ReclaimConnectedCards extends Cards {
 
     super.update( data );
 
-    ReclaimConnectedCards.autoDrawCardLimit( this );
+    ReclaimConnectedCards.autoDrawCards( this );
   }
 
   /**
@@ -54,7 +55,7 @@ export class ReclaimConnectedCards extends Cards {
    *
    * @param {Array.ReclaimConnectedCards} connectedHands Card hands that should be refilled
    */
-  static async autoDrawCardLimit( connectedHands ) {
+  static async autoDrawCards( connectedHands ) {
     if ( !Array.isArray( connectedHands ) ) {
       if ( !( connectedHands instanceof ReclaimConnectedCards ) ) {
         return;
@@ -62,37 +63,42 @@ export class ReclaimConnectedCards extends Cards {
       connectedHands = [connectedHands];
     }
 
-    connectedHands.forEach( hand => {
-      const connectionsArray = hand.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
-      if ( !connectionsArray ) {
-        return;
-      }
+    connectedHands.forEach( hand => ReclaimConnectedCards.autoDrawHandCards( hand ) );
+  }
 
-      connectionsArray.forEach( connection => {
-        const sourceDeckId = connection[ RECLAIM.Flags.ConnectedDeckId ];
-        const drawLimit = connection[ RECLAIM.Flags.AutoDrawLimit ];
+  static async autoDrawHandCards( hand ) {
+    const connectionsArray = hand.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
+    if ( !connectionsArray || hand.ongoingAutoDraw ) {
+      return;
+    }
 
-        if ( !drawLimit || !sourceDeckId || hand.ongoingAutoDraw ) {
-          return;
-        } // Early out if data invalid
+    hand.ongoingAutoDraw = true;
+    connectionsArray.forEach( connection => ReclaimConnectedCards._autoDrawConnection( hand, connection ) );
+    hand.ongoingAutoDraw = false;
+  }
 
-        const nbrToDraw = drawLimit - hand.cards.filter( card => card.origin.id === sourceDeckId ).length;
-        if ( nbrToDraw <= 0 ) {
-          return;
-        }
 
-        hand.ongoingAutoDraw = true;
-        const sourceDeck = game.cards.get( sourceDeckId );
-        hand.draw( sourceDeck, nbrToDraw );
-        hand.ongoingAutoDraw = false;
-      } );
+  static async _autoDrawConnection( hand, connection ) {
 
-    } );
+    // Early out
+    const sourceDeckId = connection[ RECLAIM.Flags.ConnectedDeckId ];
+    const drawLimit = connection[ RECLAIM.Flags.AutoDrawLimit ];
+    if ( !drawLimit || !sourceDeckId ) {
+      return;
+    }
+    const nbrToDraw = drawLimit - hand.cards.filter( card => card.origin.id === sourceDeckId ).length;
+    if ( nbrToDraw <= 0 ) {
+      return;
+    }
+
+    const sourceDeck = game.cards.get( sourceDeckId );
+    hand.draw( sourceDeck, nbrToDraw );
+
   }
 
   async pass( to, ids, { updateData = {}, action = `pass`, chatNotification = true } = {} ) {
     const result = await super.pass( to, ids, { updateData, action, chatNotification } );
-    ReclaimConnectedCards.autoDrawCardLimit( this );
+    ReclaimConnectedCards.autoDrawCards( this );
     return result;
   }
 }
