@@ -13,9 +13,10 @@ export class ReclaimCardsHandSheet extends CardsHand {
    */
   activateListeners( html ) {
 
-    const connectedDecks = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
-    let connectionFieldCount = connectedDecks ? connectedDecks.length : 4;
+    const connectedDecksArray = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
+    let connectionFieldCount = 4; // Make this line connectedDecksArray ? connectedDecksArray.length : 1; to make dynamic
     const allDecks = game.cards.filter( collection => collection.type === `deck` );
+    const allDecksLength = allDecks.length;
 
     let deckBinderHtmlString =
       `<div class="reclaim-deckBinder">
@@ -24,17 +25,20 @@ export class ReclaimCardsHandSheet extends CardsHand {
         <span class="number">Untill</span>
       </header>`;
 
-    for ( let count = 0; count < connectionFieldCount; count++ ) {
-      const connectedDeckId = connectedDecks ? connectedDecks[ count ].Id : 0;
-      const autoDrawLimit = connectedDecks ? connectedDecks[ count ].AutoDrawLimit : 0;
+    // Loop creates connectionFieldCount select and input elements
+    for ( let selectIndex = 0; selectIndex < connectionFieldCount; selectIndex++ ) {
+      const connection = connectedDecksArray[ selectIndex ];
+      const connectedDeckId = connection ? connection[ RECLAIM.Flags.ConnectedDeckId ] : null;
+      const autoDrawLimit = connection ? connection[ RECLAIM.Flags.AutoDrawLimit ] : null;
 
-      deckBinderHtmlString +=
-      `<div class="form-fields flexrow">
-        <select class="deck" name="${RECLAIM.InputFields.ConnectedDeckId}" >
+      deckBinderHtmlString += `
+      <div class="form-fields flexrow">
+        <select class="deck" name="${RECLAIM.InputFields.ConnectedDeckId}${selectIndex}" >
           <option value="">-</option>`;
 
-      // TODO allDecks is an object not an array. Collection? How to iterate?
-      for ( let deck in allDecks.entries() ) {
+      // Loop fills select element with all card deck values
+      for ( let optionIndex = 0; optionIndex < allDecksLength; optionIndex++ ) {
+        let deck = allDecks[ optionIndex ];
         const selected = ( deck.id === connectedDeckId ) ? ` selected` : ``;
 
         deckBinderHtmlString +=
@@ -44,7 +48,7 @@ export class ReclaimCardsHandSheet extends CardsHand {
 
       deckBinderHtmlString +=
       `</select>
-        <input class="number" type="number" value="${autoDrawLimit}" step="1" name="${RECLAIM.InputFields.AutoDrawLimit}" min="0">
+        <input class="number" type="number" value="${autoDrawLimit}" step="1" name="${RECLAIM.InputFields.AutoDrawLimit}${selectIndex}" min="0" />
       </div>`;
     }
 

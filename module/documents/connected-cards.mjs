@@ -14,9 +14,32 @@ export class ReclaimConnectedCards extends Cards {
   update( data ) {
 
     let reclaimFlags = {};
-    reclaimFlags[ RECLAIM.Flags.ConnectedDeckId ] = data[ RECLAIM.Flags.ConnectedDeckId ];
-    reclaimFlags[ RECLAIM.Flags.AutoDrawLimit ] = data[ RECLAIM.Flags.AutoDrawLimit ];
+    let connectionFlagArray = [];
 
+    // ReclaimFlags[ RECLAIM.Flags.ConnectedDeckId ] = data[ RECLAIM.Flags.ConnectedDeckId ];
+    // reclaimFlags[ RECLAIM.Flags.AutoDrawLimit ] = data[ RECLAIM.Flags.AutoDrawLimit ];
+
+    let connectionIndex = 0;
+    let connectedDeckId = data[ `${RECLAIM.InputFields.ConnectedDeckId}${connectionIndex}` ];
+    let autoDrawLimit = data[ `${RECLAIM.InputFields.AutoDrawLimit}${connectionIndex}` ];
+
+    // Exit loop if potential connection invalid
+    while ( connectedDeckId && autoDrawLimit ) {
+
+      // Push connection to array
+      let connection = {};
+      connection[ RECLAIM.Flags.ConnectedDeckId ] = connectedDeckId;
+      connection[ RECLAIM.Flags.AutoDrawLimit ] = autoDrawLimit;
+      connectionFlagArray.push( connection );
+
+      // Load next potential connection
+      connectionIndex++;
+      connectedDeckId = data[ `${RECLAIM.InputFields.ConnectedDeckId}${connectionIndex}` ];
+      autoDrawLimit = data[ `${RECLAIM.InputFields.AutoDrawLimit}${connectionIndex}` ];
+    }
+
+    // Save array to this Document's system flags
+    reclaimFlags[ RECLAIM.Flags.ConnectedDeckArray ] = connectionFlagArray;
     data.flags = {};
     data.flags[ game.system.id ] = reclaimFlags;
 
@@ -40,17 +63,30 @@ export class ReclaimConnectedCards extends Cards {
     }
 
     connectedHands.forEach( hand => {
-      const drawLimit = hand.getFlag( game.system.id, RECLAIM.Flags.AutoDrawLimit );
-      const sourceCardsId = hand.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckId );
-
-      if ( !drawLimit || !sourceCardsId || hand.ongoingAutoDraw ) {
+      const connectionsArray = hand.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
+      if ( !connectionsArray ) {
         return;
       }
 
-      hand.ongoingAutoDraw = true;
-      const sourceCards = game.cards.get( sourceCardsId );
-      hand.draw( sourceCards, ( drawLimit - hand.cards.size ) );
-      hand.ongoingAutoDraw = false;
+      connectionsArray.forEach( connection => {
+        const sourceDeckId = connection[ RECLAIM.Flags.ConnectedDeckId ];
+        const drawLimit = connection[ RECLAIM.Flags.AutoDrawLimit ];
+
+        if ( !drawLimit || !sourceDeckId || hand.ongoingAutoDraw ) {
+          return;
+        } // Early out if data invalid
+
+        const nbrToDraw = drawLimit - hand.cards.filter( card => card.origin.id === sourceDeckId ).length;
+        if ( nbrToDraw <= 0 ) {
+          return;
+        }
+
+        hand.ongoingAutoDraw = true;
+        const sourceDeck = game.cards.get( sourceDeckId );
+        hand.draw( sourceDeck, nbrToDraw );
+        hand.ongoingAutoDraw = false;
+      } );
+
     } );
   }
 
