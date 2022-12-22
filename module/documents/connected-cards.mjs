@@ -7,46 +7,31 @@ import { RECLAIM } from "..//helpers/config.mjs";
  */
 export class ReclaimConnectedCards extends Cards {
 
-
   /**
    * @override
    * @param {*} data
    */
   update( data ) {
-
-    let reclaimFlags = {};
-    let connectionFlagArray = [];
-
-    // ReclaimFlags[ RECLAIM.Flags.ConnectedDeckId ] = data[ RECLAIM.Flags.ConnectedDeckId ];
-    // reclaimFlags[ RECLAIM.Flags.AutoDrawLimit ] = data[ RECLAIM.Flags.AutoDrawLimit ];
-
-    let connectionIndex = 0;
-    let connectedDeckId = data[ `${RECLAIM.InputFields.ConnectedDeckId}${connectionIndex}` ];
-    let autoDrawLimit = data[ `${RECLAIM.InputFields.AutoDrawLimit}${connectionIndex}` ];
-
-    // Exit loop if potential connection invalid
-    while ( connectedDeckId && autoDrawLimit ) {
-
-      // Push connection to array
-      let connection = {};
-      connection[ RECLAIM.Flags.ConnectedDeckId ] = connectedDeckId;
-      connection[ RECLAIM.Flags.AutoDrawLimit ] = autoDrawLimit;
-      connectionFlagArray.push( connection );
-
-      // Load next potential connection
-      connectionIndex++;
-      connectedDeckId = data[ `${RECLAIM.InputFields.ConnectedDeckId}${connectionIndex}` ];
-      autoDrawLimit = data[ `${RECLAIM.InputFields.AutoDrawLimit}${connectionIndex}` ];
-    }
-
-    // Save array to this Document's system flags
-    reclaimFlags[ RECLAIM.Flags.ConnectedDeckArray ] = connectionFlagArray;
-    data.flags = {};
-    data.flags[ game.system.id ] = reclaimFlags;
-
     super.update( data );
 
     ReclaimConnectedCards.autoDrawCards( this );
+  }
+
+  /**
+   * @override
+   * @param {object} [options={}]                       Options which modify the recall operation
+   * @param {object} [options.updateData={}]            Modifications to make to each Card as part of the recall
+   *                                                    operation, for example the displayed face
+   * @param {boolean} [options.chatNotification=true]   Create a ChatMessage which notifies that this action has
+   *                                                    occurred
+   * @returns {Promise<Cards>}                          The Cards document after the recall operation has completed.
+   */
+  async recall( options ) {
+    debugger;
+
+    this.setFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray, null );
+
+    return super.recall( options );
   }
 
   /**
