@@ -9,29 +9,20 @@ export class ReclaimConnectedCards extends Cards {
 
   /**
    * @override
-   * @param {*} data
-   */
-  update( data ) {
-    super.update( data );
-
-    ReclaimConnectedCards.autoDrawCards( this );
-  }
-
-  /**
-   * @override
-   * @param {object} [options={}]                       Options which modify the recall operation
-   * @param {object} [options.updateData={}]            Modifications to make to each Card as part of the recall
-   *                                                    operation, for example the displayed face
-   * @param {boolean} [options.chatNotification=true]   Create a ChatMessage which notifies that this action has
-   *                                                    occurred
-   * @returns {Promise<Cards>}                          The Cards document after the recall operation has completed.
+   * @inheritdoc
    */
   async recall( options ) {
-    debugger;
+    let result = super.recall( options );
 
     this.setFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray, null );
 
-    return super.recall( options );
+    return result;
+  }
+
+  async pass( to, ids, { updateData = {}, action = `pass`, chatNotification = true } = {} ) {
+    const result = await super.pass( to, ids, { updateData, action, chatNotification } );
+    ReclaimConnectedCards.autoDrawCards( this );
+    return result;
   }
 
   /**
@@ -62,7 +53,6 @@ export class ReclaimConnectedCards extends Cards {
     hand.ongoingAutoDraw = false;
   }
 
-
   static async _autoDrawConnection( hand, connection ) {
 
     // Early out
@@ -81,9 +71,16 @@ export class ReclaimConnectedCards extends Cards {
 
   }
 
-  async pass( to, ids, { updateData = {}, action = `pass`, chatNotification = true } = {} ) {
-    const result = await super.pass( to, ids, { updateData, action, chatNotification } );
-    ReclaimConnectedCards.autoDrawCards( this );
-    return result;
+  static async onUpdateCards( options ) {
+    if ( !options ) {
+      return;
+    }
+
+    ReclaimConnectedCards.autoDrawCards( options );
   }
 }
+
+Hooks.once( `init`, async function() {
+  console.debug( `Initialising Reclaim Connected Cards hooks.` );
+  Hooks.on( `updateCards`, ReclaimConnectedCards.onUpdateCards );
+} );
