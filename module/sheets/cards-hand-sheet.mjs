@@ -9,14 +9,6 @@ export class ReclaimCardsHandSheet extends CardsHand {
 
   /**
    * @override
-   * @param {*} html
-   */
-  activateListeners( html ) {
-    return super.activateListeners( html );
-  }
-
-  /**
-   * @override
    */
   async _onSubmit( event, { updateData = null, preventClose = false, preventRender = false } = {} ) {
     const result = super._onSubmit( event, { updateData, preventClose, preventRender } );
