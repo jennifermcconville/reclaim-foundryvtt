@@ -5,20 +5,15 @@
 		},
 		{
 			"path": "../../Program Files/Foundry Virtual Tabletop/resources/app"
+		},
+		{
+			"path": "../FoundryLocal/Data/worlds/developing-reclaim"
+		},
+		{
+			"path": "../ReclaimDefaultWorld"
 		}
 	],
 	"settings": {
-		"debug.javascript.usePreview": false,
-		"triggerTaskOnSave.tasks": {
-			"watch: reload": [
-				"module/**/*.js",
-				"**/*.html"
-			],
-			"watch: scss": [
-				"scss/*.scss"
-			]
-		},
-		"triggerTaskOnSave.showStatusBarToggle": true,
 		"launches": {
 			"fvtt-debug": "FoundryVTT"
 		},
@@ -26,26 +21,24 @@
 		"[css]": {
 			"editor.defaultFormatter": "michelemelluso.code-beautifier"
 		},
-		"workbench.colorCustomizations": {
-			"fileAccess.readonlyForeground": "#ffff00",
-			"fileAccess.writeableForeground": "#008800"
-		},
 		"eslint.validate": [
 			"javascript"
 		],
-		"beautify.options": {
-			"preserveNewLines": "true"
+		"editor.formatOnSave": true,
+		"eslint.format.enable": true,
+		"[javascript]": {
+			"editor.formatOnSave": true,
+			"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+		},
+		"[html]": {
+			"editor.formatOnSave": false
 		}
 	},
 	"extensions": {
 		"recommendations": [
 			"alefragnani.bookmarks",
 			"dbaeumer.vscode-eslint",
-			"compulim.vscode-mocha",
-			"maty.vscode-mocha-sidebar",
 			"ms-vscode.js-debug",
-			"gruntfuggly.triggertaskonsave",
-			"ArturoDent.launch-config"
 		]
 	}
 }

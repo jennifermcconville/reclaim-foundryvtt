@@ -3,7 +3,7 @@
   "id": "reclaim",
   "title": "Reclaim Board Game",
   "description": "The Reclaim Board Game system for FoundryVTT!",
-  "version": "#{version}#",
+  "version": "v0.3.11",
   "compatibility": {
     "minimum": "10",
     "verified": "10.291"
@@ -164,10 +164,10 @@
         "compatibility": {}
       },
       {
-        "id":"monks-active-tiles",
+        "id": "monks-active-tiles",
         "type": "module",
-        "manifest":"https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
-        "compatibility":{}
+        "manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+        "compatibility": {}
       }
     ]
   }

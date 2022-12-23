@@ -1,6 +1,11 @@
+/* eslint-disable no-undef */
+
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
+import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
+
 // Import sheet classes.
+import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -13,13 +18,15 @@ import { RECLAIM } from "./helpers/config.mjs";
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
-Hooks.once(`init`, async function() {
+Hooks.once( `init`, async function() {
 
-  console.debug(`Initialising Reclaim System.`);
+  console.debug( `Initialising Reclaim System.` );
 
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
+    ReclaimConnectedCards,
+    ReclaimCardsHandSheet,
     ReclaimToken,
     ReclaimTokenHUD
   };
@@ -29,19 +36,32 @@ Hooks.once(`init`, async function() {
 
   // Define custom Document classes
   CONFIG.Token.objectClass = ReclaimToken;
+  CONFIG.Cards.documentClass = ReclaimConnectedCards;
 
+  // Unregister default sheet
+  DocumentSheetConfig.unregisterSheet( Cards, `core`, CardsHand, {
+    label: `CARDS.CardsHand`,
+    types: [`hand`],
+    makeDefault: true
+  } );
 
   // Register sheet application classes
+  DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
+    label: `RECLAIM.CardsHand`,
+    types: [`hand`],
+    makeDefault: true
+  } );
 
+  // Propagate init to other js modules
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
-});
+} );
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once(`ready`, async function() {
+Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
-});
+} );

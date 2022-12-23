@@ -23,7 +23,7 @@
                 "/systems/*": "C:/Code/FoundryLocal/Data/systems",
                 "/systems/reclaim": "${workspaceFolder}"
             },
-            "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public/scripts"
+            "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public"
         }
     ]
 }
