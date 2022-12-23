@@ -67,8 +67,9 @@ export class ReclaimConnectedCards extends Cards {
     }
 
     const sourceDeck = game.cards.get( sourceDeckId );
-    hand.draw( sourceDeck, nbrToDraw, { how: CONST.CARD_DRAW_MODES.RANDOM } );
-
+    if ( sourceDeck ) {
+      hand.draw( sourceDeck, nbrToDraw, { how: CONST.CARD_DRAW_MODES.RANDOM } );
+    }
   }
 
   static async onUpdateCards( options ) {
