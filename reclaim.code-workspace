@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../FoundryLocal/Data/worlds/developing-reclaim"
+		},
+		{
+			"path": "../ReclaimDefaultWorld"
 		}
 	],
 	"settings": {
