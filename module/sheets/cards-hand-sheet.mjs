@@ -127,12 +127,6 @@ export class ReclaimCardsHandSheet extends CardsHand {
     let connections = ReclaimCardsHandSheet._getTemplateDataFromFlag( fromFlags );
     result.connections = connections;
 
-
     return result;
-  }
-
-  /** @override */
-  render( ...args ) {
-    super.render( args );
   }
 }
