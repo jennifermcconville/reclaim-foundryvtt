@@ -3,7 +3,7 @@
   "id": "reclaim",
   "title": "Reclaim Board Game",
   "description": "The Reclaim Board Game system for FoundryVTT!",
-  "version": "#{version}#",
+  "version": "v0.3.11",
   "compatibility": {
     "minimum": "10",
     "verified": "10.291"
