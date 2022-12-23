@@ -28,12 +28,13 @@
 body.vtt.game.system-reclaim {
   div.sheet.cards-config.hand {
     form.editable {
+      div.reclaim-deckBinder,
       ol.cards {
         padding-bottom: 4px;
         border-bottom: 2px groove #444;
       }
 
-      header.reclaim-deckBinder-header {
+      header.reclaim-cards-connection-header {
         font-weight: bold;
       }
 
@@ -43,6 +44,10 @@ body.vtt.game.system-reclaim {
 
       .number {
         flex: 1;
+      }
+
+      footer.sheet-footer {
+        padding-top: 4px;
       }
     }
   }

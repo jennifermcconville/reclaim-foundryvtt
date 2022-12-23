@@ -12,45 +12,7 @@ export class ReclaimCardsHandSheet extends CardsHand {
    * @param {*} html
    */
   activateListeners( html ) {
-
-    const connectedDecksArray = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
-    let connectionFieldCount = 4; // Make this line connectedDecksArray ? connectedDecksArray.length : 1; to make dynamic
-    let deckOptions = ReclaimCardsHandSheet._renderDeckToOptionElements();
-
-    let deckBinderHtmlString =
-      `<div class="reclaim-deckBinder">
-      <header class="reclaim-deckBinder-header flexrow">
-        <span class="deck">Auto draw from deck</span>
-        <span class="number">Untill</span>
-      </header>`;
-
-    // Loop creates connectionFieldCount select and input elements
-    for ( let selectIndex = 0; selectIndex < connectionFieldCount; selectIndex++ ) {
-      const connection = connectedDecksArray ? connectedDecksArray[ selectIndex ] : null;
-      const connectedDeckId = connection ? connection[ RECLAIM.Flags.ConnectedDeckId ] : null; // Only used to compare if selected
-      const autoDrawLimit = connection ? connection[ RECLAIM.Flags.AutoDrawLimit ] : 0; // Allways used as input element value
-
-      deckBinderHtmlString += `
-      <div class="form-fields flexrow">
-        <select class="deck" name="${RECLAIM.InputFields.ConnectedDeckId}${selectIndex}" >
-          <option value="">-</option>`;
-
-      deckBinderHtmlString += ReclaimCardsHandSheet._selectOptionById( deckOptions, connectedDeckId );
-
-      deckBinderHtmlString +=
-      `</select>
-        <input class="number" type="number" value="${autoDrawLimit}" step="1" name="${RECLAIM.InputFields.AutoDrawLimit}${selectIndex}" min="0" />
-      </div>`;
-    }
-
-    deckBinderHtmlString += `
-      </div>`;
-
-    let deckBinderElement = $.parseHTML( deckBinderHtmlString );
-    let deckBinderFooter = html.children( `footer` );
-    deckBinderFooter.before( deckBinderElement[ 0 ] );
-
-    super.activateListeners( html );
+    return super.activateListeners( html );
   }
 
   /**
@@ -74,8 +36,6 @@ export class ReclaimCardsHandSheet extends CardsHand {
     }
 
     this.object.setFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray, newConnectionArray );
-
-    // TODO saved data looks wrong
 
     return result;
   }
@@ -110,5 +70,77 @@ export class ReclaimCardsHandSheet extends CardsHand {
     }
 
     return result;
+  }
+
+  /**
+   * @override
+   */
+  static get defaultOptions() {
+    return mergeObject( super.defaultOptions, {
+      classes: super.defaultOptions.classes.concat( [game.system.id, `cards-config`] ),
+      template: `systems/reclaim/templates/cards/cards-hand.html`,
+      closeOnSubmit: true
+    } );
+  }
+
+  /**
+   * Takes an array as stored in the flag of a ReclaimConnectedCards and transforms it into
+   * a data model for the cards-hand handlebar template to use
+   *
+   * @protected
+   * @param {Array} fromFlag
+   */
+  static _getTemplateDataFromFlag( fromFlag ) {
+
+    let connections = [];
+    for ( let connectionIndex = 0; connectionIndex < 4; connectionIndex++ ) {
+      let connectionIdFromFlag = ``;
+      let connectionLimitFromFlag = 0;
+
+      if ( fromFlag && connectionIndex < fromFlag.length ) {
+        let connectionFromFlag = fromFlag[ connectionIndex ];
+        connectionIdFromFlag = connectionFromFlag[ RECLAIM.Flags.ConnectedDeckId ];
+        connectionLimitFromFlag = connectionFromFlag[ RECLAIM.Flags.AutoDrawLimit ];
+      }
+
+      let connectionTemplateData = {
+        selectElementName: `${RECLAIM.InputFields.ConnectedDeckId}${connectionIndex}`,
+        inputElementName: `${RECLAIM.InputFields.AutoDrawLimit}${connectionIndex}`,
+        connectionId: connectionIdFromFlag,
+        connectionLimit: connectionLimitFromFlag,
+        selection: connectionIdFromFlag
+      };
+
+      let allDecks = game.cards.filter( collection => collection.type === `deck` );
+      connectionTemplateData.decks = allDecks.map( deck => {
+        return {
+          name: deck.name,
+          id: deck.id };
+      } );
+
+      connections.push( connectionTemplateData );
+    }
+
+    return connections;
+  }
+
+  /**
+   * @override
+   * @inheritdoc
+   */
+  async getData( options ) {
+    let result = await super.getData( options );
+
+    const fromFlags = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
+    let connections = ReclaimCardsHandSheet._getTemplateDataFromFlag( fromFlags );
+    result.connections = connections;
+
+
+    return result;
+  }
+
+  /** @override */
+  render( ...args ) {
+    super.render( args );
   }
 }
