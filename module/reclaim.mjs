@@ -3,9 +3,11 @@
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
+import { ReclaimCard } from "./documents/card.mjs";
 
 // Import sheet classes.
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
+import { ReclaimCardConfig } from "./sheets/card-config-sheet.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -13,10 +15,6 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
-
-/* -------------------------------------------- */
-/*  Init Hook                                   */
-/* -------------------------------------------- */
 
 Hooks.once( `init`, async function() {
 
@@ -26,7 +24,9 @@ Hooks.once( `init`, async function() {
   // accessible in global contexts.
   game.reclaim = {
     ReclaimConnectedCards,
+    ReclaimCard,
     ReclaimCardsHandSheet,
+    ReclaimCardConfig,
     ReclaimToken,
     ReclaimTokenHUD
   };
@@ -37,18 +37,25 @@ Hooks.once( `init`, async function() {
   // Define custom Document classes
   CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
+  CONFIG.Card.documentClass = ReclaimCard;
 
   // Unregister default sheet
   DocumentSheetConfig.unregisterSheet( Cards, `core`, CardsHand, {
     label: `CARDS.CardsHand`,
-    types: [`hand`],
-    makeDefault: true
+    types: [`hand`]
+  } );
+  DocumentSheetConfig.unregisterSheet( Card, `core`, CardConfig, {
+    label: `CARDS.Card`
   } );
 
   // Register sheet application classes
   DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
     label: `RECLAIM.CardsHand`,
     types: [`hand`],
+    makeDefault: true
+  } );
+  DocumentSheetConfig.registerSheet( Card, `reclaim`, ReclaimCardConfig, {
+    label: `RECLAIM.Card`,
     makeDefault: true
   } );
 
@@ -58,10 +65,8 @@ Hooks.once( `init`, async function() {
   return preloadHandlebarsTemplates();
 } );
 
-/* -------------------------------------------- */
-/*  Ready Hook                                  */
-/* -------------------------------------------- */
-
 Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
 } );
+
+

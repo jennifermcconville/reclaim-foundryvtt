@@ -10,6 +10,31 @@ export class ReclaimCardsHandSheet extends CardsHand {
   /**
    * @override
    */
+  static get defaultOptions() {
+    return mergeObject( super.defaultOptions, {
+      classes: super.defaultOptions.classes.concat( [game.system.id, `cards-config`] ),
+      template: `systems/reclaim/templates/cards/cards-hand.html`,
+      closeOnSubmit: true
+    } );
+  }
+
+  /**
+   * @override
+   * @inheritdoc
+   */
+  async getData( options ) {
+    let result = await super.getData( options );
+
+    const fromFlags = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
+    let connections = ReclaimCardsHandSheet._getTemplateDataFromFlag( fromFlags );
+    result.connections = connections;
+
+    return result;
+  }
+
+  /**
+   * @override
+   */
   async _onSubmit( event, { updateData = null, preventClose = false, preventRender = false } = {} ) {
     const result = super._onSubmit( event, { updateData, preventClose, preventRender } );
 
@@ -65,17 +90,6 @@ export class ReclaimCardsHandSheet extends CardsHand {
   }
 
   /**
-   * @override
-   */
-  static get defaultOptions() {
-    return mergeObject( super.defaultOptions, {
-      classes: super.defaultOptions.classes.concat( [game.system.id, `cards-config`] ),
-      template: `systems/reclaim/templates/cards/cards-hand.html`,
-      closeOnSubmit: true
-    } );
-  }
-
-  /**
    * Takes an array as stored in the flag of a ReclaimConnectedCards and transforms it into
    * a data model for the cards-hand handlebar template to use
    *
@@ -114,19 +128,5 @@ export class ReclaimCardsHandSheet extends CardsHand {
     }
 
     return connections;
-  }
-
-  /**
-   * @override
-   * @inheritdoc
-   */
-  async getData( options ) {
-    let result = await super.getData( options );
-
-    const fromFlags = this.object.getFlag( game.system.id, RECLAIM.Flags.ConnectedDeckArray );
-    let connections = ReclaimCardsHandSheet._getTemplateDataFromFlag( fromFlags );
-    result.connections = connections;
-
-    return result;
   }
 }
