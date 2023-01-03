@@ -31,19 +31,22 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
 
   // Magic numbers since we don't know what the token size will be
   const newPos = { x: args[ 1 ].x - 50, y: args[ 1 ].y - 50 };
-  spawnActor( card.flags.reclaim[ CONFIG.RECLAIM.Flags.CardSpawnsActorId ], newPos );
+  spawnActor( card.flags.reclaim[ CONFIG.RECLAIM.Flags.CardSpawnsActorId ], args[ 0 ].scene, newPos );
+  let permission = card.testUserPermission( game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER, { exact: true } );
   moveCard( card );
 }
 );
 
 /**
  *  Spawns a token based on the sent in actorId and positiong
- * @param {string} actorId     Id of actor you want to spawn
- * @param {object} pos      Object with float x and y float properties
+ * @param {string} actorId      Id of actor you want to spawn
+ * @param {Scene} scene         The scene in which the Actor's token should be created
+ * @param {object} pos          Object with float x and y float properties
  * @param {float} pos.x
  * @param {float} pos.y
+ *
  */
-async function spawnActor( actorId, pos = { x, y } ) {
+async function spawnActor( actorId, scene, pos = { x, y } ) {
   if ( !actorId ) {
     return;
   }
@@ -51,10 +54,10 @@ async function spawnActor( actorId, pos = { x, y } ) {
   const actor = game.actors.get( actorId );
   const tokenDocument = await actor.getTokenDocument( { x: pos.x, y: pos.y } );
   let newToken = await TokenDocument.create( tokenDocument, {
-    parent: args[ 0 ].scene
+    parent: scene
   } );
 
-  console.debug( `Reclaim token from card created. Card id: ${card.id}, NewTokenId: ${newToken.id}
+  console.debug( `Reclaim token from card created. NewTokenId: ${newToken.id}
   Position: (${newToken.x},${newToken.y})` );
 }
 
