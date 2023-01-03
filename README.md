@@ -1,22 +1,9 @@
 # Introduction 
-A digitalisation of the Reclaim board game by created by the SPANS (Sanitation Planning for Alternative Nutrient-recovery Systems) project at the SLU (Sveriges lantbruksuniversitet). Currently under developement with no public releases yet. 
+A digitalisation of the Reclaim board game by created by the SPANS (Sanitation Planning for Alternative Nutrient-recovery Systems) project at the SLU (Sveriges lantbruksuniversitet). A System for Foundry <a href="https://foundryvtt.com/">Virtual Table Top</a>. Currently under developement with no public releases yet. 
 
 Read more here: https://www.slu.se/institutioner/energi-teknik/projekt/kretslopp/reclaim/
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
-
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
-
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+# Installation
+- To run this software you need a Foundry Virtual Table Top instance. More on how to aquire one on the official site - https://foundryvtt.com/article/hosting/
+- Download an place all the files from this repository in [Foundry User Data]/Data/systems/reclaim
+- For the best user experiance we recommend you also get a preset default world which you can find at https://github.com/jennifermcconville/reclaim-world-foundryvtt
