@@ -45,7 +45,7 @@ export class UserCardsManager {
    * @param {Cards}hand
    */
   static async assingToMiniCardHand( user, hand ) {
-    user.setFlag( UserCardsManager.HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
+    user.setFlag( HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
   }
 
   /**
