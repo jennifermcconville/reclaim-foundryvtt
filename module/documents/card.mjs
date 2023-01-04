@@ -27,13 +27,11 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
     notifyCardMissingActor( card );
     return;
   }
-  console.debug( ` DropCanvasData! Card id: ${card.id}, ActorId: ${card.flags.reclaim.ReclaimCardsActorSpawnId}` );
 
   // Magic numbers since we don't know what the token size will be
   const newPos = { x: args[ 1 ].x - 50, y: args[ 1 ].y - 50 };
   spawnActor( card.flags.reclaim[ CONFIG.RECLAIM.Flags.CardSpawnsActorId ], args[ 0 ].scene, newPos );
-  let permission = card.testUserPermission( game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER, { exact: true } );
-  moveCard( card );
+  moveCard( card, game.user );
 }
 );
 
@@ -83,7 +81,18 @@ async function notifyCardMissingActor( source ) {
  *  Removes the card from it's current container and places it in the player's hand
  *
  * @param {ReclaimCard} card
+ * @param {User} targetUser
  */
-async function moveCard( card ) {
+async function moveCard( card, targetUser ) {
+  if ( !card || !targetUser ) {
+    return;
+  }
 
+  const usersCardHandId = targetUser.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
+  const usersCardHand = game.cards.find( card => card.id === usersCardHandId );
+  if ( !usersCardHand ) {
+    return;
+  }
+
+  card.pass( usersCardHand );
 }
