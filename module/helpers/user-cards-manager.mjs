@@ -26,12 +26,14 @@ export class UserCardsManager {
         newHand = true;
       }
 
-      if ( userHandPromise.then ) {
-        userHandPromise.then( value => {
-          UserCardsManager.assingToMiniCardHand( user, value, newHand );
-        } );
-      } else {
-        UserCardsManager.assingToMiniCardHand( user, userHandPromise, newHand );
+      if ( newHand ) {
+        if ( userHandPromise.then ) {
+          userHandPromise.then( value => {
+            UserCardsManager.assingToMiniCardHand( user, value );
+          } );
+        } else {
+          UserCardsManager.assingToMiniCardHand( user, userHandPromise );
+        }
       }
     } );
   }
@@ -41,14 +43,9 @@ export class UserCardsManager {
    * Make sure that the hand is displayed as the bottom card collection of hand-mini-bar for this user.
    * @param {User}user
    * @param {Cards}hand
-   * @param {boolean}newlyCreated
    */
-  static async assingToMiniCardHand( user, hand, newlyCreated ) {
-
-    // If we created a new card hand, assign to hand-mini-bar slot 0
-    if ( newlyCreated ) {
-      user.setFlag( UserCardsManager.HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
-    }
+  static async assingToMiniCardHand( user, hand ) {
+    user.setFlag( UserCardsManager.HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
   }
 
   /**
