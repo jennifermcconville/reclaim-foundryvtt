@@ -9,10 +9,6 @@ export class ReclaimCard extends Card {
    * @override */
   prepareDerivedData() {
     super.prepareDerivedData();
-
-    if ( this.flags.reclaim ) {
-      console.debug( `Found card with reclaim flags! Card:${this.id}, Actor:${this.flags.reclaim.ReclaimCardsActorSpawnId}` );
-    }
   }
 }
 
@@ -27,23 +23,33 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
     notifyCardMissingActor( card );
     return;
   }
-  console.debug( ` DropCanvasData! Card id: ${card.id}, ActorId: ${card.flags.reclaim.ReclaimCardsActorSpawnId}` );
 
   // Magic numbers since we don't know what the token size will be
   const newPos = { x: args[ 1 ].x - 50, y: args[ 1 ].y - 50 };
-  spawnActor( card.flags.reclaim[ CONFIG.RECLAIM.Flags.CardSpawnsActorId ], newPos );
-  moveCard( card );
+  let newTokenPromise = spawnToken(
+    card.flags.reclaim[ CONFIG.RECLAIM.Flags.CardSpawnsActorId ],
+    args[ 0 ].scene,
+    newPos
+  );
+
+  newTokenPromise.then( newToken => {
+    assignCardToToken( newToken, card );
+  } );
+
+  moveCard( card, game.user );
 }
 );
 
 /**
  *  Spawns a token based on the sent in actorId and positiong
- * @param {string} actorId     Id of actor you want to spawn
- * @param {object} pos      Object with float x and y float properties
+ * @param {string} actorId      Id of actor you want to spawn
+ * @param {Scene} scene         The scene in which the Actor's token should be created
+ * @param {object} pos          Object with float x and y float properties
  * @param {float} pos.x
  * @param {float} pos.y
+ *
  */
-async function spawnActor( actorId, pos = { x, y } ) {
+async function spawnToken( actorId, scene, pos = { x, y } ) {
   if ( !actorId ) {
     return;
   }
@@ -51,11 +57,21 @@ async function spawnActor( actorId, pos = { x, y } ) {
   const actor = game.actors.get( actorId );
   const tokenDocument = await actor.getTokenDocument( { x: pos.x, y: pos.y } );
   let newToken = await TokenDocument.create( tokenDocument, {
-    parent: args[ 0 ].scene
+    parent: scene
   } );
 
-  console.debug( `Reclaim token from card created. Card id: ${card.id}, NewTokenId: ${newToken.id}
-  Position: (${newToken.x},${newToken.y})` );
+  return newToken;
+}
+
+/**
+ * Add the ID of a card to a token's flag. Mean to represent the card that
+ * placed the token on the game board.
+ *
+ * @param {TokenDocument} token
+ * @param {ReclaimCard} card
+ */
+async function assignCardToToken( token, card ) {
+  token.setFlag( game.system.id, RECLAIM.Flags.TokenSpawnedByCardId, card.id );
 }
 
 /**
@@ -80,7 +96,18 @@ async function notifyCardMissingActor( source ) {
  *  Removes the card from it's current container and places it in the player's hand
  *
  * @param {ReclaimCard} card
+ * @param {User} targetUser
  */
-async function moveCard( card ) {
+async function moveCard( card, targetUser ) {
+  if ( !card || !targetUser ) {
+    return;
+  }
 
+  const usersCardHandId = targetUser.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
+  const usersCardHand = game.cards.find( card => card.id === usersCardHandId );
+  if ( !usersCardHand ) {
+    return;
+  }
+
+  card.pass( usersCardHand );
 }

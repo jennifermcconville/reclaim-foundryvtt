@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../ReclaimDefaultWorld"
+		},
+		{
+			"path": "../FoundryLocal/Data/modules/hand-mini-bar"
 		}
 	],
 	"settings": {
@@ -32,7 +35,8 @@
 		},
 		"[html]": {
 			"editor.formatOnSave": false
-		}
+		},
+		"debug.console.wordWrap": false
 	},
 	"extensions": {
 		"recommendations": [

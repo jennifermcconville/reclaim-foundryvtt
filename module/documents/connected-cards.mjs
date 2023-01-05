@@ -82,6 +82,5 @@ export class ReclaimConnectedCards extends Cards {
 }
 
 Hooks.once( `init`, async function() {
-  console.debug( `Initialising Reclaim Connected Cards hooks.` );
   Hooks.on( `updateCards`, ReclaimConnectedCards.onUpdateCards );
 } );

@@ -15,6 +15,7 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
+import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -67,6 +68,7 @@ Hooks.once( `init`, async function() {
 
 Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
-} );
+  UserCardsManager.onReady();
+} ); // End hook ready
 
 
