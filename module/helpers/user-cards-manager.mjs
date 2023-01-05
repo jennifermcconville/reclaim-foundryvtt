@@ -91,7 +91,7 @@ export class UserCardsManager {
 
     if ( !playerHandsFolder ) {
       playerHandsFolder = await Folder.create( {
-        name: playerHandSubfolderName,
+        name: RECLAIM.FoundryFolderNames.PlayerCardHands,
         type: `Cards`,
         parent: cardHandsFolder
       } );
