@@ -125,7 +125,6 @@ export class ReclaimTokenHUD extends TokenHUD {
       return;
     }
 
-    console.debug( `Changing token...` );
     const token = this.object;
 
     // Get a list of all resource actors

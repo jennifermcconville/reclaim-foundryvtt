@@ -60,9 +60,6 @@ async function spawnToken( actorId, scene, pos = { x, y } ) {
     parent: scene
   } );
 
-  console.debug( `Reclaim token from card created. NewTokenId: ${newToken.id}
-  Position: (${newToken.x},${newToken.y})` );
-
   return newToken;
 }
 
@@ -74,8 +71,6 @@ async function spawnToken( actorId, scene, pos = { x, y } ) {
  * @param {ReclaimCard} card
  */
 async function assignCardToToken( token, card ) {
-  console.debug( `Assigning ${token.id} to ${card.id}` );
-
   token.setFlag( game.system.id, RECLAIM.Flags.TokenSpawnedByCardId, card.id );
 }
 

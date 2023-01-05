@@ -12,7 +12,6 @@ export class UserCardsManager {
     );
 
     await game.users.forEach( user => {
-      console.debug( `Processing user ${user.id}` );
       let newHand = false;
       let flag = user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
       if ( !flag ) {
