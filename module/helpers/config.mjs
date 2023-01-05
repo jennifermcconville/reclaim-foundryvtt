@@ -4,6 +4,7 @@ export const RECLAIM = {
     AutoDrawLimit: `ReclaimDrawLimit`,
     ConnectedDeckArray: `ReclaimConnectedDecks`,
     CardSpawnsActorId: `ReclaimCardsActorSpawnId`,
+    TokenSpawnedByCardId: `ReclaimTokenCardId`,
     UserCardHandId: `ReclaimUserCardHandId`
   },
   InputFields:

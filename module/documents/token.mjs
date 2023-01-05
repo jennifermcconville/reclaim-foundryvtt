@@ -5,6 +5,9 @@
  */
 
 '';
+
+import { RECLAIM } from "../helpers/config.mjs";
+
 export class ReclaimToken extends Token {
 
   //* @override */
@@ -40,11 +43,43 @@ export class ReclaimToken extends Token {
    * @override
    */
   _onClickLeft2( event ) {
-    if ( this.actor.type === `infrastructure` || this.actor.type === `resource` ) {
+    if ( this.actor.type === `resource` ) {
       return;
     }
 
+    if ( this.actor.type === `infrastructure` ) {
+      this.showCardPopout();
+    }
+
+
     super._onClickLeft2( event );
+  }
+
+  async showCardPopout() {
+
+    const cardId = this.document.getFlag( game.system.id, RECLAIM.Flags.TokenSpawnedByCardId );
+    if ( !cardId ) {
+      return;
+    }
+
+    let card;
+    for ( const stack of game.cards.contents ) {
+      card = stack.cards.find( card => card.id === cardId );
+      if ( card ) {
+        break;
+      }
+    }
+
+    if ( !card ) {
+      return;
+    }
+
+    const imagePopout = new ImagePopout( card.img, {
+      title: card.name,
+      uuid: card.link
+    } );
+
+    imagePopout.render( true );
   }
 
 }
