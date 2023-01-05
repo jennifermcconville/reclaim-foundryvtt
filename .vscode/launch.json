@@ -11,15 +11,20 @@
             "preLaunchTask": "build-then-run-node",
             "postDebugTask": "stop server",
             "request": "launch",
+            "runtimeArgs": [
+                ".",
+                "--remote-debugging-port=9223"
+            ],
             "skipFiles": [
                 "<node_internals>/**/*.js",
                 "node_modules/**/*.js"
             ],
             "pathMapping": {
                 "/systems/*": "C:/Code/FoundryLocal/Data/systems",
-                "/systems/reclaim": "${workspaceFolder}"
+                "/systems/reclaim": "${workspaceFolder}",
+                "/modules/hand-mini-bar/": "C:/Code/FoundryLocal/Data/modules/hand-mini-bar"
             },
-            "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public/scripts"
+            "webRoot": "C:/Program Files/Foundry Virtual Tabletop/resources/app/public"
         }
     ]
 }
