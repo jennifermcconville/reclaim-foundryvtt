@@ -168,6 +168,12 @@
         "type": "module",
         "manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
         "compatibility": {}
+      },
+      {
+        "id": "reclaim-default-world",
+        "type": "world",
+        "manifest": "https://github.com/jennifermcconville/reclaim-world-foundryvtt/releases/latest/download/world.json",
+        "compatibility": {}
       }
     ]
   }
