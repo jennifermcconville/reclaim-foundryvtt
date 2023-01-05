@@ -4,7 +4,6 @@
  *  @extends {Token}
  */
 
-'';
 
 import { RECLAIM } from "../helpers/config.mjs";
 

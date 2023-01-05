@@ -17,13 +17,6 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 
-/**
- * @typedef {Object} CardFolders
- * @property {Folder} cardHands A reference to the automatically created Card Hand folder
- * @property {Folder} playerHands A reference to the automatically created subfolder to cardHands, which
- * is meant to contain all player owned Card Hands.
- */
-
 Hooks.once( `init`, async function() {
 
   console.debug( `Initialising Reclaim System.` );
