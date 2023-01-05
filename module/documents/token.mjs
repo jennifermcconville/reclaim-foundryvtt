@@ -49,8 +49,8 @@ export class ReclaimToken extends Token {
 
     if ( this.actor.type === `infrastructure` ) {
       this.showCardPopout();
+      return;
     }
-
 
     super._onClickLeft2( event );
   }
