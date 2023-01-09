@@ -122,6 +122,12 @@
   "relationships": {
     "requires": [
       {
+        "id": "colorsettings",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/ardittristan/VTTColorSettings/master/module.json",
+        "compatibility": {}
+      },
+      {
         "id": "hand-mini-bar",
         "type": "module",
         "manifest": "https://gitlab.com/pengrath/hand-mini-bar/-/raw/main/module.json",
