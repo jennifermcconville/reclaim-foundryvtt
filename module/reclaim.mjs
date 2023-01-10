@@ -69,6 +69,9 @@ Hooks.once( `init`, async function() {
 Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
   UserCardsManager.onReady();
+
+  // Disable default pause when starting module
+  if ( game.paused ) {
+    game.togglePause( false );
+  }
 } ); // End hook ready
-
-
