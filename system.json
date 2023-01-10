@@ -122,6 +122,12 @@
   "relationships": {
     "requires": [
       {
+        "id": "colorsettings",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/ardittristan/VTTColorSettings/master/module.json",
+        "compatibility": {}
+      },
+      {
         "id": "hand-mini-bar",
         "type": "module",
         "manifest": "https://gitlab.com/pengrath/hand-mini-bar/-/raw/main/module.json",
@@ -167,6 +173,12 @@
         "id": "monks-active-tiles",
         "type": "module",
         "manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "reclaim-default-world",
+        "type": "world",
+        "manifest": "https://github.com/jennifermcconville/reclaim-world-foundryvtt/releases/latest/download/world.json",
         "compatibility": {}
       }
     ]
