@@ -8,6 +8,7 @@ import { ReclaimCard } from "./documents/card.mjs";
 // Import sheet classes.
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
 import { ReclaimCardConfig } from "./sheets/card-config-sheet.mjs";
+import { RelcaimTokenConfig } from "./placables/reclaim-token-config.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -29,6 +30,7 @@ Hooks.once( `init`, async function() {
     ReclaimCardsHandSheet,
     ReclaimCardConfig,
     ReclaimToken,
+    RelcaimTokenConfig,
     ReclaimTokenHUD
   };
 
@@ -48,6 +50,7 @@ Hooks.once( `init`, async function() {
   DocumentSheetConfig.unregisterSheet( Card, `core`, CardConfig, {
     label: `CARDS.Card`
   } );
+  DocumentSheetConfig.unregisterSheet( TokenDocument, `core`, TokenConfig );
 
   // Register sheet application classes
   DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
@@ -59,6 +62,11 @@ Hooks.once( `init`, async function() {
     label: `RECLAIM.Card`,
     makeDefault: true
   } );
+  DocumentSheetConfig.registerSheet( TokenDocument, `reclaim`, RelcaimTokenConfig, {
+    label: `RECLAIM.Token`,
+    makeDefault: true
+  } );
+
 
   // Propagate init to other js modules
 

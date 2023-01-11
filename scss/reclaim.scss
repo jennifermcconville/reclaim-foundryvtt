@@ -24,7 +24,6 @@
 @import "mod_overrides/hand_mini_bar";
 /* /Module overrides */
 
-/* Card Hand Sheet customization */
 body.vtt.game.system-reclaim {
   div.sheet.cards-config.hand {
     form.editable {
@@ -50,6 +49,15 @@ body.vtt.game.system-reclaim {
         padding-top: 4px;
       }
     }
-  }
+  } /* /Card Hand Sheet customization */
+
+  /* Token Sheet customization */
+  div.token-sheet {
+    div.form-group {
+      select,
+      input {
+        max-width: 273px;
+      }
+    }
+  } /* /Token Sheet customization */
 }
-/* /Card Hand Sheet customization */
