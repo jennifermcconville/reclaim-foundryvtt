@@ -62,7 +62,8 @@ export class UserCardsManager {
 
     const newHand = await ReclaimConnectedCards.create( {
       name: `${user.name} Hand`,
-      folder: cardFolders.playerHands
+      folder: cardFolders.playerHands,
+      type: `hand`
     } );
 
     user.setFlag( game.system.id, RECLAIM.Flags.UserCardHandId, newHand.id );
