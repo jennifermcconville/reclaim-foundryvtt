@@ -94,12 +94,6 @@ function setupOwnership() {
 
   for ( let cards of game.cards ) {
     correctDefaultOwnership( cards );
-
-    // For ( let child of cards.collections.cards ) {
-    //   if ( child.ownership ) {
-    //     child.ownership.default = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
-    //   }
-    // }
   }
 
   for ( let actor of game.actors ) {
@@ -112,12 +106,6 @@ function setupOwnership() {
       correctDefaultOwnership( entry );
     }
   }
-
-  // For ( let scene of game.scenes ) {
-  //   for ( let token of scene.tokens ) {
-  //     correctDefaultOwnership( token );
-  //   }
-  // }
 }
 
 /**
