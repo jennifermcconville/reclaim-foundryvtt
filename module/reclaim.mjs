@@ -78,6 +78,7 @@ Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
   UserCardsManager.onReady();
 
+  setupHotbar();
   setupOwnership();
 
   // Disable default pause when starting module
@@ -87,11 +88,9 @@ Hooks.once( `ready`, async function() {
 } ); // End hook ready
 
 /**
- * Sets the ownership for all tokens, actors, cards and journals to Owner for all players
+ * Sets the ownership for all actors, cards, journals and macros to Owner for all players
  */
 function setupOwnership() {
-  console.debug( `Setting up permissions.` );
-
   for ( let cards of game.cards ) {
     correctDefaultOwnership( cards );
   }
@@ -106,6 +105,11 @@ function setupOwnership() {
       correctDefaultOwnership( entry );
     }
   }
+
+  let hotbar = game.macros.apps.find( app => app.options.id === `hotbar` );
+  for ( let slot of hotbar.macros ) {
+    correctDefaultOwnership( slot.macro );
+  }
 }
 
 /**
@@ -115,6 +119,10 @@ function setupOwnership() {
  * @param {Document} document
  */
 function correctDefaultOwnership( document ) {
+  if ( !document ) {
+    return;
+  }
+
   if ( !document.ownership ) {
     return;
   }
@@ -126,6 +134,35 @@ function correctDefaultOwnership( document ) {
     document.update( {
       ownership: newOwnership
     } );
+  }
+}
+
+/**
+ * Adds all macros from the Reclaim Macros folder to all users hotbars.
+ */
+async function setupHotbar() {
+  console.debug( `Setting up Hotbar.` );
+
+  let hotbar = game.macros.apps.find( app => app.options.id === `hotbar` );
+  let macrosDirectory = game.macros.apps.find( app => app.options.id === `macros` );
+  let reclaimFolder = macrosDirectory.folders.find( folder => folder.name === `Reclaim Macros` );
+
+  for ( const macro of reclaimFolder.contents ) {
+    let foundMacro = hotbar.macros.find( barMacro => barMacro.macro?.id === macro.id );
+
+    if ( foundMacro ) {
+      continue; // Macro already in hotbar
+    }
+
+    let emptyPosition = hotbar.macros.find( slot => {
+      if ( slot.macro ) {
+        return false;
+      }
+
+      return true;
+    } );
+
+    await game.user.assignHotbarMacro( macro, emptyPosition.slot );
   }
 }
 
