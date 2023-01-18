@@ -78,8 +78,66 @@ Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
   UserCardsManager.onReady();
 
+  setupOwnership();
+
   // Disable default pause when starting module
   if ( game.paused ) {
     game.togglePause( false );
   }
 } ); // End hook ready
+
+/**
+ * Sets the ownership for all tokens, actors, cards and journals to Owner for all players
+ */
+function setupOwnership() {
+  console.debug( `Setting up permissions.` );
+
+  for ( let cards of game.cards ) {
+    correctDefaultOwnership( cards );
+
+    // For ( let child of cards.collections.cards ) {
+    //   if ( child.ownership ) {
+    //     child.ownership.default = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+    //   }
+    // }
+  }
+
+  for ( let actor of game.actors ) {
+    correctDefaultOwnership( actor );
+  }
+
+  for ( let journal of game.journal ) {
+    correctDefaultOwnership( journal );
+    for ( let entry of journal.collection ) {
+      correctDefaultOwnership( entry );
+    }
+  }
+
+  // For ( let scene of game.scenes ) {
+  //   for ( let token of scene.tokens ) {
+  //     correctDefaultOwnership( token );
+  //   }
+  // }
+}
+
+/**
+ *
+ * If default ownership not set to CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER, sets to CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER.
+ *
+ * @param {Document} document
+ */
+function correctDefaultOwnership( document ) {
+  if ( !document.ownership ) {
+    return;
+  }
+
+  if ( document.ownership.default !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER ) {
+
+    let newOwnership = document.ownership;
+    newOwnership.default = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+    document.update( {
+      ownership: newOwnership
+    } );
+  }
+}
+
