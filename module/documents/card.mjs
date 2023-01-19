@@ -19,7 +19,7 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
 
   const card = game.cards.get( args[ 1 ].cardsId ).cards.get( args[ 1 ].cardId );
 
-  if ( !card?.flags?.reclaim?.ReclaimCardsActorSpawnId ) {
+  if ( !card?.flags?.reclaim?.[ RECLAIM.Flags.CardSpawnsActorId ] ) {
     notifyCardMissingActor( card );
     return;
   }
@@ -36,7 +36,9 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
     assignCardToToken( newToken, card );
   } );
 
-  moveCard( card, game.user );
+  if ( card.flags?.reclaim?.[ RECLAIM.Flags.DrawOnPlay ] === true ) {
+    moveCard( card, game.user );
+  }
 }
 );
 

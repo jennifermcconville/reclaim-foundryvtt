@@ -44,6 +44,10 @@ export class UserCardsManager {
    * @param {Cards}hand
    */
   static async assingToMiniCardHand( user, hand ) {
+    if ( !hand || !user ) {
+      return;
+    }
+
     user.setFlag( HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
   }
 
@@ -84,7 +88,7 @@ export class UserCardsManager {
     let playerHandsFolder = game.folders.find( folder => folder.name === playerHandSubfolderName );
 
     if ( !cardHandsFolder ) {
-      cardHandsFolder = Folder.create( {
+      cardHandsFolder = await Folder.create( {
         name: cardHandFolderName,
         type: `Cards` }
       );

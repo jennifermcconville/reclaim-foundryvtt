@@ -27,6 +27,8 @@ export class ReclaimCardConfig extends CardConfig {
 
     result.allActors = game.actors.contents;
     result.selectedActor = this.object.getFlag( game.system.id, RECLAIM.Flags.CardSpawnsActorId );
+    result.drawOnPlay = this.object.getFlag( game.system.id, RECLAIM.Flags.DrawOnPlay );
+    result.drawOnPlay = ( typeof result.drawOnPlay !== `undefined` ) ? result.drawOnPlay : true; // Sets default value to true
 
     return result;
   }
@@ -42,6 +44,10 @@ export class ReclaimCardConfig extends CardConfig {
 
     if ( formData.actorSelect ) {
       this.object.setFlag( game.system.id, RECLAIM.Flags.CardSpawnsActorId, formData.actorSelect );
+    }
+
+    if ( formData.drawOnPlay === false || formData.drawOnPlay === true ) {
+      this.object.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, formData.drawOnPlay );
     }
 
     return result;

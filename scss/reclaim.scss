@@ -51,6 +51,14 @@ body.vtt.game.system-reclaim {
     }
   } /* /Card Hand Sheet customization */
 
+  div.card-config {
+    div.form-group {
+      #with-checkbox {
+        justify-content: flex-start;
+      }
+    }
+  }
+
   /* Token Sheet customization */
   div.token-sheet {
     div.form-group {
