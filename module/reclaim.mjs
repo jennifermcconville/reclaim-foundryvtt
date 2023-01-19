@@ -76,8 +76,8 @@ Hooks.once( `init`, async function() {
 
 Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
-  UserCardsManager.onReady();
 
+  UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
 

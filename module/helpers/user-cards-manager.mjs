@@ -6,37 +6,76 @@ import { ReclaimConnectedCards } from "../documents/connected-cards.mjs";
 export class UserCardsManager {
 
   static async onReady() {
-    const cardFolders = await UserCardsManager.ensureCardFolders(
+    const cardFolders = await UserCardsManager.createCardFolders(
       RECLAIM.FoundryFolderNames.CardHands,
       RECLAIM.FoundryFolderNames.PlayerCardHands
     );
 
     await game.users.forEach( user => {
-      let newHand = false;
-      let flag = user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
-      if ( !flag ) {
-        UserCardsManager.createUserCardHand( user, cardFolders );
-        newHand = true;
-      }
-
-      let userHandPromise = game.cards.find( cardHand => cardHand.id === flag );
-      if ( !userHandPromise ) {
-        userHandPromise = UserCardsManager.createUserCardHand( user, cardFolders );
-        newHand = true;
-      }
-
-      if ( newHand ) {
-        if ( userHandPromise.then ) {
-          userHandPromise.then( value => {
-            UserCardsManager.assingToMiniCardHand( user, value );
-          } );
-        } else {
-          UserCardsManager.assingToMiniCardHand( user, userHandPromise );
-        }
-      }
+      UserCardsManager.createPlayerHand( user, cardFolders );
+      UserCardsManager.drawHiddenAgenda( user );
     } );
   }
 
+  /**
+   *
+   * If not present in user's Card Hand, draws a random Hidden Agenda
+   *
+   * @param {User} user
+   */
+  static drawHiddenAgenda( user ) {
+    let flag = user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
+    if ( !flag ) {
+      return;
+    }
+
+    let userCardHand = game.cards.find( cardHand => cardHand.id === flag );
+    if ( !userCardHand ) {
+      return;
+    }
+
+    for ( const card of userCardHand.availableCards ) {
+      if ( card.origin.name === `Hidden Agenda` ) {
+        return; // Early out if player has a Hidden Agenda card already
+      }
+    }
+
+    // Draw random Hidden Agenda card to player hand
+    let hiddenAgendaDeck = game.cards.find( deck => deck.name === `Hidden Agenda` );
+    userCardHand.draw( hiddenAgendaDeck, 1, { how: CONST.CARD_DRAW_MODES.RANDOM } );
+  }
+
+  /**
+   *
+   * If one doesn't exist, creates a Card Hand and assigns it to a user Mini Card Hand, first slot.
+   *
+   * @param {User} user
+   * @param {Folder} cardFolders
+   */
+  static createPlayerHand( user, cardFolders ) {
+    let newHand = false;
+    let flag = user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
+    if ( !flag ) {
+      UserCardsManager.createUserCardHand( user, cardFolders );
+      newHand = true;
+    }
+
+    let userHandPromise = game.cards.find( cardHand => cardHand.id === flag );
+    if ( !userHandPromise ) {
+      userHandPromise = UserCardsManager.createUserCardHand( user, cardFolders );
+      newHand = true;
+    }
+
+    if ( newHand ) {
+      if ( userHandPromise.then ) {
+        userHandPromise.then( value => {
+          UserCardsManager.assingToMiniCardHand( user, value );
+        } );
+      } else {
+        UserCardsManager.assingToMiniCardHand( user, userHandPromise );
+      }
+    }
+  }
 
   /**
    * Make sure that the hand is displayed as the bottom card collection of hand-mini-bar for this user.
@@ -83,7 +122,7 @@ export class UserCardsManager {
    *
    * @returns {CardFolders}
    */
-  static async ensureCardFolders( cardHandFolderName, playerHandSubfolderName ) {
+  static async createCardFolders( cardHandFolderName, playerHandSubfolderName ) {
     let cardHandsFolder = game.folders.find( folder => folder.name === cardHandFolderName );
     let playerHandsFolder = game.folders.find( folder => folder.name === playerHandSubfolderName );
 
