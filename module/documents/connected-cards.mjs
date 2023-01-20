@@ -32,14 +32,17 @@ export class ReclaimConnectedCards extends Cards {
    * @param {Array.ReclaimConnectedCards} connectedHands Card hands that should be refilled
    */
   static async autoDrawCards( connectedHands ) {
-    if ( !Array.isArray( connectedHands ) ) {
-      if ( !( connectedHands instanceof ReclaimConnectedCards ) ) {
-        return;
-      }
+    if ( connectedHands instanceof ReclaimConnectedCards ) {
       connectedHands = [connectedHands];
     }
 
-    connectedHands.forEach( hand => ReclaimConnectedCards.autoDrawHandCards( hand ) );
+    connectedHands.forEach( hand => {
+      if ( !( hand instanceof ReclaimConnectedCards ) ) {
+        return;
+      }
+
+      ReclaimConnectedCards.autoDrawHandCards( hand );
+    } );
   }
 
   static async autoDrawHandCards( hand ) {

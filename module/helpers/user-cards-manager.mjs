@@ -15,6 +15,9 @@ export class UserCardsManager {
       UserCardsManager.createPlayerHand( user, cardFolders );
       UserCardsManager.drawHiddenAgenda( user );
     } );
+
+    // Refill all card hands
+    ReclaimConnectedCards.autoDrawCards( game.cards.contents );
   }
 
   /**
