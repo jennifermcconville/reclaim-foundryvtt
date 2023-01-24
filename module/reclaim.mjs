@@ -1,9 +1,13 @@
 /* eslint-disable no-undef */
 
+// Import application classes
+import { ReclaimSidebar } from "./apps/sidebar.mjs";
+
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 import { ReclaimCard } from "./documents/card.mjs";
+import { ReclaimChatMessage } from "./documents/chatt-message.mjs";
 
 // Import sheet classes.
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
@@ -25,13 +29,15 @@ Hooks.once( `init`, async function() {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
-    ReclaimConnectedCards,
     ReclaimCard,
     ReclaimCardsHandSheet,
     ReclaimCardConfig,
+    ReclaimChatMessage,
+    ReclaimConnectedCards,
     ReclaimToken,
     RelcaimTokenConfig,
-    ReclaimTokenHUD
+    ReclaimTokenHUD,
+    ReclaimSidebar
   };
 
   // Add custom constants for configuration.
@@ -41,6 +47,8 @@ Hooks.once( `init`, async function() {
   CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
   CONFIG.Card.documentClass = ReclaimCard;
+  CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
+  CONFIG.ui.sidebar = ReclaimSidebar;
 
   // Unregister default sheet
   DocumentSheetConfig.unregisterSheet( Cards, `core`, CardsHand, {
@@ -66,7 +74,6 @@ Hooks.once( `init`, async function() {
     label: `RECLAIM.Token`,
     makeDefault: true
   } );
-
 
   // Propagate init to other js modules
 
