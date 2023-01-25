@@ -24,8 +24,6 @@ import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 
 Hooks.once( `init`, async function() {
 
-  console.debug( `Initialising Reclaim System.` );
-
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
@@ -148,8 +146,6 @@ function correctDefaultOwnership( document ) {
  * Adds all macros from the Reclaim Macros folder to all users hotbars.
  */
 async function setupHotbar() {
-  console.debug( `Setting up Hotbar.` );
-
   let hotbar = game.macros.apps.find( app => app.options.id === `hotbar` );
   let macrosDirectory = game.macros.apps.find( app => app.options.id === `macros` );
   let reclaimFolder = macrosDirectory.folders.find( folder => folder.name === `Reclaim Macros` );
