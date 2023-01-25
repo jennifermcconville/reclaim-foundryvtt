@@ -9,6 +9,16 @@ export class ReclaimCard extends Card {
    * @override */
   prepareDerivedData() {
     super.prepareDerivedData();
+
+    const drawOnPlayFlag = this.flags?.reclaim?.[ RECLAIM.Flags.DrawOnPlay ];
+    if ( drawOnPlayFlag === null || drawOnPlayFlag === `undefined` ) {
+      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, RECLAIM.Enum.Yes );
+      return;
+    }
+
+    if ( typeof drawOnPlayFlag == `boolean` ) {
+      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, RECLAIM.Enum.Yes );
+    }
   }
 }
 
@@ -19,7 +29,7 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
 
   const card = game.cards.get( args[ 1 ].cardsId ).cards.get( args[ 1 ].cardId );
 
-  if ( !card?.flags?.reclaim?.ReclaimCardsActorSpawnId ) {
+  if ( !card?.flags?.reclaim?.[ RECLAIM.Flags.CardSpawnsActorId ] ) {
     notifyCardMissingActor( card );
     return;
   }
@@ -36,7 +46,13 @@ Hooks.on( `dropCanvasData`, async function( ...args ) {
     assignCardToToken( newToken, card );
   } );
 
-  moveCard( card, game.user );
+  const drawCardFlag = card.getFlag( game.system.id, RECLAIM.Flags.DrawOnPlay );
+
+  // Default behavior:
+  // If not boolean (not set) or true, move card
+  if ( typeof drawCardFlag !== `boolean` || drawCardFlag ) {
+    moveCard( card, game.user );
+  }
 }
 );
 

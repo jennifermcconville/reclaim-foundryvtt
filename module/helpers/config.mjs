@@ -5,7 +5,8 @@ export const RECLAIM = {
     ConnectedDeckArray: `ReclaimConnectedDecks`,
     CardSpawnsActorId: `ReclaimCardsActorSpawnId`,
     TokenSpawnedByCardId: `ReclaimTokenCardId`,
-    UserCardHandId: `ReclaimUserCardHandId`
+    UserCardHandId: `ReclaimUserCardHandId`,
+    DrawOnPlay: `ReclaimDrawOnPlay`
   },
   InputFields:
   {

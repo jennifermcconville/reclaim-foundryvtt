@@ -81,5 +81,37 @@ export class ReclaimToken extends Token {
     imagePopout.render( true );
   }
 
+  /**
+   * @inheritdoc
+   * @returns {string}
+   * @private
+   */
+  _getTooltipText() {
+
+    const parentCardId = this.document.getFlag( game.system.id, RECLAIM.Flags.TokenSpawnedByCardId );
+
+    let formattedName = ``;
+    for ( const stack of game.cards.contents ) {
+      if ( stack.type !== `deck` ) {
+        continue;
+      }
+
+      let card = stack.cards.find( c => c.id === parentCardId );
+      if ( !card ) {
+        continue;
+      }
+      formattedName = `${stack.name} - ${card.name}`;
+      break;
+    }
+
+    return formattedName;
+  }
+
+  /** @override */
+  _refresh( options ) {
+    super._refresh( options );
+    this.tooltip.visible = this.hover;
+  }
+
 }
 

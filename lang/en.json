@@ -1,3 +1,5 @@
 {
-  "RECLAIM.Add": "Add"
+  "RECLAIM.Add": "Add",
+  "RECLAIM.ChatMessage": "Game Event",
+  "RECLAIM.ChatMessages": "Game Events"
 }
