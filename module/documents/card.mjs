@@ -10,14 +10,14 @@ export class ReclaimCard extends Card {
   prepareDerivedData() {
     super.prepareDerivedData();
 
-    const drawOnPlayFlag = this.flags?.reclaim?.[ RECLAIM.Flags.DrawOnPlay ];
+    const drawOnPlayFlag = getFlag( game.system.id, RECLAIM.Flags.DrawOnPlay );
     if ( drawOnPlayFlag === null || drawOnPlayFlag === `undefined` ) {
-      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, RECLAIM.Enum.Yes );
+      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, true );
       return;
     }
 
-    if ( typeof drawOnPlayFlag == `boolean` ) {
-      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, RECLAIM.Enum.Yes );
+    if ( typeof drawOnPlayFlag !== `boolean` ) {
+      this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, true );
     }
   }
 }
