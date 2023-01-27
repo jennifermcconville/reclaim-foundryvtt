@@ -1,3 +1,5 @@
+
+
 export const RECLAIM = {
   Flags: {
     ConnectedDeckId: `ReclaimConnectedDeckId`,
@@ -6,7 +8,8 @@ export const RECLAIM = {
     CardSpawnsActorId: `ReclaimCardsActorSpawnId`,
     TokenSpawnedByCardId: `ReclaimTokenCardId`,
     UserCardHandId: `ReclaimUserCardHandId`,
-    DrawOnPlay: `ReclaimDrawOnPlay`
+    DrawOnPlay: `ReclaimDrawOnPlay`,
+    UserRole: `ReclaimUserRole`
   },
   InputFields:
   {

@@ -10,17 +10,7 @@ export class RelcaimTokenConfig extends TokenConfig {
    * */
   static get defaultOptions() {
     return foundry.utils.mergeObject( super.defaultOptions, {
-      classes: [`sheet`, `token-sheet`],
-      template: `systems/reclaim/templates/token-config.html`,
-      width: 480,
-      height: `auto`,
-      tabs: [
-        { navSelector: `.tabs[data-group="main"]`, contentSelector: `form`, initial: `character` },
-        { navSelector: `.tabs[data-group="light"]`, contentSelector: `.tab[data-tab="light"]`, initial: `basic` },
-        { navSelector: `.tabs[data-group="vision"]`, contentSelector: `.tab[data-tab="vision"]`, initial: `basic` }
-      ],
-      viewPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER,
-      sheetConfig: true
+      template: `systems/reclaim/templates/token-config.html`
     } );
   }
 
@@ -30,7 +20,6 @@ export class RelcaimTokenConfig extends TokenConfig {
    */
   async getData( options ) {
     let result = await super.getData( options );
-
 
     let allCards = [];
     let formattedName = ``;

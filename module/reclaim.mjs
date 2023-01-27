@@ -2,12 +2,14 @@
 
 // Import application classes
 import { ReclaimSidebar } from "./apps/sidebar.mjs";
+import { ReclaimPickRoleForm } from "./apps/pick-role-form.mjs";
 
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 import { ReclaimCard } from "./documents/card.mjs";
 import { ReclaimChatMessage } from "./documents/chatt-message.mjs";
+import { ReclaimUser } from "./documents/user.mjs";
 
 // Import sheet classes.
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
@@ -34,20 +36,24 @@ Hooks.once( `init`, async function() {
     ReclaimCardConfig,
     ReclaimChatMessage,
     ReclaimConnectedCards,
+    ReclaimPickRoleForm,
+    ReclaimSidebar,
     ReclaimToken,
     RelcaimTokenConfig,
     ReclaimTokenHUD,
-    ReclaimSidebar
+    ReclaimUser
   };
 
   // Add custom constants for configuration.
   CONFIG.RECLAIM = RECLAIM;
 
   // Define custom Document classes
-  CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
   CONFIG.Card.documentClass = ReclaimCard;
   CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
+  CONFIG.User.documentClass = ReclaimUser;
+
+  CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.ui.sidebar = ReclaimSidebar;
 
   // Unregister default sheet
@@ -75,6 +81,9 @@ Hooks.once( `init`, async function() {
     makeDefault: true
   } );
 
+  // Instantiate custom GUI elements
+  window.PickRoleForm = ReclaimPickRoleForm;
+
   // Propagate init to other js modules
 
   // Preload Handlebars templates.
@@ -87,6 +96,7 @@ Hooks.once( `ready`, async function() {
   UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
+  checkGameState();
 
   // Disable default pause when starting module
   if ( game.paused ) {
@@ -170,6 +180,25 @@ async function setupHotbar() {
     } );
 
     await game.user.assignHotbarMacro( macro, emptyPosition.slot );
+  }
+}
+
+/**
+ * Goes through all the users and checks if they have a valid derrivedRole.
+ * If not, displays dialog requesting users to pick roles.
+ */
+async function checkGameState() {
+  let allUserValid = true;
+  for ( const user of game.users ) {
+    if ( user.derivedRole || !( user.derivedRole.isValid() ) ) {
+      allUserValid = false;
+    }
+  }
+
+  if ( !allUserValid ) {
+
+    let form = new ReclaimPickRoleForm( game.users );
+    form.render( true );
   }
 }
 
