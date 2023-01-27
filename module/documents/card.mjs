@@ -10,7 +10,7 @@ export class ReclaimCard extends Card {
   prepareDerivedData() {
     super.prepareDerivedData();
 
-    const drawOnPlayFlag = getFlag( game.system.id, RECLAIM.Flags.DrawOnPlay );
+    let drawOnPlayFlag = this.getFlag( game.system.id, RECLAIM.Flags.DrawOnPlay );
     if ( drawOnPlayFlag === null || drawOnPlayFlag === `undefined` ) {
       this.setFlag( game.system.id, RECLAIM.Flags.DrawOnPlay, true );
       return;
