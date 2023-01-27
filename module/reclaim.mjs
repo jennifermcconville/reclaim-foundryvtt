@@ -158,9 +158,22 @@ function correctDefaultOwnership( document ) {
 async function setupHotbar() {
   let hotbar = game.macros.apps.find( app => app.options.id === `hotbar` );
   let macrosDirectory = game.macros.apps.find( app => app.options.id === `macros` );
-  let reclaimFolder = macrosDirectory.folders.find( folder => folder.name === `Reclaim Macros` );
+  let reclaimMacroFolder = macrosDirectory.folders.find( folder => folder.name === RECLAIM.FoundryFolderNames.Macros );
+  let reclaimMacros;
 
-  for ( const macro of reclaimFolder.contents ) {
+  if ( !reclaimMacroFolder ) {
+    let macroPack = game.packs.find( pack => pack.title === `Reclaim Macros` );
+    reclaimMacros = await macroPack.importAll( { folderName: RECLAIM.FoundryFolderNames.Macros } );
+  } else {
+    reclaimMacros = reclaimMacroFolder.contents;
+  }
+
+  if ( !reclaimMacros || !Array.isArray( reclaimMacros ) || reclaimMacros.length < 1 ) {
+    console.error( `Failed to set up Reclaim macros` );
+    return;
+  }
+
+  for ( let macro of reclaimMacros ) {
     let foundMacro = hotbar.macros.find( barMacro => barMacro.macro?.id === macro.id );
 
     if ( foundMacro ) {

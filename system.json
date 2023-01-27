@@ -78,7 +78,7 @@
       "flags": {}
     },
     {
-      "label": "Macro Pack",
+      "label": "Reclaim Macros",
       "type": "Macro",
       "name": "macro-pack",
       "path": "packs/macro-pack.db",

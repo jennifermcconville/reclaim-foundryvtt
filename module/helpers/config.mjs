@@ -18,7 +18,8 @@ export const RECLAIM = {
   },
   FoundryFolderNames: {
     CardHands: `Card Hands`,
-    PlayerCardHands: `Player's Hands`
+    PlayerCardHands: `Player's Hands`,
+    Macros: `Reclaim Macros`
   }
 };
 
