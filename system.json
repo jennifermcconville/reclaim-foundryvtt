@@ -88,10 +88,10 @@
       "index": []
     },
     {
-      "label": "Reclaim Card Hands",
+      "label": "Reclaim Revealed Cards",
       "type": "Cards",
-      "name": "reclaim-card-hands",
-      "path": "packs/reclaim-card-hands.db",
+      "name": "reclaim-revealed-card",
+      "path": "packs/reclaim-revealed-card.db",
       "system": "reclaim",
       "private": false,
       "flags": {},
