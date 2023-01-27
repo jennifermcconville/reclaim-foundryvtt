@@ -199,9 +199,15 @@ async function setupHotbar() {
 async function checkGameState() {
   let allUserValid = true;
   for ( const user of game.users ) {
-    if ( user.derivedRole || !( user.derivedRole.isValid() ) ) {
+    if ( user.derivedRole ) {
       allUserValid = false;
+      break;
     }
+
+    // If ( !( user.derivedRole.isValid() ) ) {
+    //   allUserValid = false;
+    //   break;
+    // }
   }
 
   if ( !allUserValid ) {

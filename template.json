@@ -1,25 +1,40 @@
 {
   "Actor": {
-    "types": ["infrastructure", "resource"],
+    "types": [
+      "infrastructure",
+      "resource"
+    ],
     "templates": {
-      "base": {
-      }
+      "base": {}
     },
-    "infrastructure": {
-
-    },
-    "resource": {
-
-    }
+    "infrastructure": {},
+    "resource": {}
   },
   "Item": {
-    "types": ["none"],
+    "types": [
+      "none"
+    ],
     "templates": {
-      "base": {
-      }
+      "base": {}
     },
-    "none":{
-      
-    }
+    "none": {}
+  },
+  "ReclaimUser": {
+    "role": -1
+  },
+  "PlayerRole": {
+    "types": [
+      "housing",
+      "treatment",
+      "farming",
+      "contractor"
+    ],
+    "templates": {
+      "base": {}
+    },
+    "housing": {},
+    "treatment": {},
+    "farming": {},
+    "contractor": {}
   }
 }
