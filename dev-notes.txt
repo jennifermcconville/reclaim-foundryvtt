@@ -1,3 +1,0 @@
-canvas.scene.deleteEmbeddedDocuments(this.constructor.documentName, ids)
-
-'Token' 'ktTSPs3jiZhnFZLQ'
