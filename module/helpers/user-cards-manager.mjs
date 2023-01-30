@@ -86,7 +86,7 @@ export class UserCardsManager {
    * @param {Cards}hand
    */
   static async assingToMiniCardHand( user, hand ) {
-    if ( !hand || !user ) {
+    if ( !hand || !user || typeof HandMiniBarModule === `undefined` ) {
       return;
     }
 
