@@ -199,19 +199,13 @@ async function setupHotbar() {
 async function checkGameState() {
   let allUserValid = true;
   for ( const user of game.users ) {
-    if ( user.derivedRole ) {
+    user.canModifyRole = ( game.users.current.isGM || user.isSelf );
+    if ( !user.derivedRole ) {
       allUserValid = false;
-      break;
     }
-
-    // If ( !( user.derivedRole.isValid() ) ) {
-    //   allUserValid = false;
-    //   break;
-    // }
   }
 
   if ( !allUserValid ) {
-
     let form = new ReclaimPickRoleForm( game.users );
     form.render( true );
   }

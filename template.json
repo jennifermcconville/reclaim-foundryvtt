@@ -18,23 +18,5 @@
       "base": {}
     },
     "none": {}
-  },
-  "ReclaimUser": {
-    "role": -1
-  },
-  "PlayerRole": {
-    "types": [
-      "housing",
-      "treatment",
-      "farming",
-      "contractor"
-    ],
-    "templates": {
-      "base": {}
-    },
-    "housing": {},
-    "treatment": {},
-    "farming": {},
-    "contractor": {}
   }
 }

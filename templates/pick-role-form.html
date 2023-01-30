@@ -1,21 +1,19 @@
-<form class="reclaim pick-role-form" action="">
-	{{#each users}}
+<form class="reclaim pick-role-form">
+	{{#each object.contents}}
         <div class="form-group">
-            <label>{{this.name}}</label>
-			{{#if this.isSelf }}  
-			<select name="roleId">
-                {{#select roleId}}
-					<option value="">None</option>
+            <label>{{this.name}} (role: {{this.reclaimRole}} {{this.system.reclaimRole}})</label>
+			{{#if this.canModifyRole }}  
+			<select name="reclaimRole" id="{{this.id}}">
+                {{#select flags.reclaim.ReclaimUserRole}}
 					{{#each ../roles}}
 						<option value="{{this}}">{{this}}</option>
 					{{/each}}
                 {{/select}}
             </select>
 			{{/if}}
-			{{#unless this.isSelf}}
-				<select name="roleId" disabled>
-					{{#select roleId}}
-						<option value="">None</option>
+			{{#unless this.canModifyRole}}
+				<select name="reclaimRole" disabled>
+					{{#select flags.reclaim.ReclaimUserRole}}
 						{{#each ../roles}}
 							<option value="{{this}}">{{this}}</option>
 						{{/each}}
