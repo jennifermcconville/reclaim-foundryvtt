@@ -115,6 +115,43 @@ function setupOwnership() {
   for ( let slot of hotbar.macros ) {
     correctDefaultOwnership( slot.macro );
   }
+
+  ApplyDefaultModuleSettings();
+}
+
+/**
+ * Sets default values for this combination of System and Module
+ */
+function ApplyDefaultModuleSettings() {
+  if ( game.users.current.isGM ) {
+    if ( game.settings.get( `hide-player-ui`, `settings` ) ) {
+      game.settings.set( `hide-player-ui`, `settings`, {
+        hideControls: false,
+        hideCustomHotbar: true,
+        hideHotbar: false,
+        hideLogo: true,
+        hideNavigation: {
+          complete: true,
+          navToggle: true,
+          sceneList: true,
+          bossBar: true
+        },
+        hidePlayerConfig: true,
+        hidePlayers: false,
+        hideSideBar: {
+          complete: false,
+          chatLog: false,
+          combatTracker: true,
+          actorsDirectory: false,
+          itemsDirectory: true
+
+          // ...
+        },
+        hideTokenActionHUD: true,
+        hideTokenHUD: false
+      } );
+    }
+  }
 }
 
 /**
@@ -132,12 +169,14 @@ function correctDefaultOwnership( document ) {
     return;
   }
 
-  if ( document.ownership.default !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER ) {
+  if ( !game.users.current.isGM ) {
+    return;
+  }
 
-    let newOwnership = document.ownership;
-    newOwnership.default = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
+  if ( document.ownership.default !== CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER ) {
+    document.ownership.default = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
     document.update( {
-      ownership: newOwnership
+      ownership: document.ownership
     } );
   }
 }

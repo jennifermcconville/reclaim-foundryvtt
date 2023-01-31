@@ -45,7 +45,10 @@ export class UserCardsManager {
 
     // Draw random Hidden Agenda card to player hand
     let hiddenAgendaDeck = game.cards.find( deck => deck.name === `Hidden Agenda` );
-    userCardHand.draw( hiddenAgendaDeck, 1, { how: CONST.CARD_DRAW_MODES.RANDOM } );
+
+    if ( hiddenAgendaDeck ) {
+      userCardHand.draw( hiddenAgendaDeck, 1, { how: CONST.CARD_DRAW_MODES.RANDOM } );
+    }
   }
 
   /**
@@ -109,7 +112,10 @@ export class UserCardsManager {
     const newHand = await ReclaimConnectedCards.create( {
       name: `${user.name} Hand`,
       folder: cardFolders.playerHands,
-      type: `hand`
+      type: `hand`,
+      ownership: {
+        default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+      }
     } );
 
     user.setFlag( game.system.id, RECLAIM.Flags.UserCardHandId, newHand.id );
