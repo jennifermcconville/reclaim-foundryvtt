@@ -44,7 +44,7 @@ export class ReclaimPickRoleForm extends FormApplication {
       return;
     }
 
-    user.setFlag( game.system.id, RECLAIM.Flags.UserRole, selectedRole );
+    user.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, selectedRole );
   }
 
   /**

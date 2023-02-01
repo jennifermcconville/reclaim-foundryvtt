@@ -23,6 +23,7 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
+import { ReclaimSceneRoleValidator } from "./helpers/sceneRoleValidator.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -39,7 +40,8 @@ Hooks.once( `init`, async function() {
     ReclaimToken,
     RelcaimTokenConfig,
     ReclaimTokenHUD,
-    ReclaimUser
+    ReclaimUser,
+    ReclaimSceneRoleValidator
   };
 
   // Add custom constants for configuration.
@@ -94,7 +96,9 @@ Hooks.once( `ready`, async function() {
   UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
-  checkGameState();
+  ReclaimSceneRoleValidator.checkGameState( game.scenes.current, game.users );
+
+  ApplyDefaultModuleSettings();
 
   // Disable default pause when starting module
   if ( game.paused ) {
@@ -125,8 +129,6 @@ function setupOwnership() {
   for ( let slot of hotbar.macros ) {
     correctDefaultOwnership( slot.macro );
   }
-
-  ApplyDefaultModuleSettings();
 }
 
 /**
@@ -231,22 +233,4 @@ async function setupHotbar() {
   }
 }
 
-/**
- * Goes through all the users and checks if they have a valid derrivedRole.
- * If not, displays dialog requesting users to pick roles.
- */
-async function checkGameState() {
-  let allUserValid = true;
-  for ( const user of game.users ) {
-    user.canModifyRole = ( game.users.current.isGM || user.isSelf );
-    if ( !user.derivedRole ) {
-      allUserValid = false;
-    }
-  }
-
-  if ( !allUserValid ) {
-    let form = new ReclaimPickRoleForm( game.users );
-    form.render( true );
-  }
-}
 

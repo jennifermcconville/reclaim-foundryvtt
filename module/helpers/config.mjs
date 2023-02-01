@@ -9,7 +9,7 @@ export const RECLAIM = {
     TokenSpawnedByCardId: `ReclaimTokenCardId`,
     UserCardHandId: `ReclaimUserCardHandId`,
     DrawOnPlay: `ReclaimDrawOnPlay`,
-    UserRole: `ReclaimUserRole`
+    UserSceneRole: `ReclaimSceneUserRole`
   },
   InputFields:
   {
@@ -20,6 +20,14 @@ export const RECLAIM = {
     CardHands: `Card Hands`,
     PlayerCardHands: `Player's Hands`,
     Macros: `Reclaim Macros`
+  },
+  SceneRoles: {
+    Observer: `Observer`,
+    Farmer: `Farmer`,
+    Housing: `Housing`,
+    Treatment: `Treatment`,
+    Contractor: `Contractor`
   }
 };
+
 
