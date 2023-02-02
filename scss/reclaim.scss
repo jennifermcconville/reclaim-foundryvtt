@@ -68,4 +68,13 @@ body.vtt.game.system-reclaim {
       }
     }
   } /* /Token Sheet customization */
+
+  div.reclaim-chat-box {
+    flex: none;
+  }
+
+  div.reclaim-chat-box-button {
+    margin: 3px;
+    padding: 1px;
+  }
 }

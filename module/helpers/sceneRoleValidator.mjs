@@ -13,57 +13,26 @@ export class ReclaimSceneRoleValidator {
    */
   static async checkGameState( scene, users ) {
     let allUserValid = true;
-    let assignedRoles = new Map();
-
-    for ( const property in RECLAIM.SceneRoles ) {
-      if ( Object.hasOwnProperty.call( RECLAIM.SceneRoles, property ) ) {
-        const roleName = RECLAIM.SceneRoles[ property ];
-        assignedRoles.set( roleName, 0 );
-      }
-    }
+    let roleCount = ReclaimSceneRoleValidator.createRoleIntMap();
 
 
-    let userSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-    if ( !userSceneRoles ) {
-      userSceneRoles = {};
+    let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+    if ( !assignedSceneRoles ) {
+      assignedSceneRoles = {};
       if ( users.current.isGM ) {
-        let document = await scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, userSceneRoles );
-        userSceneRoles = document.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+        let document = await scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, assignedSceneRoles );
+        assignedSceneRoles = document.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
       }
     }
 
     // Check if each user has valid role
-    for ( const user of users ) {
-      const currentUserRole = userSceneRoles[ user.id ];
-
-      if ( !currentUserRole ) { // User doesn't have a role
-        userSceneRoles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUserValid = false;
-        continue;
-      }
-
-      if ( !RECLAIM.SceneRoles[ currentUserRole ] ) { // User role is invalid
-        userSceneRoles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUserValid = false;
-        continue;
-      }
-
-      if ( !assignedRoles.has( currentUserRole ) ) {
-        userSceneRoles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUserValid = false;
-        continue;
-      }
-
-      let increment = assignedRoles.get( currentUserRole );
-      increment++;
-      assignedRoles.set( currentUserRole, increment );
-    }
+    allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles, roleCount );
 
     if ( users.current.isGM && !allUserValid ) {
-      scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, userSceneRoles );
+      scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, assignedSceneRoles );
     }
 
-    for ( const pair of assignedRoles ) {
+    for ( const pair of roleCount ) {
       if ( pair[ 1 ] <= 0 ) {
         allUserValid = false;
         break;
@@ -71,8 +40,52 @@ export class ReclaimSceneRoleValidator {
     }
 
     if ( !allUserValid ) {
+      scene.setFlag( game.system.id, RECLAIM.Flags.GameState, RECLAIM.GameState.RolesNotSelected );
       let form = new ReclaimPickRoleForm( users );
       form.render( true );
     }
   }
+
+  static validateUserRoles( users, assignedSceneroles, roleCount ) {
+    let allUsersValid = true;
+    for ( const user of users ) {
+      const assignedUserRole = assignedSceneroles[ user.id ];
+
+      if ( !assignedUserRole ) { // User doesn't have a role
+        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
+        allUsersValid = false;
+        continue;
+      }
+
+      if ( !RECLAIM.SceneRoles[ assignedUserRole ] ) { // User role is invalid
+        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
+        allUsersValid = false;
+        continue;
+      }
+
+      if ( !roleCount.has( assignedUserRole ) ) {
+        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
+        allUsersValid = false;
+        continue;
+      }
+
+      let increment = roleCount.get( assignedUserRole );
+      increment++;
+      roleCount.set( assignedUserRole, increment );
+    }
+
+    return allUsersValid;
+  }
+
+  static createRoleIntMap() {
+    let result = new Map();
+    for ( const property in RECLAIM.SceneRoles ) {
+      if ( Object.hasOwnProperty.call( RECLAIM.SceneRoles, property ) ) {
+        const roleName = RECLAIM.SceneRoles[ property ];
+        result.set( roleName, 0 );
+      }
+    }
+    return result;
+  }
+
 }

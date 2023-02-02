@@ -3,6 +3,7 @@
 // Import application classes
 import { ReclaimSidebar } from "./apps/sidebar.mjs";
 import { ReclaimPickRoleForm } from "./apps/pick-role-form.mjs";
+import { ReclaimChatLog } from "./apps/chat-log.mjs";
 
 // Import document classes.
 import { ReclaimToken } from "./documents/token.mjs";
@@ -33,6 +34,7 @@ Hooks.once( `init`, async function() {
     ReclaimCard,
     ReclaimCardsHandSheet,
     ReclaimCardConfig,
+    ReclaimChatLog,
     ReclaimChatMessage,
     ReclaimConnectedCards,
     ReclaimPickRoleForm,
@@ -46,6 +48,8 @@ Hooks.once( `init`, async function() {
 
   // Add custom constants for configuration.
   CONFIG.RECLAIM = RECLAIM;
+
+  CONFIG.ui.chat = ReclaimChatLog;
 
   // Define custom Document classes
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
