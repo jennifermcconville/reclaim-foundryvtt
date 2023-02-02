@@ -3,6 +3,13 @@
 import { RECLAIM } from "./config.mjs";
 import { ReclaimPickRoleForm } from "../apps/pick-role-form.mjs";
 
+Hooks.on( `canvasReady`, async function( canvas ) {
+  let allRolesValid = ReclaimSceneRoleValidator.checkGameState( canvas.scene, game.users );
+  let form = new ReclaimPickRoleForm( game.users );
+  form.render( true );
+} );
+
+
 export class ReclaimSceneRoleValidator {
 
   /**
@@ -14,7 +21,6 @@ export class ReclaimSceneRoleValidator {
   static async checkGameState( scene, users ) {
     let allUserValid = true;
     let roleCount = ReclaimSceneRoleValidator.createRoleIntMap();
-
 
     let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
     if ( !assignedSceneRoles ) {
@@ -41,9 +47,9 @@ export class ReclaimSceneRoleValidator {
 
     if ( !allUserValid ) {
       scene.setFlag( game.system.id, RECLAIM.Flags.GameState, RECLAIM.GameState.RolesNotSelected );
-      let form = new ReclaimPickRoleForm( users );
-      form.render( true );
     }
+
+    return allUserValid;
   }
 
   static validateUserRoles( users, assignedSceneroles, roleCount ) {

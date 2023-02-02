@@ -16,6 +16,7 @@ import { ReclaimUser } from "./documents/user.mjs";
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
 import { ReclaimCardConfig } from "./sheets/card-config-sheet.mjs";
 import { RelcaimTokenConfig } from "./placables/reclaim-token-config.mjs";
+import { ReclaimSceneConfig } from "./sheets/scene-config.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -24,7 +25,7 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
-import { ReclaimSceneRoleValidator } from "./helpers/sceneRoleValidator.mjs";
+import { ReclaimSceneRoleValidator } from "./helpers/scene-role-validator.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -38,6 +39,7 @@ Hooks.once( `init`, async function() {
     ReclaimChatMessage,
     ReclaimConnectedCards,
     ReclaimPickRoleForm,
+    ReclaimSceneConfig,
     ReclaimSidebar,
     ReclaimToken,
     RelcaimTokenConfig,
@@ -69,6 +71,7 @@ Hooks.once( `init`, async function() {
     label: `CARDS.Card`
   } );
   DocumentSheetConfig.unregisterSheet( TokenDocument, `core`, TokenConfig );
+  DocumentSheetConfig.unregisterSheet( Scene, `core`, SceneConfig );
 
   // Register sheet application classes
   DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
@@ -82,6 +85,10 @@ Hooks.once( `init`, async function() {
   } );
   DocumentSheetConfig.registerSheet( TokenDocument, `reclaim`, RelcaimTokenConfig, {
     label: `RECLAIM.Token`,
+    makeDefault: true
+  } );
+  DocumentSheetConfig.registerSheet( Scene, `reclaim`, ReclaimSceneConfig, {
+    label: `RECLAIM.Scene`,
     makeDefault: true
   } );
 
@@ -100,7 +107,6 @@ Hooks.once( `ready`, async function() {
   UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
-  ReclaimSceneRoleValidator.checkGameState( game.scenes.current, game.users );
 
   ApplyDefaultModuleSettings();
 
