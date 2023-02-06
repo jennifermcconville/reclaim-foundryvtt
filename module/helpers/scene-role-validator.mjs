@@ -23,7 +23,6 @@ export class ReclaimSceneRoleValidator {
    */
   static async checkGameState( scene, users ) {
     let allUserValid = true;
-    let roleCount = ReclaimSceneRoleValidator.createRoleIntMap();
 
     let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
     if ( !assignedSceneRoles ) {
@@ -34,7 +33,7 @@ export class ReclaimSceneRoleValidator {
     allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
 
     if ( !allUserValid ) {
-      Hooks.callAll( `playerRolesInvalid`, canvas.scene );
+      Hooks.callAll( RECLAIM.Hooks.PlayerRolesInvalid, canvas.scene );
     }
 
   }
@@ -70,18 +69,16 @@ export class ReclaimSceneRoleValidator {
       }
     }
 
-    return true;
-  }
+    for ( const roleKey in RECLAIM.SceneRoles ) {
+      if ( RECLAIM.SceneRoles[ roleKey ] === RECLAIM.SceneRoles.Observer ) {
+        continue;
+      }
 
-  static createRoleIntMap() {
-    let result = new Map();
-    for ( const property in RECLAIM.SceneRoles ) {
-      if ( Object.hasOwnProperty.call( RECLAIM.SceneRoles, property ) ) {
-        const roleName = RECLAIM.SceneRoles[ property ];
-        result.set( roleName, 0 );
+      if ( roleCount[ RECLAIM.SceneRoles[ roleKey ] ] !== 1 ) {
+        return false;
       }
     }
-    return result;
-  }
 
+    return true;
+  }
 }
