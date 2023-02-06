@@ -31,6 +31,9 @@ export const RECLAIM = {
   },
   GameState: {
     RolesNotSelected: `RolesNotSelected`
+  },
+  Hooks: {
+    PlayerRolesInvalid: `ReclaimPlayerRolesInvalid`
   }
 };
 

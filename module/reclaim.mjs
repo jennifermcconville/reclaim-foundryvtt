@@ -2,7 +2,6 @@
 
 // Import application classes
 import { ReclaimSidebar } from "./apps/sidebar.mjs";
-import { ReclaimPickRoleForm } from "./apps/pick-role-form.mjs";
 import { ReclaimChatLog } from "./apps/chat-log.mjs";
 
 // Import document classes.
@@ -38,7 +37,6 @@ Hooks.once( `init`, async function() {
     ReclaimChatLog,
     ReclaimChatMessage,
     ReclaimConnectedCards,
-    ReclaimPickRoleForm,
     ReclaimSceneConfig,
     ReclaimSidebar,
     ReclaimToken,
@@ -91,9 +89,6 @@ Hooks.once( `init`, async function() {
     label: `RECLAIM.Scene`,
     makeDefault: true
   } );
-
-  // Instantiate custom GUI elements
-  window.PickRoleForm = ReclaimPickRoleForm;
 
   // Propagate init to other js modules
 

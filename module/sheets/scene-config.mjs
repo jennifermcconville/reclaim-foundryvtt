@@ -26,13 +26,13 @@ export class ReclaimSceneConfig extends SceneConfig {
     let userData = [];
     for ( const user of game.users.contents ) {
 
-      // Const assignedRole = this.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+      const assignedRoles = this.object.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
 
       userData.push( {
         name: user.name,
         id: user.id,
         sceneRoles: RECLAIM.SceneRoles,
-        assignedRole: `Not assigned`
+        assignedRole: assignedRoles[ user.id ]
       } );
     }
 
@@ -41,5 +41,21 @@ export class ReclaimSceneConfig extends SceneConfig {
         users: userData
       } );
     return merged;
+  }
+
+  /**
+   * @override
+   * @inheritdoc
+   */
+  async _updateObject( event, formData ) {
+    super._updateObject( event, formData );
+
+    let usersRoleData = {};
+    for ( const user of game.users.contents ) {
+      usersRoleData[ user.id ] = formData[ `userRole-${user.id}` ];
+    }
+
+    this.object.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, usersRoleData );
+
   }
 }

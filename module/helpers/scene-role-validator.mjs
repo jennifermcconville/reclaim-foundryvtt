@@ -1,12 +1,15 @@
 /* eslint-disable no-undef */
 
 import { RECLAIM } from "./config.mjs";
-import { ReclaimPickRoleForm } from "../apps/pick-role-form.mjs";
 
 Hooks.on( `canvasReady`, async function( canvas ) {
-  let allRolesValid = ReclaimSceneRoleValidator.checkGameState( canvas.scene, game.users );
-  let form = new ReclaimPickRoleForm( game.users );
-  form.render( true );
+  ReclaimSceneRoleValidator.checkGameState( canvas.scene, game.users );
+} );
+
+Hooks.on( `updateScene`, async function( scene, args ) {
+  if ( typeof args?.flags?.reclaim?.ReclaimSceneUserRole !== `undefined` ) {
+    ReclaimSceneRoleValidator.checkGameState( scene, game.users );
+  }
 } );
 
 
@@ -24,63 +27,50 @@ export class ReclaimSceneRoleValidator {
 
     let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
     if ( !assignedSceneRoles ) {
-      assignedSceneRoles = {};
-      if ( users.current.isGM ) {
-        let document = await scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, assignedSceneRoles );
-        assignedSceneRoles = document.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-      }
+      allUserValid = false;
     }
 
     // Check if each user has valid role
-    allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles, roleCount );
-
-    if ( users.current.isGM && !allUserValid ) {
-      scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, assignedSceneRoles );
-    }
-
-    for ( const pair of roleCount ) {
-      if ( pair[ 1 ] <= 0 ) {
-        allUserValid = false;
-        break;
-      }
-    }
+    allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
 
     if ( !allUserValid ) {
-      scene.setFlag( game.system.id, RECLAIM.Flags.GameState, RECLAIM.GameState.RolesNotSelected );
+      Hooks.callAll( `playerRolesInvalid`, canvas.scene );
     }
 
-    return allUserValid;
   }
 
-  static validateUserRoles( users, assignedSceneroles, roleCount ) {
-    let allUsersValid = true;
+  static validateUserRoles( users, assignedSceneRoles ) {
+    let roleCount = {};
+    for ( const roleKey in RECLAIM.SceneRoles ) {
+      roleCount[ RECLAIM.SceneRoles[ roleKey ] ] = 0;
+    }
+
     for ( const user of users ) {
-      const assignedUserRole = assignedSceneroles[ user.id ];
+      const assignedUserRole = assignedSceneRoles[ user.id ];
 
       if ( !assignedUserRole ) { // User doesn't have a role
-        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUsersValid = false;
-        continue;
+        return false;
       }
 
       if ( !RECLAIM.SceneRoles[ assignedUserRole ] ) { // User role is invalid
-        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUsersValid = false;
+        return false;
+      }
+
+      if ( !( assignedUserRole in roleCount ) ) {
+        return false;
+      }
+
+      if ( assignedUserRole === RECLAIM.SceneRoles.Observer ) {
         continue;
       }
 
-      if ( !roleCount.has( assignedUserRole ) ) {
-        assignedSceneroles[ user.id ] = RECLAIM.SceneRoles.Observer;
-        allUsersValid = false;
-        continue;
+      roleCount[ assignedUserRole ]++;
+      if ( roleCount[ assignedUserRole ] !== 1 ) {
+        return false;
       }
-
-      let increment = roleCount.get( assignedUserRole );
-      increment++;
-      roleCount.set( assignedUserRole, increment );
     }
 
-    return allUsersValid;
+    return true;
   }
 
   static createRoleIntMap() {

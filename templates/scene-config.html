@@ -6,7 +6,7 @@
         <a class="item" data-tab="grid"><i class="fas fa-ruler"></i> {{localize "SCENES.HeaderGrid"}}</a>
         <a class="item" data-tab="lighting"><i class="fas fas fa-lightbulb"></i> {{localize "SCENES.HeaderVision"}}</a>
         <a class="item" data-tab="ambience"><i class="fas fa-cloud-sun"></i> {{localize "SCENES.HeaderAmbience"}}</a>
-		<a class="item" data-tab="scene-roles"><i class="fas fa-users"></i> Player Roles</a>
+        <a class="item" data-tab="scene-roles"><i class="fas fa-users"></i> Player Roles</a>
     </nav>
 
     <!-- Basic Tab -->
@@ -14,7 +14,7 @@
         <div class="form-group">
             <label>{{localize "SCENES.SceneName"}}</label>
             <div class="form-fields">
-                <input type="text" name="name" placeholder="{{localize 'Name'}}" value="{{data.name}}"/>
+                <input type="text" name="name" placeholder="{{localize 'Name'}}" value="{{data.name}}" />
             </div>
         </div>
 
@@ -23,13 +23,13 @@
             <div class="form-fields">
                 <label class="checkbox">
                     {{localize "SCENES.ShowNav"}}
-                    <input type="checkbox" name="navigation" {{checked data.navigation}}/>
+                    <input type="checkbox" name="navigation" {{checked data.navigation}} />
                 </label>
                 <select name="ownership.default" data-dtype="Number">
-                {{#select data.ownership.default}}
+                    {{#select data.ownership.default}}
                     <option value="0">{{localize "SCENES.AccessibilityGM"}}</option>
                     <option value="2">{{localize "SCENES.AccessibilityAll"}}</option>
-                {{/select}}
+                    {{/select}}
                 </select>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <div class="form-group">
             <label>{{localize "SCENES.NavName"}}</label>
             <div class="form-fields">
-                <input type="text" name="navName" value="{{data.navName}}"/>
+                <input type="text" name="navName" value="{{data.navName}}" />
             </div>
             <p class="notes">{{localize "SCENES.NavNameHint"}}</p>
         </div>
@@ -48,7 +48,7 @@
             <div class="form-fields">
                 {{filePicker target="background.src" type="imagevideo"}}
                 <input class="image" type="text" name="background.src" placeholder="{{localize 'File Path'}}"
-                       value="{{data.background.src}}"/>
+                    value="{{data.background.src}}" />
             </div>
             <p class="notes">{{localize "SCENES.BackgroundImageHint"}}</p>
         </div>
@@ -57,7 +57,8 @@
             <label>{{localize "SCENES.ForegroundImage"}}</label>
             <div class="form-fields">
                 {{filePicker target="foreground" type="imagevideo"}}
-                <input class="image" type="text" name="foreground" placeholder="{{localize 'File Path'}}" value="{{data.foreground}}"/>
+                <input class="image" type="text" name="foreground" placeholder="{{localize 'File Path'}}"
+                    value="{{data.foreground}}" />
             </div>
             <p class="notes">{{localize "SCENES.ForegroundImageHint"}}</p>
         </div>
@@ -81,15 +82,15 @@
         <div class="form-group initial-position">
             <label>{{localize "SCENES.InitialView"}}</label>
             <div class="form-fields">
-                <button class="capture-position" type="button" title="{{ localize "SCENES.InitialViewButton" }}">
+                <button class="capture-position" type="button" title="{{ localize " SCENES.InitialViewButton" }}">
                     <i class="fas fa-crop-alt fa-fw"></i>
                 </button>
                 <label>X</label>
-                <input type="number" name="initial.x" placeholder="0" value="{{data.initial.x}}" step="1"/>
+                <input type="number" name="initial.x" placeholder="0" value="{{data.initial.x}}" step="1" />
                 <label>Y</label>
-                <input type="number" name="initial.y" placeholder="0" value="{{data.initial.y}}" step="1"/>
+                <input type="number" name="initial.y" placeholder="0" value="{{data.initial.y}}" step="1" />
                 <label>{{localize "SCENES.ZoomLower"}}</label>
-                <input type="number" name="initial.scale" placeholder="1" value="{{data.initial.scale}}" step="any"/>
+                <input type="number" name="initial.scale" placeholder="1" value="{{data.initial.scale}}" step="any" />
             </div>
             <p class="notes">{{localize "SCENES.InitialViewHint"}}</p>
         </div>
@@ -100,7 +101,7 @@
         <div class="form-group">
             <label>{{localize "SCENES.GridType"}}</label>
             <div class="form-fields">
-                <button type="button" class="grid-config" title="{{ localize "SCENES.GridConfigTool" }}">
+                <button type="button" class="grid-config" title="{{ localize " SCENES.GridConfigTool" }}">
                     <i class="fas fa-ruler-combined"></i>
                 </button>
                 <select name="grid.type" data-dtype="Number">
@@ -121,9 +122,9 @@
             <label>{{localize "SCENES.Dimensions"}} <span class="units">({{localize "SCENES.Pixels"}})</span></label>
             <div class="form-fields">
                 <label class="grid-label">{{localize "Width"}}</label>
-                <input type="number" name="width" placeholder="{{localize 'SCENES.Pixels'}}" value="{{data.width}}"/>
+                <input type="number" name="width" placeholder="{{localize 'SCENES.Pixels'}}" value="{{data.width}}" />
                 <label class="grid-label">{{localize "Height"}}</label>
-                <input type="number" name="height" placeholder="{{localize 'SCENES.Pixels'}}" value="{{data.height}}"/>
+                <input type="number" name="height" placeholder="{{localize 'SCENES.Pixels'}}" value="{{data.height}}" />
             </div>
             <p class="notes">{{localize "SCENES.DimensionsHint"}}</p>
         </div>
@@ -131,7 +132,7 @@
         <div class="form-group">
             <label>{{localize "SCENES.Padding"}}</label>
             <div class="form-fields">
-                <input type="range" name="padding" value="{{data.padding}}" min="0" max="0.5" step="0.05"/>
+                <input type="range" name="padding" value="{{data.padding}}" min="0" max="0.5" step="0.05" />
                 <span class="range-value">{{data.padding}}</span>
             </div>
             <p class="notes">{{localize "SCENES.PaddingHint"}}</p>
@@ -154,7 +155,7 @@
                 <label class="grid-label">{{localize "SCENES.GridDistance"}}</label>
                 {{numberInput data.grid.distance name="grid.distance" placeholder=1}}
                 <label class="grid-label">{{localize "SCENES.GridUnits"}}</label>
-                <input type="text" name="grid.units" placeholder="{{localize "None"}}" value="{{data.grid.units}}"/>
+                <input type="text" name="grid.units" placeholder="{{localize " None"}}" value="{{data.grid.units}}" />
             </div>
         </div>
 
@@ -177,13 +178,13 @@
     <div class="tab" data-tab="lighting">
         <div class="form-group">
             <label>{{localize "SCENES.TokenVision"}}</label>
-            <input type="checkbox" name="tokenVision" {{checked data.tokenVision}}/>
+            <input type="checkbox" name="tokenVision" {{checked data.tokenVision}} />
             <p class="notes">{{localize "SCENES.TokenVisionHint"}}</p>
         </div>
 
         <div class="form-group">
             <label>{{localize "SCENES.FogExplore"}}</label>
-            <input type="checkbox" name="fogExploration" {{checked data.fogExploration}}/>
+            <input type="checkbox" name="fogExploration" {{checked data.fogExploration}} />
             <p class="notes">{{localize "SCENES.FogExploreHint"}}</p>
         </div>
 
@@ -191,7 +192,8 @@
             <label>{{localize "SCENES.FogOverlay"}}</label>
             <div class="form-fields">
                 {{filePicker target="fogOverlay" type="imagevideo"}}
-                <input class="image" type="text" name="fogOverlay" placeholder="{{localize 'File Path'}}" value="{{data.fogOverlay}}"/>
+                <input class="image" type="text" name="fogOverlay" placeholder="{{localize 'File Path'}}"
+                    value="{{data.fogOverlay}}" />
             </div>
             <p class="notes">{{localize "SCENES.FogOverlayHint"}}</p>
         </div>
@@ -215,14 +217,14 @@
 
         <div class="form-group">
             <label>{{localize "SCENES.GlobalIllum"}}</label>
-            <input type="checkbox" name="globalLight" {{checked data.globalLight}}/>
+            <input type="checkbox" name="globalLight" {{checked data.globalLight}} />
             <p class="notes">{{localize "SCENES.GlobalIllumHint"}}</p>
         </div>
 
         <div class="form-group">
             <label>{{localize "SCENES.Darkness"}}</label>
             <div class="form-fields">
-                <input type="range" name="darkness" value="{{data.darkness}}" min="0" max="1" step="0.05"/>
+                <input type="range" name="darkness" value="{{data.darkness}}" min="0" max="1" step="0.05" />
                 <span class="range-value">{{data.darkness}}</span>
             </div>
             <p class="notes">{{localize "SCENES.DarknessHint"}}</p>
@@ -232,9 +234,10 @@
             <label>{{localize "SCENES.GlobalLightThreshold"}}</label>
             <div class="form-fields">
                 <label class="checkbox">
-                   <input type="checkbox" name="hasGlobalThreshold" {{ checked hasGlobalThreshold }}/>
+                    <input type="checkbox" name="hasGlobalThreshold" {{ checked hasGlobalThreshold }} />
                 </label>
-                <input type="range" name="globalLightThreshold" value="{{data.globalLightThreshold}}" min="0" max="1" step="0.05"/>
+                <input type="range" name="globalLightThreshold" value="{{data.globalLightThreshold}}" min="0" max="1"
+                    step="0.05" />
                 <span class="range-value">{{data.globalLightThreshold}}</span>
             </div>
             <p class="notes">{{localize "SCENES.GlobalLightThresholdHint"}}</p>
@@ -286,16 +289,28 @@
         </div>
     </div>
 
-	<div class="tab" data-tab="scene-roles">
+    <!-- Player Roles -->
+    <div class="tab" data-tab="scene-roles">
+
+        {{#each users}}
         <div class="form-group">
-			{{#each users}}
-				<label>{{name}}'s role:</label>
-				<select name="userRole" id="{{id}}" >
-					{{ selectOptions sceneRoles selected=assignedRole blank="" }}
-				</select>
-			{{/each}}
+            <label>{{name}}'s role:</label>
+            <div class="form-fields">
+                <select name="userRole-{{id}}">
+                    {{ selectOptions sceneRoles selected=assignedRole blank="" }}
+                </select>
+            </div>
         </div>
-	</div>
+        {{/each}}
+
+    </div>
+
+    <!-- <div class="form-group">
+        <label>Scene Name</label>
+        <div class="form-fields">
+            <input type="text" name="name" placeholder=" Name" value="debug">
+        </div>
+    </div> -->
 
     <!-- Form Submission -->
     <button type="submit">
