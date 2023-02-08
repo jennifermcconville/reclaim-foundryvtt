@@ -31,7 +31,7 @@ export class ReclaimChatLog extends ChatLog {
 
   constructor() {
     super();
-    Hooks.on( RECLAIM.Hooks.PlayerRolesInvalid, () => this.onPlayerRolesInvalid( this ) );
+    Hooks.on( RECLAIM.Hooks.PlayersValidated, this.onPlayerRolesChanged );
   }
 
   static get defaultOptions() {
@@ -41,10 +41,25 @@ export class ReclaimChatLog extends ChatLog {
 
   }
 
+  activateListeners( html ) {
+    super.activateListeners( html );
 
-  async onPlayerRolesInvalid( ) {
+    html.find( `#reclaim-chat-button` ).click( this.openSceneSettings.bind( this ) );
+  }
+
+  async onPlayerRolesChanged( scene, allValid ) {
+    if ( !allValid ) {
+      let textElement = $( this.textField );
+      textElement.text( `All the game roles haven't been correctly assigned to players in this Scene. Press the button below to open Scene Settings.` );
+      textElement.addClass( `red-tint` );
+      return;
+    }
     let textElement = $( this.textField );
-    textElement.text( `All the game roles haven't been correctly assigned to players in this Scene. Press the button below to open Scene Settings.` );
-    textElement.addClass( `red-tint` );
+    textElement.text( `Reclaim.` );
+    textElement.removeClass( `red-tint` );
+  }
+
+  async openSceneSettings( scene ) {
+    scene.sheet.render();
   }
 }

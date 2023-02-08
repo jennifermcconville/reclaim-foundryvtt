@@ -32,10 +32,7 @@ export class ReclaimSceneRoleValidator {
     // Check if each user has valid role
     allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
 
-    if ( !allUserValid ) {
-      Hooks.callAll( RECLAIM.Hooks.PlayerRolesInvalid, canvas.scene );
-    }
-
+    Hooks.callAll( RECLAIM.Hooks.PlayersValidated, canvas.scene, allUserValid );
   }
 
   static validateUserRoles( users, assignedSceneRoles ) {
