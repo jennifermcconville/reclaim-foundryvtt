@@ -109,6 +109,8 @@ Hooks.once( `ready`, async function() {
   if ( game.paused ) {
     game.togglePause( false );
   }
+
+  initGameStateMachine();
 } ); // End hook ready
 
 /**
@@ -238,4 +240,11 @@ async function setupHotbar() {
   }
 }
 
+
+/**
+ *
+ */
+async function initGameStateMachine() {
+  let fsm = new StateMachine( {} );
+}
 
