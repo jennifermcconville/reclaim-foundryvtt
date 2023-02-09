@@ -33,7 +33,8 @@ export const RECLAIM = {
     RolesNotSelected: `RolesNotSelected`
   },
   Hooks: {
-    PlayersValidated: `ReclaimHookPlayerValidated`
+    PlayersValidated: `ReclaimHookPlayerValidated`,
+    PlayerRolesChanged: `ReclaimHookPlayerRolesChanged`
   }
 };
 

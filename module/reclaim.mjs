@@ -25,6 +25,7 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 import { ReclaimSceneRoleValidator } from "./helpers/scene-role-validator.mjs";
+import { ReclaimCardHandState } from "./helpers/card-hand-state.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -33,6 +34,7 @@ Hooks.once( `init`, async function() {
   game.reclaim = {
     ReclaimCard,
     ReclaimCardsHandSheet,
+    ReclaimCardHandState,
     ReclaimCardConfig,
     ReclaimChatLog,
     ReclaimChatMessage,
@@ -91,6 +93,7 @@ Hooks.once( `init`, async function() {
   } );
 
   // Propagate init to other js modules
+  ReclaimCardHandState.init();
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -242,9 +245,11 @@ async function setupHotbar() {
 
 
 /**
- *
+ *  Initiates a state machine that controlls the message and button on bottom of chat sidebar
+ *  It's purpose is to guide the players through the flow of the game and it's rules
  */
 async function initGameStateMachine() {
-  let fsm = new StateMachine( {} );
+
+  // Let fsm = new StateMachine( {} );
 }
 
