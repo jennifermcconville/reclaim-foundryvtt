@@ -93,7 +93,7 @@ Hooks.once( `init`, async function() {
   } );
 
   // Propagate init to other js modules
-  ReclaimCardHandState.init();
+
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -107,6 +107,9 @@ Hooks.once( `ready`, async function() {
   setupOwnership();
 
   ApplyDefaultModuleSettings();
+
+  let cardHandState = new ReclaimCardHandState();
+  cardHandState.init();
 
   // Disable default pause when starting module
   if ( game.paused ) {

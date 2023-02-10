@@ -20,7 +20,8 @@ export const RECLAIM = {
   FoundryFolderNames: {
     CardHands: `Card Hands`,
     PlayerCardHands: `Player's Hands`,
-    Macros: `Reclaim Macros`
+    Macros: `Reclaim Macros`,
+    RevealedCards: `Reclaim Revealed Cards`
   },
   SceneRoles: {
     Observer: `Observer`,
@@ -35,6 +36,19 @@ export const RECLAIM = {
   Hooks: {
     PlayersValidated: `ReclaimHookPlayerValidated`,
     PlayerRolesChanged: `ReclaimHookPlayerRolesChanged`
+  },
+  DeckNames: {
+    Revealed: {
+      Cost: `Costs Deck`,
+      Discard: `Discard Pile`,
+      FarmLevel2: `Farm Level 2 Deck`,
+      FarmLevel1: `Farms Level 1 Deck`,
+      HousingLevel1: `Housing Level 1 Deck`,
+      HousingLevel2: `Housing Level 2 Deck`,
+      Transportation: `Transportation Deck`,
+      TreatmentLevel1: `Treatment Level 1 Deck`,
+      TreatmentLevel2: `Treatment Level 2 Deck`
+    }
   }
 };
 

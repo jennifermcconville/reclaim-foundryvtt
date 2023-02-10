@@ -27,7 +27,7 @@
     "css/reclaim.css"
   ],
   "scripts": [
-    "external/javascript-state-machine/dist/state-machine.min.js"
+    "external/javascript-state-machine/state-machine.min.js"
   ],
   "packs": [
     {
