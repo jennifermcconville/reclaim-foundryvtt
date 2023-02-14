@@ -27,10 +27,9 @@ export class ReclaimSceneRoleValidator {
     let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
     if ( !assignedSceneRoles ) {
       allUserValid = false;
+    } else { // Check if each user has valid role
+      allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
     }
-
-    // Check if each user has valid role
-    allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
 
     Hooks.callAll( RECLAIM.Hooks.PlayersValidated, canvas.scene, allUserValid );
   }

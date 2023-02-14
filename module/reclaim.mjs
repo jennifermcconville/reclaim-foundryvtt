@@ -108,8 +108,9 @@ Hooks.once( `ready`, async function() {
 
   ApplyDefaultModuleSettings();
 
-  let cardHandState = new ReclaimCardHandState();
-  cardHandState.init();
+  game.reclaim.cardHandState = new ReclaimCardHandState();
+  game.reclaim.cardHandState.init();
+  game.reclaim.cardHandState.updateDisplayedHands( game.scenes.current );
 
   // Disable default pause when starting module
   if ( game.paused ) {
