@@ -88,6 +88,10 @@ export class ReclaimCardHandState {
 
   static getCurrentUserRole( scene, user ) {
     let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+    if ( !assignedRoles ) {
+      return;
+    }
+
     return assignedRoles[ user.id ];
   }
 }

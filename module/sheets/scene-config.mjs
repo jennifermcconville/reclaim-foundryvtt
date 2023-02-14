@@ -25,14 +25,12 @@ export class ReclaimSceneConfig extends SceneConfig {
 
     let userData = [];
     for ( const user of game.users.contents ) {
-
       const assignedRoles = this.object.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-
       userData.push( {
         name: user.name,
         id: user.id,
         sceneRoles: RECLAIM.SceneRoles,
-        assignedRole: assignedRoles[ user.id ]
+        assignedRole: assignedRoles ? assignedRoles[ user.id ] : ``
       } );
     }
 
