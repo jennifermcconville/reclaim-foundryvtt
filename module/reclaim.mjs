@@ -5,6 +5,7 @@ import { ReclaimSidebar } from "./apps/sidebar.mjs";
 import { ReclaimChatLog } from "./apps/chat-log.mjs";
 
 // Import document classes.
+import { ReclaimActor } from "./documents/actor.mjs";
 import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 import { ReclaimCard } from "./documents/card.mjs";
@@ -32,6 +33,7 @@ Hooks.once( `init`, async function() {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
   game.reclaim = {
+    ReclaimActor,
     ReclaimCard,
     ReclaimCardsHandSheet,
     ReclaimCardHandState,
@@ -54,11 +56,11 @@ Hooks.once( `init`, async function() {
   CONFIG.ui.chat = ReclaimChatLog;
 
   // Define custom Document classes
+  CONFIG.Actor.documentClass = ReclaimActor;
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
   CONFIG.Card.documentClass = ReclaimCard;
   CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
   CONFIG.User.documentClass = ReclaimUser;
-
   CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.ui.sidebar = ReclaimSidebar;
 
