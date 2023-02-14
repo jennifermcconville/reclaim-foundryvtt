@@ -1,3 +1,5 @@
+
+
 export const RECLAIM = {
   Flags: {
     ConnectedDeckId: `ReclaimConnectedDeckId`,
@@ -6,7 +8,8 @@ export const RECLAIM = {
     CardSpawnsActorId: `ReclaimCardsActorSpawnId`,
     TokenSpawnedByCardId: `ReclaimTokenCardId`,
     UserCardHandId: `ReclaimUserCardHandId`,
-    DrawOnPlay: `ReclaimDrawOnPlay`
+    DrawOnPlay: `ReclaimDrawOnPlay`,
+    UserSceneRole: `ReclaimSceneUserRole`
   },
   InputFields:
   {
@@ -16,7 +19,32 @@ export const RECLAIM = {
   FoundryFolderNames: {
     CardHands: `Card Hands`,
     PlayerCardHands: `Player's Hands`,
-    Macros: `Reclaim Macros`
+    Macros: `Reclaim Macros`,
+    RevealedCards: `Reclaim Revealed Cards`
+  },
+  SceneRoles: {
+    Observer: `Observer`,
+    Farmer: `Farmer`,
+    Housing: `Housing`,
+    Treatment: `Treatment`,
+    Contractor: `Contractor`
+  },
+  Hooks: {
+    PlayersValidated: `ReclaimHookPlayerValidated`
+  },
+  DeckNames: {
+    Revealed: {
+      Cost: `Costs Deck`,
+      Discard: `Discard Pile`,
+      FarmLevel2: `Farm Level 2 Deck`,
+      FarmLevel1: `Farms Level 1 Deck`,
+      HousingLevel1: `Housing Level 1 Deck`,
+      HousingLevel2: `Housing Level 2 Deck`,
+      Transportation: `Transportation Deck`,
+      TreatmentLevel1: `Treatment Level 1 Deck`,
+      TreatmentLevel2: `Treatment Level 2 Deck`
+    }
   }
 };
+
 

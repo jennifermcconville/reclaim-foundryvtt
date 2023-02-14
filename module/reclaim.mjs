@@ -2,6 +2,7 @@
 
 // Import application classes
 import { ReclaimSidebar } from "./apps/sidebar.mjs";
+import { ReclaimChatLog } from "./apps/chat-log.mjs";
 
 // Import document classes.
 import { ReclaimActor } from "./documents/actor.mjs";
@@ -14,6 +15,7 @@ import { ReclaimChatMessage } from "./documents/chatt-message.mjs";
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
 import { ReclaimCardConfig } from "./sheets/card-config-sheet.mjs";
 import { RelcaimTokenConfig } from "./placables/reclaim-token-config.mjs";
+import { ReclaimSceneConfig } from "./sheets/scene-config.mjs";
 
 // Import placable classes.
 import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
@@ -22,6 +24,8 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
+import { ReclaimSceneRoleValidator } from "./helpers/scene-role-validator.mjs";
+import { ReclaimCardHandState } from "./helpers/card-hand-state.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -31,24 +35,30 @@ Hooks.once( `init`, async function() {
     ReclaimActor,
     ReclaimCard,
     ReclaimCardsHandSheet,
+    ReclaimCardHandState,
     ReclaimCardConfig,
+    ReclaimChatLog,
     ReclaimChatMessage,
     ReclaimConnectedCards,
+    ReclaimSceneConfig,
+    ReclaimSidebar,
     ReclaimToken,
     RelcaimTokenConfig,
     ReclaimTokenHUD,
-    ReclaimSidebar
+    ReclaimSceneRoleValidator
   };
 
   // Add custom constants for configuration.
   CONFIG.RECLAIM = RECLAIM;
 
+  CONFIG.ui.chat = ReclaimChatLog;
+
   // Define custom Document classes
   CONFIG.Actor.documentClass = ReclaimActor;
-  CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
   CONFIG.Card.documentClass = ReclaimCard;
   CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
+  CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.ui.sidebar = ReclaimSidebar;
 
   // Unregister default sheet
@@ -60,6 +70,7 @@ Hooks.once( `init`, async function() {
     label: `CARDS.Card`
   } );
   DocumentSheetConfig.unregisterSheet( TokenDocument, `core`, TokenConfig );
+  DocumentSheetConfig.unregisterSheet( Scene, `core`, SceneConfig );
 
   // Register sheet application classes
   DocumentSheetConfig.registerSheet( Cards, `reclaim`, ReclaimCardsHandSheet, {
@@ -75,8 +86,13 @@ Hooks.once( `init`, async function() {
     label: `RECLAIM.Token`,
     makeDefault: true
   } );
+  DocumentSheetConfig.registerSheet( Scene, `reclaim`, ReclaimSceneConfig, {
+    label: `RECLAIM.Scene`,
+    makeDefault: true
+  } );
 
   // Propagate init to other js modules
+
 
   // Preload Handlebars templates.
   return preloadHandlebarsTemplates();
@@ -88,6 +104,12 @@ Hooks.once( `ready`, async function() {
   UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
+
+  ApplyDefaultModuleSettings();
+
+  game.reclaim.cardHandState = new ReclaimCardHandState();
+  game.reclaim.cardHandState.init();
+  game.reclaim.cardHandState.updateDisplayedHands( game.scenes.current );
 
   // Disable default pause when starting module
   if ( game.paused ) {
@@ -118,8 +140,6 @@ function setupOwnership() {
   for ( let slot of hotbar.macros ) {
     correctDefaultOwnership( slot.macro );
   }
-
-  ApplyDefaultModuleSettings();
 }
 
 /**
@@ -222,5 +242,14 @@ async function setupHotbar() {
 
     await game.user.assignHotbarMacro( macro, emptyPosition.slot );
   }
+}
+
+
+/**
+ *  Initiates a state machine that controlls the message and button on bottom of chat sidebar
+ *  It's purpose is to guide the players through the flow of the game and it's rules
+ */
+async function initGameStateMachine() {
+  throw new SyntaxError( `Not implemented` );
 }
 
