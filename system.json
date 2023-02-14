@@ -26,9 +26,7 @@
   "styles": [
     "css/reclaim.css"
   ],
-  "scripts": [
-    "external/javascript-state-machine/state-machine.min.js"
-  ],
+  "scripts": [],
   "packs": [
     {
       "label": "Reclaim Infrastructure Tokens",

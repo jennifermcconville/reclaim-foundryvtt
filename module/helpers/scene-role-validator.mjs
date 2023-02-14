@@ -3,12 +3,12 @@
 import { RECLAIM } from "./config.mjs";
 
 Hooks.on( `canvasReady`, async function( canvas ) {
-  ReclaimSceneRoleValidator.checkGameState( canvas.scene, game.users );
+  ReclaimSceneRoleValidator.checkPlayerRoles( canvas.scene, game.users );
 } );
 
 Hooks.on( `updateScene`, async function( scene, args ) {
   if ( typeof args?.flags?.reclaim?.ReclaimSceneUserRole !== `undefined` ) {
-    ReclaimSceneRoleValidator.checkGameState( scene, game.users );
+    ReclaimSceneRoleValidator.checkPlayerRoles( scene, game.users );
   }
 } );
 
@@ -21,7 +21,7 @@ export class ReclaimSceneRoleValidator {
    * @param {Scene}   scene
    * @param {[user]}  users
    */
-  static async checkGameState( scene, users ) {
+  static async checkPlayerRoles( scene, users ) {
     let allUserValid = true;
 
     let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );

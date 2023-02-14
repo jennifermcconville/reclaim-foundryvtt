@@ -47,7 +47,7 @@ export class ReclaimChatLog extends ChatLog {
     html.find( `#reclaim-chat-button` ).click( this.openSceneSettings.bind( this ) );
   }
 
-  async onPlayerRolesChanged( scene, allValid ) {
+  async onPlayerRolesChanged( _scene, allValid ) {
     if ( !allValid ) {
       let textElement = $( this.textField );
       textElement.text( `All the game roles haven't been correctly assigned to players in this Scene. Press the button below to open Scene Settings.` );

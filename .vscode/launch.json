@@ -9,7 +9,6 @@
             "type": "chrome",
             "url": "http://localhost:30000",
             "preLaunchTask": "build-then-run-node",
-            
             "postDebugTask": "stop server",
             "request": "launch",
             "runtimeArgs": [

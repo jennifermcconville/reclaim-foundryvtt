@@ -10,7 +10,6 @@ import { ReclaimToken } from "./documents/token.mjs";
 import { ReclaimConnectedCards } from "./documents/connected-cards.mjs";
 import { ReclaimCard } from "./documents/card.mjs";
 import { ReclaimChatMessage } from "./documents/chatt-message.mjs";
-import { ReclaimUser } from "./documents/user.mjs";
 
 // Import sheet classes.
 import { ReclaimCardsHandSheet } from "./sheets/cards-hand-sheet.mjs";
@@ -46,7 +45,6 @@ Hooks.once( `init`, async function() {
     ReclaimToken,
     RelcaimTokenConfig,
     ReclaimTokenHUD,
-    ReclaimUser,
     ReclaimSceneRoleValidator
   };
 
@@ -60,7 +58,6 @@ Hooks.once( `init`, async function() {
   CONFIG.Cards.documentClass = ReclaimConnectedCards;
   CONFIG.Card.documentClass = ReclaimCard;
   CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
-  CONFIG.User.documentClass = ReclaimUser;
   CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.ui.sidebar = ReclaimSidebar;
 
@@ -118,8 +115,6 @@ Hooks.once( `ready`, async function() {
   if ( game.paused ) {
     game.togglePause( false );
   }
-
-  initGameStateMachine();
 } ); // End hook ready
 
 /**
@@ -255,7 +250,6 @@ async function setupHotbar() {
  *  It's purpose is to guide the players through the flow of the game and it's rules
  */
 async function initGameStateMachine() {
-
-  // Let fsm = new StateMachine( {} );
+  throw new SyntaxError( `Not implemented` );
 }
 
