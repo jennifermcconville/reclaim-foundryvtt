@@ -3,6 +3,7 @@
 // Import application classes
 import { ReclaimSidebar } from "./apps/sidebar.mjs";
 import { ReclaimChatLog } from "./apps/chat-log.mjs";
+import { ReclaimHotbar } from "./apps/hotbar.mjs";
 
 // Import document classes.
 import { ReclaimActor } from "./documents/actor.mjs";
@@ -40,6 +41,7 @@ Hooks.once( `init`, async function() {
     ReclaimChatLog,
     ReclaimChatMessage,
     ReclaimConnectedCards,
+    ReclaimHotbar,
     ReclaimSceneConfig,
     ReclaimSidebar,
     ReclaimToken,
@@ -60,6 +62,7 @@ Hooks.once( `init`, async function() {
   CONFIG.ChatMessage.documentClass = ReclaimChatMessage;
   CONFIG.Token.objectClass = ReclaimToken;
   CONFIG.ui.sidebar = ReclaimSidebar;
+  CONFIG.ui.hotbar = ReclaimHotbar;
 
   // Unregister default sheet
   DocumentSheetConfig.unregisterSheet( Cards, `core`, CardsHand, {
