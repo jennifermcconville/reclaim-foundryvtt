@@ -70,7 +70,7 @@ export class ReclaimCardHandState {
     }
 
     const user = game.users.current;
-    const currentUserRole = ReclaimCardHandState.getCurrentUserRole( scene, user );
+    const currentUserRole = RECLAIM.Helpers.getUserSceneRole( scene, user );
 
     // Remove all decks belonging to other roles
     // for ( const roleKey in RECLAIM.SceneRoles ) {
@@ -84,14 +84,5 @@ export class ReclaimCardHandState {
     } ).then( () => {
       window.HandMiniBarModule.updatePlayerHands();
     } );
-  }
-
-  static getCurrentUserRole( scene, user ) {
-    let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-    if ( !assignedRoles ) {
-      return;
-    }
-
-    return assignedRoles[ user.id ];
   }
 }

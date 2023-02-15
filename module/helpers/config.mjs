@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 
 
 export const RECLAIM = {
@@ -30,7 +31,8 @@ export const RECLAIM = {
     Contractor: `Contractor`
   },
   Hooks: {
-    PlayersValidated: `ReclaimHookPlayerValidated`
+    PlayersValidated: `ReclaimHookPlayerValidated`,
+    PlayerRoleChanged: `ReclaimHookPlayerRoleChanged`
   },
   DeckNames: {
     Revealed: {
@@ -43,6 +45,16 @@ export const RECLAIM = {
       Transportation: `Transportation Deck`,
       TreatmentLevel1: `Treatment Level 1 Deck`,
       TreatmentLevel2: `Treatment Level 2 Deck`
+    }
+  },
+  Helpers: {
+    getUserSceneRole( scene, user ) {
+      let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+      if ( !assignedRoles ) {
+        return;
+      }
+
+      return assignedRoles[ user.id ];
     }
   }
 };
