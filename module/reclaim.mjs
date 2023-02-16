@@ -152,33 +152,66 @@ function setupOwnership() {
  */
 function ApplyDefaultModuleSettings() {
   if ( game.users.current.isGM ) {
-    if ( game.settings.get( `hide-player-ui`, `settings` ) ) {
-      game.settings.set( `hide-player-ui`, `settings`, {
-        hideControls: false,
-        hideCustomHotbar: true,
-        hideHotbar: false,
-        hideLogo: true,
-        hideNavigation: {
-          complete: true,
-          navToggle: true,
-          sceneList: true,
-          bossBar: true
-        },
-        hidePlayerConfig: true,
-        hidePlayers: false,
-        hideSideBar: {
-          complete: false,
-          chatLog: false,
-          combatTracker: true,
-          actorsDirectory: false,
-          itemsDirectory: true
 
-          // ...
-        },
-        hideTokenActionHUD: true,
-        hideTokenHUD: false
-      } );
-    }
+    game.settings.set( `hide-player-ui`, `settings`, {
+      hideLogo: true,
+      hideNavigation: {
+        complete: true,
+        navToggle: true,
+        sceneList: true,
+        bossBar: true
+      },
+      hideControls: false,
+      hideSideBar: {
+        complete: false,
+        chatLog: false,
+        combatTracker: true,
+        actorsDirectory: false,
+        itemsDirectory: true,
+        journalEntries: false,
+        rollableTables: true,
+        cardStacks: false,
+        audioPlaylists: true,
+        compendiumPacks: true,
+        gameSettings: false
+      },
+      hidePlayers: false,
+      hideHotbar: false,
+      hidePlayerConfig: false,
+      hideTokenHUD: false,
+      hideTokenActionHUD: false,
+      hideCustomHotbar: false
+    } );
+
+    game.settings.set( `hide-player-ui`, `playerConfig`, {
+      hideLogo: true,
+      hideNavigation: {
+        complete: false,
+        navToggle: false,
+        sceneList: false,
+        bossBar: false
+      },
+      hideControls: false,
+      hideSideBar: {
+        complete: false,
+        chatLog: false,
+        combatTracker: true,
+        actorsDirectory: false,
+        itemsDirectory: true,
+        journalEntries: false,
+        rollableTables: false,
+        cardStacks: false,
+        audioPlaylists: true,
+        compendiumPacks: false,
+        gameSettings: false
+      },
+      hidePlayers: false,
+      hideHotbar: false,
+      hidePlayerConfig: false,
+      hideTokenHUD: false,
+      hideTokenActionHUD: false,
+      hideCustomHotbar: false
+    } );
   }
 }
 
