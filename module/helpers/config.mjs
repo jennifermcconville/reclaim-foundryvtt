@@ -55,6 +55,9 @@ export const RECLAIM = {
       }
 
       return assignedRoles[ user.id ];
+    },
+    getUserDeck( user ) {
+      return user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
     }
   }
 };

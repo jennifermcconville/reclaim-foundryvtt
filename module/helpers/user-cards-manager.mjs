@@ -59,41 +59,17 @@ export class UserCardsManager {
    * @param {Folder} cardFolders
    */
   static createPlayerHand( user, cardFolders ) {
-    let newHand = false;
     let flag = user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
     if ( !flag ) {
       UserCardsManager.createUserCardHand( user, cardFolders );
-      newHand = true;
     }
 
     let userHandPromise = game.cards.find( cardHand => cardHand.id === flag );
     if ( !userHandPromise ) {
       userHandPromise = UserCardsManager.createUserCardHand( user, cardFolders );
-      newHand = true;
     }
 
-    if ( newHand ) {
-      if ( userHandPromise.then ) {
-        userHandPromise.then( value => {
-          UserCardsManager.assingToMiniCardHand( user, value );
-        } );
-      } else {
-        UserCardsManager.assingToMiniCardHand( user, userHandPromise );
-      }
-    }
-  }
-
-  /**
-   * Make sure that the hand is displayed as the bottom card collection of hand-mini-bar for this user.
-   * @param {User}user
-   * @param {Cards}hand
-   */
-  static async assingToMiniCardHand( user, hand ) {
-    if ( !hand || !user || typeof HandMiniBarModule === `undefined` ) {
-      return;
-    }
-
-    user.setFlag( HandMiniBarModule.moduleName, `CardsID-0`, hand.id );
+    // Adding new hand to hand-mini-bar handled by ReclaimCardHandState
   }
 
   /**

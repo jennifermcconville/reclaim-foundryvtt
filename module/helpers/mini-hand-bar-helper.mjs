@@ -1,70 +1,49 @@
 /* eslint-disable no-undef */
 
-import { RECLAIM } from "./config.mjs";
+import HandMiniBar from "../../../../modules/hand-mini-bar/scripts/hand-mini-bar.js";
 
 export class ReclaimMiniHandBarHelper {
-  static async removeAllDecksFromUi( user ) {
-    if ( !user ) {
-      return;
-    }
 
-    ReclaimMiniHandBarHelper.iterateUiSlots( user, ( uiSlotId, _uiSlotContent ) => {
-      user.unsetFlag( HandMiniBarModule.moduleName, uiSlotId );
+  /**
+   * Fix for hand-mini-bar module which caused doubles of each HandMiniBar
+   * to be added to HandMiniBarModule.handMiniBarList
+   */
+  static fixHandMiniBar() {
+    const fixedFunction = function( value ) { // Value is the new value of the setting
+      if ( value > HandMiniBarModule.handMax ) {
+        value = HandMiniBarModule.handMax;
+      }
+
+      if ( value > HandMiniBarModule.handMiniBarList.length ) {
+        let more = value - HandMiniBarModule.handMiniBarList.length;
+        for ( let i = 0; i < more; i++ ) {
+          new HandMiniBar( HandMiniBarModule.handMiniBarList.length ); // Pushes itself into list as part of constructor;
+        }
+      } else {// Remove some may need additional cleanup
+        let less = HandMiniBarModule.handMiniBarList.length - value;
+        for ( let i = 0; i < less; i++ ) {
+          HandMiniBarModule.handMiniBarList.pop().remove();
+        }
+      }
+    };
+
+    window.HandMiniBarModule.updateHandCount = fixedFunction;
+
+    game.settings.register( HandMiniBarModule.moduleName, `HandCount`, {
+      name: game.i18n.localize( `HANDMINIBAR.HandCountSetting` ),
+      hint: game.i18n.localize( `HANDMINIBAR.HandCountSettingHint` ),
+      scope: `client`,     // "world" = sync to db, "client" = local storage
+      config: true,       // False if you dont want it to show in module config
+      type: Number,       // Number, Boolean, String,
+      default: 1,
+      range: {             // If range is specified, the resulting setting will be a range slider
+        min: 0,
+        max: 10,
+        step: 1
+      },
+      onChange: fixedFunction,
+      filePicker: false  // Set true with a String `type` to use a file picker input
     } );
-  }
-
-  static async addDecksToUi( user, decksArray, showUserDeck = true ) {
-    if ( !decksArray ) {
-      return;
-    }
-
-    let decksIndex = 0;
-    if ( showUserDeck ) {
-      const userDeckId = [user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId )];
-      decksArray = userDeckId.concat( decksArray );
-    }
-
-    for ( let uiIndex = 0; uiIndex <= 9; uiIndex++ ) {
-      if ( decksIndex >= decksArray.length ) { // Early out if deck empty or out when end of deck reached
-        return;
-      }
-
-      let uiSlotId = `CardsID-${uiIndex}`;
-      let idOfOccupant = user.getFlag( HandMiniBarModule.moduleName, uiSlotId );
-
-      if ( !idOfOccupant ) {
-        await user.setFlag( HandMiniBarModule.moduleName, uiSlotId, decksArray[ decksIndex ] );
-        decksIndex++;
-      }
-    }
-  }
-
-  static async consolidateDecks( user ) {
-    let displayedDecks = this.iterateUiSlots( user, ( _slotId, slotContent ) => {
-      if ( typeof slotContent !== `undefined` && slotContent !== null ) {
-        return slotContent;
-      }
-    } );
-
-    let counter = { value: 0 };
-    this.iterateUiSlots( user, ( slotId, _slotContent, deckArray, index ) => {
-      if ( index.value < deckArray.length ) {
-        user.setFlag( HandMiniBarModule.moduleName, slotId, deckArray[ index.value ] );
-        index.value++;
-        return;
-      }
-      user.unsetFlag( HandMiniBarModule.moduleName, slotId );
-    }, displayedDecks, counter );
-  }
-
-  static updateDisplayedDecksNumber( user ) {
-    let decksDisplayed = this.iterateUiSlots( user, ( _slotId, slotContent ) => {
-      if ( typeof slotContent !== `undefined` && slotContent != null ) {
-        return slotContent;
-      }
-    } );
-    let displayedCount = decksDisplayed.length;
-    window.HandMiniBarModule.updateHandCount( displayedCount );
   }
 
   /**
@@ -80,7 +59,7 @@ export class ReclaimMiniHandBarHelper {
       let uiSlotId = `CardsID-${uiIndex}`;
       let idOfOccupant = user.getFlag( HandMiniBarModule.moduleName, uiSlotId );
 
-      let result = operation( uiSlotId, idOfOccupant, ...args );
+      const result = operation( uiSlotId, idOfOccupant, ...args );
       if ( typeof result !== `undefined` ) {
         results.push( result );
       }

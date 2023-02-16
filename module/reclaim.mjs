@@ -27,6 +27,7 @@ import { RECLAIM } from "./helpers/config.mjs";
 import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 import { ReclaimSceneRoleValidator } from "./helpers/scene-role-validator.mjs";
 import { ReclaimCardHandState } from "./helpers/card-hand-state.mjs";
+import { ReclaimMiniHandBarHelper } from "./helpers/mini-hand-bar-helper.mjs";
 
 Hooks.once( `init`, async function() {
 
@@ -109,6 +110,7 @@ Hooks.once( `ready`, async function() {
   setupOwnership();
 
   ApplyDefaultModuleSettings();
+  ReclaimMiniHandBarHelper.fixHandMiniBar();
 
   game.reclaim.cardHandState = new ReclaimCardHandState();
   game.reclaim.cardHandState.init();
@@ -246,7 +248,6 @@ async function setupHotbar() {
     await game.user.assignHotbarMacro( macro, emptyPosition.slot );
   }
 }
-
 
 /**
  *  Initiates a state machine that controlls the message and button on bottom of chat sidebar

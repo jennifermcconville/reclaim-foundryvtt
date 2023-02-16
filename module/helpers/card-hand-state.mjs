@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { RECLAIM } from "./config.mjs";
-import { ReclaimMiniHandBarHelper as HandbarHelper } from "./mini-hand-bar-helper.mjs";
 
 Hooks.on( `updateScene`, ( scene, changes ) => {
   if ( !scene.active ) {
@@ -71,18 +70,31 @@ export class ReclaimCardHandState {
 
     const user = game.users.current;
     const currentUserRole = RECLAIM.Helpers.getUserSceneRole( scene, user );
+    const roleDecks = this.#roleDecks.get( currentUserRole );
 
-    // Remove all decks belonging to other roles
-    // for ( const roleKey in RECLAIM.SceneRoles ) {
-    // }
-    await HandbarHelper.removeAllDecksFromUi( user ).then( () => {
-      return HandbarHelper.addDecksToUi( user, this.#roleDecks.get( currentUserRole ) );
-    } ).then( () => {
-      return HandbarHelper.consolidateDecks( user );
-    } ).then( () => {
-      return HandbarHelper.updateDisplayedDecksNumber( user );
-    } ).then( () => {
-      window.HandMiniBarModule.updatePlayerHands();
+    // Preper new flag map
+    let newDecks = {
+      "CardsID-0": RECLAIM.Helpers.getUserDeck( user )
+    };
+    for ( let index = 0; index < roleDecks.length; index++ ) {
+      newDecks[ `CardsID-${index + 1}` ] = roleDecks[ index ];
+    }
+    let newDecksNbr = Object.keys( newDecks ).length;
+
+    // Remove all old flag data
+    await user.update( {
+      flags: {
+        [ HandMiniBarModule.moduleName ]: null
+      }
     } );
+
+    // Add all flags in one update call
+    await user.update( {
+      flags: {
+        [ HandMiniBarModule.moduleName ]: newDecks
+      }
+    } );
+
+    game.settings.set( HandMiniBarModule.moduleName, `HandCount`, newDecksNbr );
   }
 }
