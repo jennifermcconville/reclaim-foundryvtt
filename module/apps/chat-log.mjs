@@ -39,7 +39,22 @@ export class ReclaimChatLog extends ChatLog {
   activateListeners( html ) {
     super.activateListeners( html );
 
-    html.find( `#reclaim-chat-button` ).click( this.openSceneSettings.bind( this ) );
+    html.find( `#reclaim-chat-button` ).click( this.switchRole.bind( this ) );
+  }
+
+  async switchRole() {
+    const user = game.users.current;
+    const activeScene = game.scenes.active;
+    const currentRole = RECLAIM.Helpers.getUserSceneRole( activeScene, user );
+    const nextRole = RECLAIM.Helpers.getNextRole( currentRole );
+    if ( nextRole === null ) {
+      ui.notifications.warn( `You don't have permission to switch your role. Ask the Gamemaster to assign you a role.` );
+      return;
+    }
+
+    const result = await activeScene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
+      [ user.id ]: nextRole
+    } );
   }
 
   async openSceneSettings( scene ) {
@@ -51,7 +66,6 @@ export class ReclaimChatLog extends ChatLog {
     return mergeObject( super.defaultOptions, {
       template: `systems/reclaim/templates/chat-log.html`
     } );
-
   }
 
   static async onPlayerRolesChanged( scene, allValid ) {
@@ -60,23 +74,22 @@ export class ReclaimChatLog extends ChatLog {
     }
 
     const textElement = $( ui.chat.textField );
-    const button = $( ui.chat.chatButton );
+    let newText = ``;
     if ( !allValid ) {
-      let newText = `All the game roles haven't been correctly assigned to players in this Scene`;
-      if ( game.users.current.isGm ) {
-        newText += `Press the button below to open Scene Settings.`;
-      }
-      textElement.text( newText );
+      newText += `All the game roles haven't been correctly assigned to players in this Scene.`;
+
+
       textElement.addClass( `red-tint` );
-      button.show();
-      return;
+
+      // Button.show();
+      // return;
+    } else {
+      textElement.removeClass( `red-tint` );
+      newText += `You are playing in the ${currentRole} role.`;
     }
 
     const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
-    textElement.text( `You are playing in the ${currentRole} role.` );
-    textElement.removeClass( `red-tint` );
-    button.hide();
-
+    textElement.text( newText );
   }
 
   /** /STATIC FUNCTIONS */
