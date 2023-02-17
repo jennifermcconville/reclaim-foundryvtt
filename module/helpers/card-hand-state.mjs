@@ -13,6 +13,19 @@ Hooks.on( `updateScene`, ( scene, changes ) => {
   game.reclaim.cardHandState.updateDisplayedHands( scene );
 } );
 
+Hooks.on( `updateUser`, ( user, changes ) => {
+  if ( !user.isSelf ) {
+    return;
+  }
+
+  const activeScene = game.scenes.active;
+  if ( typeof changes.flags?.reclaim?.[ RECLAIM.Flags.UserSceneRole ][ activeScene.id ] === `undefined` ) {
+    return;
+  }
+
+  game.reclaim.cardHandState.updateDisplayedHands( activeScene );
+} );
+
 export class ReclaimCardHandState {
 
   #roleDecks = new Map();
@@ -70,6 +83,10 @@ export class ReclaimCardHandState {
 
     const user = game.users.current;
     const currentUserRole = RECLAIM.Helpers.getUserSceneRole( scene, user );
+    if ( !currentUserRole ) {
+      return;
+    }
+
     const roleDecks = this.#roleDecks.get( currentUserRole );
 
     // Preper new flag map

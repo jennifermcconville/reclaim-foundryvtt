@@ -25,12 +25,12 @@ export class ReclaimSceneConfig extends SceneConfig {
 
     let userData = [];
     for ( const user of game.users.contents ) {
-      const assignedRoles = this.object.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+      const assignedRole = RECLAIM.Helpers.getUserSceneRole( this.object, user );
       userData.push( {
         name: user.name,
         id: user.id,
         sceneRoles: RECLAIM.SceneRoles,
-        assignedRole: assignedRoles ? assignedRoles[ user.id ] : ``
+        assignedRole: assignedRole
       } );
     }
 
@@ -47,13 +47,8 @@ export class ReclaimSceneConfig extends SceneConfig {
    */
   async _updateObject( event, formData ) {
     super._updateObject( event, formData );
-
-    let usersRoleData = {};
     for ( const user of game.users.contents ) {
-      usersRoleData[ user.id ] = formData[ `userRole-${user.id}` ];
+      RECLAIM.Helpers.setUserSceneRole( this.object, user, formData[ `userRole-${user.id}` ] );
     }
-
-    this.object.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, usersRoleData );
-
   }
 }

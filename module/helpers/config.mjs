@@ -49,12 +49,26 @@ export const RECLAIM = {
   },
   Helpers: {
     getUserSceneRole( scene, user ) {
-      let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-      if ( !assignedRoles ) {
-        return;
+      const result = user.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+      if ( result ) {
+        return result[ scene.id ];
       }
 
-      return assignedRoles[ user.id ];
+      // Let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
+      // if ( !assignedRoles ) {
+      //   return;
+      // }
+
+      // return assignedRoles[ user.id ];
+    },
+    setUserSceneRole( scene, user, role ) {
+      user.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
+        [ scene.id ]: role
+      } );
+
+      // Scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
+      //   [ user.id ]: role
+      // } );
     },
     getUserDeck( user ) {
       return user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );

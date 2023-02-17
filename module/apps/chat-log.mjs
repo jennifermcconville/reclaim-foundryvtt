@@ -52,9 +52,7 @@ export class ReclaimChatLog extends ChatLog {
       return;
     }
 
-    const result = await activeScene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
-      [ user.id ]: nextRole
-    } );
+    RECLAIM.Helpers.setUserSceneRole( game.scenes.active, user, nextRole );
   }
 
   async openSceneSettings( scene ) {
@@ -74,6 +72,7 @@ export class ReclaimChatLog extends ChatLog {
     }
 
     const textElement = $( ui.chat.textField );
+    const button = $( ui.chat.chatButton );
     let newText = ``;
     if ( !allValid ) {
       newText += `All the game roles haven't been correctly assigned to players in this Scene.`;
@@ -83,8 +82,14 @@ export class ReclaimChatLog extends ChatLog {
       const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
       newText += `You are playing in the ${currentRole} role.`;
     }
-
     textElement.text( newText );
+
+    const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
+    if ( !currentRole || currentRole === RECLAIM.SceneRoles.Observer ) {
+      button.hide();
+    } else {
+      button.show();
+    }
   }
 
   /** /STATIC FUNCTIONS */
