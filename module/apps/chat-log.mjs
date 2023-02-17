@@ -77,18 +77,13 @@ export class ReclaimChatLog extends ChatLog {
     let newText = ``;
     if ( !allValid ) {
       newText += `All the game roles haven't been correctly assigned to players in this Scene.`;
-
-
       textElement.addClass( `red-tint` );
-
-      // Button.show();
-      // return;
     } else {
       textElement.removeClass( `red-tint` );
+      const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
       newText += `You are playing in the ${currentRole} role.`;
     }
 
-    const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
     textElement.text( newText );
   }
 
