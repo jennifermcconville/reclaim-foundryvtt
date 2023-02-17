@@ -5,18 +5,6 @@
 		},
 		{
 			"path": "../../Program Files/Foundry Virtual Tabletop/resources/app"
-		},
-		{
-			"path": "../FoundryLocal/Data/worlds/developing-reclaim"
-		},
-		{
-			"path": "../ReclaimDefaultWorld"
-		},
-		{
-			"path": "../FoundryLocal/Data/modules/hand-mini-bar"
-		},
-		{
-			"path": "../FoundryLocal/Data/modules/hide-player-ui"
 		}
 	],
 	"settings": {
