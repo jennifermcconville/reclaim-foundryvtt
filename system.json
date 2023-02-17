@@ -3,7 +3,7 @@
   "id": "reclaim",
   "title": "Reclaim Board Game",
   "description": "The Reclaim Board Game system for FoundryVTT!",
-  "version": "v0.4.1",
+  "version": "v0.5.0",
   "compatibility": {
     "minimum": "10",
     "verified": "10.291"
@@ -78,7 +78,7 @@
       "flags": {}
     },
     {
-      "label": "Macro Pack",
+      "label": "Reclaim Macros",
       "type": "Macro",
       "name": "macro-pack",
       "path": "packs/macro-pack.db",
@@ -121,6 +121,12 @@
   "license": "LICENSE.txt",
   "relationships": {
     "requires": [
+      {
+        "id": "lib-wrapper",
+        "type": "module",
+        "manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+        "compatibility": {}
+      },
       {
         "id": "colorsettings",
         "type": "module",

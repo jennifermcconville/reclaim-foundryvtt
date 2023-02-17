@@ -68,4 +68,33 @@ body.vtt.game.system-reclaim {
       }
     }
   } /* /Token Sheet customization */
+
+  /* Reclaim Chat Tab */
+  div.reclaim-chat-box {
+    flex: none;
+  }
+
+  div.red-tint {
+    background-color: rgba(255, 0, 0, 0.5);
+    background-blend-mode: multiply;
+  }
+
+  div.green-tint {
+    background-color: rgba(0, 255, 0, 0.5);
+    background-blend-mode: multiply;
+  }
+
+  div.reclaim-chat-box-button {
+    margin: 3px;
+    padding: 1px;
+  }
+  /* Reclaim Chat Tab */
+
+  #hotbar {
+    width: 129px;
+  }
+
+  #hotbar #macro-list {
+    grid-template-columns: repeat(2, var(--macro-size));
+  }
 }
