@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 
-
 export const RECLAIM = {
   Flags: {
     ConnectedDeckId: `ReclaimConnectedDeckId`,
@@ -45,59 +44,6 @@ export const RECLAIM = {
       Transportation: `Transportation Deck`,
       TreatmentLevel1: `Treatment Level 1 Deck`,
       TreatmentLevel2: `Treatment Level 2 Deck`
-    }
-  },
-  Helpers: {
-    getUserSceneRole( scene, user ) {
-      const result = user.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-      if ( result ) {
-        return result[ scene.id ];
-      }
-
-      // Let assignedRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-      // if ( !assignedRoles ) {
-      //   return;
-      // }
-
-      // return assignedRoles[ user.id ];
-    },
-    setUserSceneRole( scene, user, role ) {
-      user.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
-        [ scene.id ]: role
-      } );
-
-      // Scene.setFlag( game.system.id, RECLAIM.Flags.UserSceneRole, {
-      //   [ user.id ]: role
-      // } );
-    },
-    getUserDeck( user ) {
-      return user.getFlag( game.system.id, RECLAIM.Flags.UserCardHandId );
-    },
-    getNextRole( role ) {
-      let result = null;
-
-      switch ( role ) {
-        case RECLAIM.SceneRoles.Housing:
-          result = RECLAIM.SceneRoles.Treatment;
-          break;
-
-        case RECLAIM.SceneRoles.Treatment:
-          result = RECLAIM.SceneRoles.Farmer;
-          break;
-
-        case RECLAIM.SceneRoles.Farmer:
-          result = RECLAIM.SceneRoles.Contractor;
-          break;
-
-        case RECLAIM.SceneRoles.Contractor:
-          result = RECLAIM.SceneRoles.Housing;
-          break;
-
-        default:
-          break;
-      }
-
-      return result;
     }
   }
 };

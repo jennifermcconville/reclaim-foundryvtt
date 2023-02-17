@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
 import { RECLAIM } from "../helpers/config.mjs";
+import { HelperFunctions } from "../helpers/helper-functions.mjs";
 
 Hooks.on( `renderChatLog`, async function( chatLog, element ) {
   chatLog.chatButton = element.find( `#reclaim-chat-button` )[ 0 ];
@@ -45,21 +46,16 @@ export class ReclaimChatLog extends ChatLog {
   async switchRole() {
     const user = game.users.current;
     const activeScene = game.scenes.active;
-    const currentRole = RECLAIM.Helpers.getUserSceneRole( activeScene, user );
-    const nextRole = RECLAIM.Helpers.getNextRole( currentRole );
+    const currentRole = HelperFunctions.getUserSceneRole( activeScene, user );
+    const nextRole = HelperFunctions.getNextRole( currentRole );
     if ( nextRole === null ) {
       ui.notifications.warn( `You don't have permission to switch your role. Ask the Gamemaster to assign you a role.` );
       return;
     }
 
-    RECLAIM.Helpers.setUserSceneRole( game.scenes.active, user, nextRole );
+    HelperFunctions.setUserSceneRole( game.scenes.active, user, nextRole );
   }
 
-  async openSceneSettings( scene ) {
-    scene.sheet.render();
-  }
-
-  /** STATIC FUNCTIONS */
   static get defaultOptions() {
     return mergeObject( super.defaultOptions, {
       template: `systems/reclaim/templates/chat-log.html`
@@ -79,18 +75,16 @@ export class ReclaimChatLog extends ChatLog {
       textElement.addClass( `red-tint` );
     } else {
       textElement.removeClass( `red-tint` );
-      const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
+      const currentRole = HelperFunctions.getUserSceneRole( scene, game.users.current );
       newText += `You are playing in the ${currentRole} role.`;
     }
     textElement.text( newText );
 
-    const currentRole = RECLAIM.Helpers.getUserSceneRole( scene, game.users.current );
+    const currentRole = HelperFunctions.getUserSceneRole( scene, game.users.current );
     if ( !currentRole || currentRole === RECLAIM.SceneRoles.Observer ) {
       button.hide();
     } else {
       button.show();
     }
   }
-
-  /** /STATIC FUNCTIONS */
 }

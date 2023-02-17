@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
 import { RECLAIM } from "../helpers/config.mjs";
+import { HelperFunctions } from "../helpers/helper-functions.mjs";
 
 
 export class ReclaimSceneConfig extends SceneConfig {
@@ -25,7 +26,7 @@ export class ReclaimSceneConfig extends SceneConfig {
 
     let userData = [];
     for ( const user of game.users.contents ) {
-      const assignedRole = RECLAIM.Helpers.getUserSceneRole( this.object, user );
+      const assignedRole = HelperFunctions.getUserSceneRole( this.object, user );
       userData.push( {
         name: user.name,
         id: user.id,
@@ -48,7 +49,7 @@ export class ReclaimSceneConfig extends SceneConfig {
   async _updateObject( event, formData ) {
     super._updateObject( event, formData );
     for ( const user of game.users.contents ) {
-      RECLAIM.Helpers.setUserSceneRole( this.object, user, formData[ `userRole-${user.id}` ] );
+      HelperFunctions.setUserSceneRole( this.object, user, formData[ `userRole-${user.id}` ] );
     }
   }
 }

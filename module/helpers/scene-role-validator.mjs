@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 
 import { RECLAIM } from "./config.mjs";
+import { HelperFunctions } from "./helper-functions.mjs";
 
 Hooks.on( `canvasReady`, async function( canvas ) {
   ReclaimSceneRoleValidator.checkPlayerRoles( canvas.scene, game.users );
@@ -17,7 +18,6 @@ Hooks.on( `updateUser`, async function( _user, args ) {
     ReclaimSceneRoleValidator.checkPlayerRoles( game.scenes.active, game.users );
   }
 } );
-
 
 export class ReclaimSceneRoleValidator {
 
@@ -39,7 +39,7 @@ export class ReclaimSceneRoleValidator {
     }
 
     for ( const user of users ) {
-      const assignedUserRole = RECLAIM.Helpers.getUserSceneRole( scene, user );
+      const assignedUserRole = HelperFunctions.getUserSceneRole( scene, user );
 
       if ( !assignedUserRole ) { // User doesn't have a role
         return false;
