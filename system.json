@@ -137,7 +137,11 @@
         "id": "hand-mini-bar",
         "type": "module",
         "manifest": "https://gitlab.com/pengrath/hand-mini-bar/-/raw/main/module.json",
-        "compatibility": {}
+        "compatibility": {
+          "minimum": "1.3.3",
+          "verified": "1.3.3",
+          "maximum": "1.3.3"
+        }
       },
       {
         "id": "force-client-settings",
