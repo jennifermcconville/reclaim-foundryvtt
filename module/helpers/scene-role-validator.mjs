@@ -1,17 +1,23 @@
 /* eslint-disable no-undef */
 
 import { RECLAIM } from "./config.mjs";
+import { HelperFunctions } from "./helper-functions.mjs";
 
 Hooks.on( `canvasReady`, async function( canvas ) {
   ReclaimSceneRoleValidator.checkPlayerRoles( canvas.scene, game.users );
 } );
 
 Hooks.on( `updateScene`, async function( scene, args ) {
-  if ( typeof args?.flags?.reclaim?.ReclaimSceneUserRole !== `undefined` ) {
+  if ( typeof args?.flags?.reclaim?.[ RECLAIM.Flags.UserSceneRole ] !== `undefined` ) {
     ReclaimSceneRoleValidator.checkPlayerRoles( scene, game.users );
   }
 } );
 
+Hooks.on( `updateUser`, async function( _user, args ) {
+  if ( typeof args?.flags?.reclaim?.[ RECLAIM.Flags.UserSceneRole ] !== `undefined` ) {
+    ReclaimSceneRoleValidator.checkPlayerRoles( game.scenes.active, game.users );
+  }
+} );
 
 export class ReclaimSceneRoleValidator {
 
@@ -22,26 +28,18 @@ export class ReclaimSceneRoleValidator {
    * @param {[user]}  users
    */
   static async checkPlayerRoles( scene, users ) {
-    let allUserValid = true;
-
-    let assignedSceneRoles = scene.getFlag( game.system.id, RECLAIM.Flags.UserSceneRole );
-    if ( !assignedSceneRoles ) {
-      allUserValid = false;
-    } else { // Check if each user has valid role
-      allUserValid = ReclaimSceneRoleValidator.validateUserRoles( users, assignedSceneRoles );
-    }
-
+    const allUserValid = ReclaimSceneRoleValidator.validateUserRoles( scene, users );
     Hooks.callAll( RECLAIM.Hooks.PlayersValidated, canvas.scene, allUserValid );
   }
 
-  static validateUserRoles( users, assignedSceneRoles ) {
+  static validateUserRoles( scene, users ) {
     let roleCount = {};
     for ( const roleKey in RECLAIM.SceneRoles ) {
       roleCount[ RECLAIM.SceneRoles[ roleKey ] ] = 0;
     }
 
     for ( const user of users ) {
-      const assignedUserRole = assignedSceneRoles[ user.id ];
+      const assignedUserRole = HelperFunctions.getUserSceneRole( scene, user );
 
       if ( !assignedUserRole ) { // User doesn't have a role
         return false;

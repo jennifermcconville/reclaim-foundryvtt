@@ -24,7 +24,6 @@ import { ReclaimTokenHUD } from "./placables/reclaim-token-hud.mjs";
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { RECLAIM } from "./helpers/config.mjs";
-import { UserCardsManager } from "./helpers/user-cards-manager.mjs";
 import { ReclaimSceneRoleValidator } from "./helpers/scene-role-validator.mjs";
 import { ReclaimCardHandState } from "./helpers/card-hand-state.mjs";
 import { ReclaimMiniHandBarHelper } from "./helpers/mini-hand-bar-helper.mjs";
@@ -105,7 +104,6 @@ Hooks.once( `init`, async function() {
 Hooks.once( `ready`, async function() {
   game.canvas.hud.token = new ReclaimTokenHUD();
 
-  UserCardsManager.onReady();
   setupHotbar();
   setupOwnership();
 
@@ -177,7 +175,7 @@ function ApplyDefaultModuleSettings() {
       },
       hidePlayers: false,
       hideHotbar: false,
-      hidePlayerConfig: false,
+      hidePlayerConfig: true,
       hideTokenHUD: false,
       hideTokenActionHUD: false,
       hideCustomHotbar: false
@@ -207,7 +205,7 @@ function ApplyDefaultModuleSettings() {
       },
       hidePlayers: false,
       hideHotbar: false,
-      hidePlayerConfig: false,
+      hidePlayerConfig: true,
       hideTokenHUD: false,
       hideTokenActionHUD: false,
       hideCustomHotbar: false
@@ -281,12 +279,3 @@ async function setupHotbar() {
     await game.user.assignHotbarMacro( macro, emptyPosition.slot );
   }
 }
-
-/**
- *  Initiates a state machine that controlls the message and button on bottom of chat sidebar
- *  It's purpose is to guide the players through the flow of the game and it's rules
- */
-async function initGameStateMachine() {
-  throw new SyntaxError( `Not implemented` );
-}
-
